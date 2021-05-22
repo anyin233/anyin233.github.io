@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>AcWing 532. 货币系统</title>
+    <url>/2021/05/22/AcWing-532/</url>
+    <content><![CDATA[<h2 id="题目描述">题目描述</h2>
+<p>在网友的国度中共有<code>n</code>种不同面额的货币，第 <code>i</code> 种货币的面额为<code>a[i]</code>，你可以假设每一种货币都有无穷多张。</p>
+<p>为了方便，我们把货币种数为<code>n</code>、面额数组为<code>a[1..n]</code>的货币系统记作<code>(n,a)</code> 。 </p>
+<p>在一个完善的货币系统中，每一个非负整数的金额 <code>x</code> 都应该可以被表示出，即对每一个非负整数 <code>x</code>，都存在 nn 个非负整数 <code>t[i]</code> 满足 <code>a[i]*t[i]</code> 的和为 <code>x</code>。</p>
+<p>然而，在网友的国度中，货币系统可能是不完善的，即可能存在金额 <code>x</code> 不能被该货币系统表示出。</p>
+<p>例如在货币系统 <code>n=3,a=[2,5,9]</code> 中，金额 <code>1,3</code> 就无法被表示出来。 </p>
+<p>两个货币系统 <code>(n,a)</code> 和 <code>(m,b)</code> 是等价的，当且仅当对于任意非负整数 <code>x</code>，它要么均可以被两个货币系统表出，要么不能被其中任何一个表出。 </p>
+<p>现在网友们打算简化一下货币系统。</p>
+<p>他们希望找到一个货币系统 <code>(m,b)</code>，满足 <code>(m,b)</code> 与原来的货币系统 <code>(n,a)</code> 等价，且 <code>m</code> 尽可能的小。</p>
+<p>他们希望你来协助完成这个艰巨的任务：找到最小的 <code>m</code>。</p>
+<span id="more"></span>
+<h2 id="输入格式">输入格式</h2>
+<p>输入文件的第一行包含一个整数 <code>T</code>，表示数据的组数。</p>
+<p>接下来按照如下格式分别给出 <code>T</code> 组数据。 </p>
+<p>每组数据的第一行包含一个正整数 <code>n</code>。</p>
+<p>接下来一行包含 <code>n</code> 个由空格隔开的正整数 <code>a[i]</code>。</p>
+<h2 id="输出格式">输出格式</h2>
+<p>输出文件共有 <code>T</code> 行，对于每组数据，输出一行一个正整数，表示所有与 <code>(n,a)</code> 等价的货币系统 <code>(m,b)</code> 中，最小的 <code>m</code>。</p>
+<h2 id="数据范围">数据范围</h2>
+<p><span class="math display">\[1 \leq n \leq 100\]</span></p>
+<p><span class="math display">\[1 \leq a[i]\leq 25000\]</span></p>
+<p><span class="math display">\[1 \leq T \leq 20\]</span></p>
+<h2 id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2 </span><br><span class="line">4 </span><br><span class="line">3 19 10 6 </span><br><span class="line">5 </span><br><span class="line">11 29 13 19 17 </span><br></pre></td></tr></table></figure>
+<h2 id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+<h2 id="题目思路">题目思路</h2>
+<p>本题中的货币系统实际上就是在给定的一串数字中去掉所有的可以被其他任意数字表示出的数字。故可以考虑使用动态规划求出使用该列数字可以表出的所有数字的方案数量，当且仅当给出数字的表示方案数量大于1的时候，即该数字除了可以被自己表出还可以被其他数字组合表出的时候即可以去掉。</p>
+<p>根据以上思路该题将会退化为一个完全背包组合问题，代码实现如下</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">25010</span>, CNT = <span class="number">101</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> T, n;</span><br><span class="line"><span class="keyword">int</span> a[CNT];<span class="keyword">long</span> <span class="keyword">long</span> f[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span>(T--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">fill</span>(f, f + N, <span class="number">0</span>);</span><br><span class="line">        f[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        cin &gt;&gt; n;</span><br><span class="line">        <span class="keyword">int</span> mx = <span class="number">0</span>, res = n;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            cin &gt;&gt; a[i]; mx = <span class="built_in">max</span>(a[i], mx);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = a[i]; j &lt;= mx; ++j) f[j] += f[j - a[i]];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (f[a[i]] &gt; <span class="number">1</span>) res--;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; res &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从零开始的Rust生活：00-前言</title>
+    <url>/2020/11/20/Rust-00/</url>
+    <content><![CDATA[<h1 id="关于我为什么要写这个系列的博客">关于我为什么要写这个系列的博客</h1>
+<p>我只是一位Rust初学者，写这篇博客一方面是为了记录自己Rust的学习历程，另外一方面也希望可以为后来学Rust的人指出一条路，虽然我觉得我还不够格被称为领路人，但是我希望终有一天也可以称为像<a href="https://github.com/ZhangHanDong/">张汉东</a>这样的大神，能够吃透Rust这门语言，让Rust的编译器成为自己的朋友而并非敌人，虽然在学习的前期她的确像一个敌人那样阻碍着代码的编译(笑)。总之这个系列的博客将会成为我Rust学习之路的一个记录，也希望它可以给每一个人帮助。</p>
+<span id="more"></span>
+<h1 id="关于我为什么会选择rust">关于我为什么会选择Rust</h1>
+<ol type="1">
+<li>她是安全的</li>
+<li>她是全新的</li>
+<li>她是社区驱动的</li>
+<li>她是奇妙的</li>
+<li>她会教会你如何写出安全的代码</li>
+</ol>
+<h1 id="关于本系列博客的一些说明">关于本系列博客的一些说明</h1>
+<ol type="1">
+<li>所有的代码均会在对应博客写作时的Rust Stable版本下成功运行</li>
+<li>我将会完全从一个初学者的角度来看Rust，所以自然也没有那些书籍写的那么全面</li>
+<li>主要的内容将会参考<a href="https://book.douban.com/subject/30312231/">《深入浅出Rust》</a>和<a href="https://book.douban.com/subject/30418895/">《Rust编程之道》</a>，也推荐大家可以去看看</li>
+<li>一切的内容都是兴趣使然的</li>
+<li>欢迎提issue</li>
+</ol>
+<h1 id="关于如何安装rust">关于如何安装Rust</h1>
+<p>出门左转<a href="https://www.rust-lang.org/">Rust官网</a>，右上角切换到中文，相信大家都看得懂的吧(笑)</p>
+<h1 id="关于用什么ide">关于用什么IDE</h1>
+<p>本人目前使用的是CLion配合Rust插件，之前也接触过vscode + rust(rls)插件和vscode + rust-analyzer这两种搭配，具体那种好用我也不好说，但是如果真的想要最完整的IDE体验的话本人更推荐使用CLion+Rust插件的组合，不过基于开源、美观(主要是美观)的原则，我更倾向于vscode + rust-analyzer这种搭配。</p>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>程序语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从零开始的Rust生活：01-基本类型与基本运算符</title>
+    <url>/2020/11/21/Rust-01/</url>
+    <content><![CDATA[<h1 id="rust中的基本数据类型">Rust中的基本数据类型</h1>
+<p>Rust中的基本数据类型和大多数的语言一样，都可以简单的被分为整型、浮点型、布尔型等等，同时Rust还有一些专属于自身的一些很奇妙的类型，包括<code>Option&lt;T&gt;</code>,<code>Box&lt;T&gt;</code>等等。</p>
+<p>通常Rust中的类型对应的符号为：</p>
+<ul>
+<li>有符号整型：<code>isize</code>,<code>i8</code>,<code>i16</code>,<code>i32</code>,<code>i64</code>,<code>i128</code></li>
+<li>无符号整型：<code>usize</code>,<code>u8</code>,<code>u16</code>,<code>u32</code>,<code>u64</code>,<code>u128</code></li>
+<li>浮点型：<code>f32</code>,<code>f64</code></li>
+<li>布尔型：<code>bool</code></li>
+<li>unit类型：<code>()</code></li>
+<li>引用：<code>&amp;T</code>,<code>&amp;mut T</code></li>
+<li>裸指针：<code>*mut T</code>,<code>*const T</code></li>
+<li><code>!</code></li>
+</ul>
+<span id="more"></span>
+<p>这里值得一提的是，Rust中的<code>!</code>类型在多数情况下实际上代表了<strong>不会返回</strong>，他的功能包括在<code>match()</code>块中实现对各种条件返回类型的补全(因为Rust中对于<code>match()</code>块要求每个分支的返回类型必须相同，当某一个分支不会返回而是导致程序异常退出的时候则可以通过返回一个<code>!</code>来通过编译器检查)</p>
+<p>另外对于Rust还有以下几种常用的类型：</p>
+<ul>
+<li><code>Option&lt;T&gt;</code>：Rust用于解决"空"的一个方案，一个<code>Option&lt;T&gt;</code>枚举量可以是一个<code>Option&lt;T&gt;::Some(n)</code>代表非空，也可以是一个<code>Option&lt;T&gt;::None</code>表示空</li>
+<li><code>Box&lt;T&gt;</code>：堆上分配的指针</li>
+<li><code>Rc&lt;T&gt;</code>,<code>Arc&lt;T&gt;</code>：智能指针(可以这么想)</li>
+<li><code>RefCell&lt;T&gt;</code>：更加神奇的指针(之后会讨论的)</li>
+<li>以及很多</li>
+</ul>
+<p>可以说Rust为了保证其基本的安全可以说是费尽了心思，搞出了一大堆用于应对各种情况的类型，某种意义上这也是Rust难学的一个重要原因。</p>
+<h1 id="类型强制转换">类型强制转换</h1>
+<p>类型强制转换可以说是几乎现役的所有程序语言必备的功能，Rust自然也不例外。<br />
+对于Rust其使用了关键字<code>as</code>用于类型转换。对于Rust来说强制类型转换同样需要各个类型之间是支持强制类型转换的，不然编译器报错警告。同时Rust对于从高类型向低类型转换的时候不会报错，最多一个warning了事，所以也不要指望编译器会帮你解决把一个<code>i32</code>转换到<code>i8</code>导致的溢出问题。</p>
+<h1 id="运算符">运算符</h1>
+<p>作为一款合格的程序语言，Rust自然也具有完备的运算符系统，考虑到运算符的数量实在是太多了(主要是懒)，<a href="https://kaisery.github.io/trpl-zh-cn/appendix-02-operators.html">这里</a>是官方的运算符列表，各位可以作为参考资料。</p>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>程序语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从零开始的Rust生活：02-函数</title>
+    <url>/2020/11/23/Rust-02/</url>
+    <content><![CDATA[<h1 id="函数是什么">函数是什么</h1>
+<p>相信各位学Rust的读者应该多少接触过至少一门程序语言，不过这里我还是会按照我的理解尽可能的去为函数做一个相对更为简单的定义。</p>
+<p>对于Rust来说，函数的意义与大多数的程序语言都很相似，我们可以将其视作程序中的一个功能模块。这个功能模块可以对一些我们会反复使用的代码进行封装，从而大幅度简化程序的开发过程。</p>
+<span id="more"></span>
+<h1 id="rust的函数长什么样">Rust的函数长什么样</h1>
+<p>Rust中声明一个函数需要用到<code>fn</code>关键字，通常一个函数的样子形如 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">func</span></span>(arg1: T1, arg2: T2) -&gt; T&#123;</span><br><span class="line">    <span class="comment">//do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 其中<code>func()</code>就是喜闻乐见的函数名，而<code>T</code>则对应的是他的返回类型，括号里面则是函数需要传入的参数，类比到C++可以就像下面这样 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">T <span class="title">func</span><span class="params">(T1 arg1, T2 arg2)</span></span>&#123;</span><br><span class="line">    <span class="comment">//do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 对于Rust的函数，他的返回值和参数的参数列表都是可选的，比如下面的代码就声明了一个不需要传入参数的函数 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">func</span></span>() -&gt; T&#123;</span><br><span class="line">    <span class="comment">//do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 而下面这样则声明了一个没有返回值的函数 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">func</span></span>(arg1:T)&#123;</span><br><span class="line">    <span class="comment">//do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 众所周知的是一个函数如果声明了返回类型后，其就必须有一个返回值。和大多数语言一样，rust可以使用<code>return</code>返回一个值，就像这样 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">return_one</span></span>() -&gt; <span class="built_in">i32</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 但是对于Rust来说，还有另外一种方式可以用来作为返回值使用，在多数情况下Rust的开发者们也更倾向使用这种方式进行返回，就像下面这样 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">mul</span></span>(x: <span class="built_in">i32</span>, y:<span class="built_in">i32</span>) -&gt; <span class="built_in">i32</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> t = x * y;</span><br><span class="line">    t</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 我们可以看到的是函数内的最后一行的<code>t</code>后面并没有<code>;</code>，但是我们又知道Rust每行代码最后必然会有<code>;</code>。而在一个有返回值的函数中，通常这样的写法会出现在整个函数的末尾，他的含义等价于<code>return t;</code>。<br />
+另外，Rust不止可以返回一个确定的变量，其同样可以将一个表达式作为返回值，就像下面这样 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">mul</span></span>(x:<span class="built_in">i32</span>, y:<span class="built_in">i32</span>) -&gt; <span class="built_in">i32</span>&#123;</span><br><span class="line">    x * y</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 这个函数的功能等价于上一个<code>mul()</code>，但是它并没有声明一个中间变量<code>t</code>，而是选择直接返回<code>x*y</code>，这样的行为在Rust中是合法的，它同样可以实现目标功能而不会出现任何不可预期的问题。</p>
+<h1 id="关于闭包">关于闭包</h1>
+<p>Rust中也存在着一个类似于很多语言中所存在的lambda的存在，那就是闭包。<br />
+闭包本质上是一个匿名的函数，其被广泛应用于Rust的多线程处理中，本节中不会讨论闭包，因为在整个Rust学习的前期闭包基本不会被提到。</p>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>程序语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从零开始的Rust生活：03-控制流与逻辑运算符</title>
+    <url>/2020/11/27/Rust-03/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p>作为一款合格的程序语言，基本的控制语句是必须有的，而对于Rust来说她的控制流语句相对于传统的语言来说都要更为丰富，本文将会大体地介绍Rust的各类控制语句及其的基本用法。</p>
+<span id="more"></span>
+<h1 id="if">if</h1>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">```rust</span><br><span class="line">if condition &#123;</span><br><span class="line">    // do something</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    // do something</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="match">match</h1>
+<p>说到了<code>if</code>，自然少不了我们的好朋友<code>switch</code>，不过非常喜闻乐见的是Rust并没有<code>switch</code>，取而代之的是功能强大的<code>match</code>。<code>match</code>作为Rust中著名的条件选择语句，它不止用于多条件的判断控制，它还经常出现于<code>Option</code>的判断等等各类<code>None</code>类型或者错误处理的场景。常见的<code>match</code>的使用场景如下</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">match</span>(item)&#123;</span><br><span class="line">    condition_1 =&gt; <span class="comment">//do something</span></span><br><span class="line">    condition_2 =&gt; &#123;</span><br><span class="line">        <span class="comment">//do something</span></span><br><span class="line">    &#125;</span><br><span class="line">    _=&gt; <span class="comment">//do default thing</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里我们可以看到Rust的<code>match</code>语句支持单行或者多行的情况，其中多行的情况必须使用大括号包起来，同时<code>match</code>同样有一个<code>_</code>分支，这个分支一般是作为default分支存在。有一点非常重要，所有分支的返回值类型必须相同。</p>
+<p>但是前面又提到了<code>match</code>相对于<code>switch</code>更为强大，所以这里我们将会探讨之所以<code>match</code>强大的原因</p>
+<h2 id="match可以作为表达式">match可以作为表达式</h2>
+<p>在Rust中，match有一个非常常用的用法，在这种情况下所有的分支都必须要有返回值，就像这样</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="keyword">match</span> (item)&#123;</span><br><span class="line">    condition_1 =&gt; &#123;</span><br><span class="line">        <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    condition_2 =&gt; &#123;</span><br><span class="line">        <span class="number">1</span> * <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">    _=&gt; &#123;</span><br><span class="line">        <span class="number">3</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这种情况下各个代码块最终的执行后的返回值将会被赋给<code>s</code></p>
+<h2 id="match的分支条件可以用于解包各类enum">match的分支条件可以用于解包各类enum</h2>
+<p>上面也说到了<code>match</code>可以用于处理<code>Option&lt;T&gt;</code>类型，在Rust中我们可以这样用</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="literal">Some</span>(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">match</span>(s)&#123;</span><br><span class="line">    <span class="literal">Some</span>(x) =&gt; &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="literal">None</span> =&gt; &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;is none&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">// 输出5</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>就像这样，Rust可以利用<code>match</code>语句轻松地解决<code>Option&lt;T&gt;</code>类型的问题。</p>
+<h1 id="后记">后记</h1>
+<p>在写了四篇Rust的博客之后，我突然发现自己对Rust的理解非常的零散肤浅，所以从本篇开始《从零开始的Rust生活》系列将会暂时停更，待到我更加了解Rust后再继续进行更新。接下来本博客将会开始逐步更新本人的Rust学习记录，同步于本人的Rust的学习进程。</p>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>程序语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>信号量机制与管程</title>
+    <url>/2020/11/18/Semaphore-and-Monitor/</url>
+    <content><![CDATA[<h1 id="信号量机制">信号量机制</h1>
+<p>信号量机制最早由提出图论的Dijkstra提出，其被广泛地使用于操作系统中用于解决同步问题。</p>
+<h2 id="信号量简介">信号量简介</h2>
+<p>信号量一般由以下几部分组成</p>
+<ul>
+<li>一个整形<code>sem</code><br />
+通常<code>sem</code>的值等于共享资源的数量</li>
+<li>两个操作
+<ul>
+<li>P操作(又名Wait)<br />
+P操作通常用于申请资源，其的主要过程一般为
+<ul>
+<li><code>sem -= 1</code></li>
+<li>当<code>sem &lt; 0</code>block当前进(线)程，并放入等待队列中</li>
+</ul></li>
+<li>V操作(又名Signal)<br />
+V操作通常用于释放资源，其的主要过程一般为
+<ul>
+<li><code>sem += 1</code></li>
+<li>当<code>sem &lt;=0</code>时从等待队列中取出一个进(线)程，并唤醒</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>借助信号量机制，我们可以解决很多的多进(线)程间同步的问题。接下来我们将会使用几个例子来进一步地了解信号量的作用。</p>
+<span id="more"></span>
+<h2 id="生产者-消费者问题">生产者-消费者问题</h2>
+<p>生产者-消费者问题是一个非常著名的多线程间同步的问题，接下来我们将会围绕这个问题探讨信号量机制的意义。</p>
+<p>首先我们假设现在我们有一个盒子，x个消费者和y个生产者。并且我们规定同时可以有消费者从盒子中取出东西，同时只能由一位生产者向盒子中放入东西，且消费者和生产者同样不能同时从盒子中取出或者放入东西。</p>
+<h3 id="情景0多消费者-无生产者-盒子内的资源无限">情景0：多消费者-无生产者-盒子内的资源无限</h3>
+<p>情景0并不是定义上的生产者-消费者问题，这种情况只是提出用于具体了解信号量的工作方式的情景，故在本情景中我们假设同时只能有一位消费者从盒子中取出东西。<br />
+这种情况实际上可以退化为多个等价的个体竞争一个资源的情况，由于我们规定了盒子同时只能由一位消费者进行访问，所以我们这里就可以使用一个信号量表示盒子的占用情况，由上文中的信号量的定义我们可以得知当任何消费者对盒子进行访问后下一次对<code>res.wait()</code>的调用就会将新的进程阻塞，直到访问盒子的消费者调用<code>res.signal()</code>进行唤醒。 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> res: Semaphore = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">consumer</span></span>()&#123;</span><br><span class="line">    res.wait();</span><br><span class="line">    <span class="comment">//对盒子中的资源进行消费</span></span><br><span class="line">    res.signal();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="情景1单消费者-单生产者-盒子容量为一">情景1：单消费者-单生产者-盒子容量为一</h3>
+<p>从情景1开始才是真正意义上的消费者生产者问题，但是这里我们还是限制了消费者和生产者的数量均为1。对于本情景中的条件，我们可以构造得到下述的伪代码 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> full: Semaphore = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> empty: Semaphore = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">consumer</span></span>()&#123;</span><br><span class="line">    full.wait();</span><br><span class="line">    <span class="comment">//对盒子内的资源进行消费</span></span><br><span class="line">    empty.signal();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">provider</span></span>()&#123;</span><br><span class="line">    empty.wait();</span><br><span class="line">    <span class="comment">//向盒子中生产内容</span></span><br><span class="line">    full.signal();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 从上面的代码就可以看到我们创建了两个信号量而非一个，原因也很简单，当盒子为空的时候消费者无法进行消费，当盒子为满的时候生产者无法进行生产，所以我们就可以让消费者对<code>full</code>作<code>wait()</code>标志空间已经被释放，同样生产者也可以使用<code>full.signal()</code>实现标志盒子中已经放入了资源。</p>
+<h3 id="情景2多消费者-单生产者-盒子容量为n">情景2：多消费者-单生产者-盒子容量为n</h3>
+<p>现在我们引入了多个消费者，我们知道当任何消费者在访问盒子的时候生产者都不能朝盒子中放入东西，但是我们只需要对上面的代码稍作修改即可解决这个问题。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> full: Semaphore = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> empty: Semaphore = n;</span><br><span class="line"><span class="keyword">let</span> mutex: Semaphore = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> using: Semaphore = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> count: <span class="built_in">i32</span> = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">consumer</span></span>()&#123;</span><br><span class="line">    full.wait();<span class="comment">//当盒中有资源的时候</span></span><br><span class="line">    mutex.wait();<span class="comment">//当生产者未占用(盒子空闲)</span></span><br><span class="line">    using.wait();</span><br><span class="line">    count += <span class="number">1</span>;</span><br><span class="line">    using.signal();</span><br><span class="line">    <span class="comment">//从此处才正式开始消费</span></span><br><span class="line">    empty.signal();</span><br><span class="line">    <span class="comment">//从盒子中取出资源</span></span><br><span class="line">    using.signal();</span><br><span class="line">    using.wait();</span><br><span class="line">    count -= <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> count == <span class="number">0</span>&#123;</span><br><span class="line">        mutex.signal();<span class="comment">//当所有消费者退出之后才释放mutex</span></span><br><span class="line">    &#125;</span><br><span class="line">    using.signal();</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">provider</span></span>()&#123;</span><br><span class="line">    empty.wait();<span class="comment">//当盒子还有空间的时候</span></span><br><span class="line">    mutex.wait();<span class="comment">//当消费者未占用(盒子空闲)</span></span><br><span class="line">    <span class="keyword">if</span> count == <span class="number">0</span>&#123;</span><br><span class="line">        <span class="comment">//向盒子中放入东西</span></span><br><span class="line">        full.signal();</span><br><span class="line">    &#125;</span><br><span class="line">    mutex.signal();   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面的代码我们可以看到这里我们加入了两个信号量，一个负责控制消费者和生产者分别对共享的盒子的访问，另外一个用于控制消费者的计数器。<br />
+在上面的代码中我们实际上将多个消费者和单一生产者的问题抽象为了第一个消费者和生产者之间的问题，当消费者全部完成消费并退出之后我们才会释放掉<code>mutex</code>使得生产者可以向盒子中放入东西。同时务必要记住在多进(线)程对共享变量的操作中必须要使用信号量管理访问的权限。</p>
+<h1 id="管程">管程</h1>
+<p>管程实际上是一种对同步锁抽象得到的数据结构，一般来说管程有以下几种特征 - 同时只允许一个进(线)程在管程中执行 - 使用条件变量管理管程内进(线)程的执行 - 拥有一个<strong>入口队列</strong>用于进(线)程排队进行管程</p>
+<p>实际上在本菜鸡看来管程的确有点难以理解，尤其是其的基本结构和几种不同的实现方式。</p>
+<h2 id="条件变量">条件变量</h2>
+<p>管程采用条件变量控制已经进入管程的进程的执行，条件变量本身的各种特征又和信号量有点相似但是完全不同 - <code>wait()</code>操作 - 表示当资源被占用导致自身阻塞，并将自身放入等待队列 - 执行<code>wait()</code>后将会从入口队列中唤醒一个新的进(线)程 - <code>signal()</code>操作 - 表示当前资源已经被使用完毕，唤醒等待队列中的一个进(线)程 - 当等待队列为空的时候<code>signal()</code>操作没有意义</p>
+<p>这里我们就可以清楚地看到条件变量和信号量的区别，对于条件变量来说由于调用其的进(线)程已经在管程中，故其的<code>wait()</code>和<code>signal()</code>无需成对，且在条件变量执行完成<code>wait()</code>操作后进(线)程必定阻塞，但是对于信号量的<code>V()</code>操作则不一定会阻塞。且在条件变量执行<code>wait()</code>操作或<code>signal()</code>的时候已经默认获得了互斥锁。</p>
+<p>光谈概念感觉管程本身还是比较晦涩的，下面还是会用著名的读者-写者问题讨论管程</p>
+<h2 id="使用管程实现读者-写者问题">使用管程实现读者-写者问题</h2>
+<p>通过使用管程，我们可以将读者-写者问题包装为一个面向对象的类 <figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Database</span></span>&#123;</span><br><span class="line">    lock: Lock,</span><br><span class="line">    AC: <span class="built_in">i32</span>, <span class="comment">//已经激活的读者</span></span><br><span class="line">    AP: <span class="built_in">i32</span>, <span class="comment">//已经激活的写者</span></span><br><span class="line">    WC: <span class="built_in">i32</span>, <span class="comment">//正在等待的读者</span></span><br><span class="line">    WP: <span class="built_in">i32</span>, <span class="comment">//正在等待的写者</span></span><br><span class="line">    buffer: <span class="built_in">i32</span>,</span><br><span class="line">    Condition okToRead, okToWrite;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Database&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">start_consume</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.lock.aquire();</span><br><span class="line">        <span class="keyword">if</span> (WP + AP) &gt; <span class="number">0</span>&#123; <span class="comment">// 相当于还有写者处于激活状态的时候</span></span><br><span class="line">            WC++;</span><br><span class="line">            okToRead.wait(<span class="keyword">mut</span> <span class="keyword">self</span>.lock); <span class="comment">// 将自己阻塞</span></span><br><span class="line">            WC--;</span><br><span class="line">        &#125;</span><br><span class="line">        AC++;<span class="comment">//此处为未阻塞或者被唤醒</span></span><br><span class="line">        <span class="keyword">self</span>.lock.release();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">end_consume</span></span>(&amp;<span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.lock.aquire();</span><br><span class="line">        AC--;</span><br><span class="line">        <span class="keyword">if</span> AC == <span class="number">0</span> &amp;&amp; WP &gt; <span class="number">0</span>&#123;</span><br><span class="line">            okToWrite.signal(); <span class="comment">// 当激活的读者退出的时候唤醒阻塞在队列中的写者</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">self</span>.lock.release();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">start_produce</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.lock.aquire();</span><br><span class="line">        <span class="keyword">if</span> (WC + AC) &gt; <span class="number">0</span>&#123;</span><br><span class="line">            WP++;</span><br><span class="line">            okToWrite.wait(<span class="keyword">mut</span> <span class="keyword">self</span>.lock); <span class="comment">// 同样当任何读者在执行的时候将自身阻塞</span></span><br><span class="line">            WP--;</span><br><span class="line">        &#125;</span><br><span class="line">        AP++; <span class="comment">//此处为未阻塞或者被唤醒</span></span><br><span class="line">        <span class="keyword">self</span>.lock.release();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">end_produce</span></span>(&amp;<span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.lock.aquire();</span><br><span class="line">        AP--;</span><br><span class="line">        <span class="keyword">if</span> AP == <span class="number">0</span> &amp;&amp; WC &gt; <span class="number">0</span>&#123;</span><br><span class="line">            okToRead.signal(); <span class="comment">// 当激活的写者退出的时候唤醒正在排队的读者线程</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">self</span>.lock.release();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">read</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.start_consume();</span><br><span class="line">        <span class="comment">// do consume</span></span><br><span class="line">        <span class="keyword">self</span>.end_consume();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">write</span></span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.start_produce();</span><br><span class="line">        <span class="comment">// do produce</span></span><br><span class="line">        <span class="keyword">self</span>.end_produce();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里我们使用了四个整形变量、一个锁和两个条件变量完成了对消费者-生产者的控制，我们可以看到对于读和写操作我们均使用两个函数来完成其的同步控制。</p>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>死锁与银行家算法</title>
+    <url>/2020/11/19/%E6%AD%BB%E9%94%81%E4%B8%8E%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="死锁">死锁</h1>
+<p>死锁作为多进(线)程开发中经常遇到的问题，其通常体现为多个进程和线程同时处于阻塞状态并且在没有任何外力干扰的情况下完全无法解除这种状态的情况。我们可以通过一个著名的场景来具体地理解死锁的概念。</p>
+<span id="more"></span>
+<h2 id="哲学家用餐问题">哲学家用餐问题</h2>
+<p>哲学家用餐问题主要模型在一个<strong>圆桌</strong>上坐着n位哲学家，而每位哲学家的间隔处均放着一只筷子，所有的哲学家均处拥有进餐和思考两种状态，其中如果希望进入用餐状态则需要同时获得左右两边的筷子。<br />
+现在假设总共有5个哲学家，对应的就是5只筷子，画成图就如下所示 <img src="https://i.loli.net/2020/11/19/5BZeJAtpYKHfzuS.png" alt="image.png" /> 这张图来自于维基百科<a href="https://zh.wikipedia.org/wiki/%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%B0%B1%E9%A4%90%E9%97%AE%E9%A2%98">哲学家就餐问题</a>,故筷子变成了叉子，将就看看吧(笑)</p>
+<h3 id="哲学家用餐问题与死锁">哲学家用餐问题与死锁</h3>
+<p>现在我们要在这个问题中引入死锁的问题，我们假设所有的哲学家同时希望就餐，此时他们同时拿起了他们左侧的筷子(叉子)，由于这群哲学家都是自私自利的，他们在成功就餐之前<strong>不会放弃</strong>手上的筷子(叉子)，故接下来他们在请求自己右边的叉子的时候所有的哲学家都不会获得在他们右手的筷子(叉子)，因为右边的筷子(叉子)均被他们各自右边的哲学家取走了，所以从这个时刻开始所有的哲学家均无法就餐，由于他们都不愿意放弃手上已经获得的筷子(叉子)，所以没有人会打破这个僵局，也就是说现在发生了<strong>死锁</strong></p>
+<h3 id="常规的解决方案">常规的解决方案</h3>
+<p>由于哲学家问题涉及到的请求的资源种类单一，我们可以使用在之前学到的信号量机制轻松地解决这个问题。</p>
+<h4 id="服务生机制">服务生机制</h4>
+<p>第一种方法就是引入一个服务生，当哲学家需要进餐的时候他们将不会自己拿起自己的筷子(叉子)，而是由服务生检查他两侧是否有筷子(叉子)，如果都有的时候便由服务生拿起两侧的餐具交给这位哲学家，这样实现了在请求资源之前对资源进行检查，防止出现死锁的情况。 我们可以用伪代码实现如下，我们将会对哲学家进行编号，顺时针0-4，其中0号哲学家左边的筷子视作0号筷子，右边为1号，依次递增。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> waiter: Semaphore = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> fork: <span class="built_in">Vec</span>&lt;Semaphore&gt; = [<span class="number">1</span>; <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">philosopher</span></span>(code:<span class="built_in">i32</span>)&#123;</span><br><span class="line">    waiter.wait();</span><br><span class="line">    <span class="keyword">let</span> ready = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> fork[left].available() and fork[right].available()&#123;</span><br><span class="line">        fork[left].wait();</span><br><span class="line">        fork[right].wait();</span><br><span class="line">    &#125;</span><br><span class="line">    waiter.signal();</span><br><span class="line">    <span class="keyword">if</span> ready&#123;</span><br><span class="line">        <span class="comment">//进餐</span></span><br><span class="line">        fork[left].signal();</span><br><span class="line">        fork[right].signal():</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//左右筷子被占用，无法就餐</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="轮流进餐机制">轮流进餐机制</h4>
+<p>第二种方法便是要求每次只能由一个哲学家要求进餐，也就是说当某个哲学家宣布自己要进餐的时候其他所有人都不能对自己身边的餐具进行请求，只能由要求进餐的这位哲学家拿起自己两侧的餐具进行就餐，就餐完毕之后其他人才能再次宣布自己要就餐。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> house: Semaphore = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> fork: <span class="built_in">Vec</span>&lt;<span class="built_in">i32</span>&gt; = [<span class="number">1</span>; <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">philosopher</span></span>(code: <span class="built_in">i32</span>)&#123;</span><br><span class="line">    house.wait();</span><br><span class="line">    fork[left] = <span class="number">0</span>;</span><br><span class="line">    fork[right] = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//就餐</span></span><br><span class="line">    fork[left] = <span class="number">1</span>;</span><br><span class="line">    fork[right] = <span class="number">1</span>;</span><br><span class="line">    house.signal();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="死锁的概念">死锁的概念</h2>
+<p>从上面的问题，相信读者也对死锁有了一定的概念，对于死锁来说其自身的产生实际上有四个必要条件，而后续探讨的系统性的对死锁的解决同样基于这四个必要条件进行</p>
+<ul>
+<li>互斥条件：多个线程之间请求的资源具有互斥性</li>
+<li>不可剥夺条件：线程请求的资源是不可剥夺的</li>
+<li>持有请求条件：当一个线程持有一个或多个资源的同时其会去请求其他线程所占有的资源，引起阻塞</li>
+<li>循环等待条件：多个线程同时发生持有等待，同时这些线程持有的资源与请求的资源可以形成一个环。</li>
+</ul>
+<h2 id="死锁的解决">死锁的解决</h2>
+<h3 id="预防死锁">预防死锁</h3>
+<p>预防死锁实际上是最低效，最暴力，但是最简单的方法，其通过分别破坏死锁的四种条件完成对死锁的预防。</p>
+<ul>
+<li>互斥条件：其作为系统的基本特征，<strong>无法破坏</strong></li>
+<li>持有请求条件：要求进程在创建时需要申请全部的资源，如果不满足的话直接阻止进程的创建</li>
+<li>不可剥夺条件：要求进程在全部资源全部申请成功后才能执行，否则将进程阻塞</li>
+<li>循环等待条件：按序申请，相当于对所有资源进行编号，进程在申请资源的时候必须严格按照序号进行申请</li>
+</ul>
+<h3 id="避免死锁">避免死锁</h3>
+<p>避免死锁相对于预防死锁来说性能更好，其的基本流程为判断申请资源的时候是否有死锁风险，如果没有的话则授予资源，否则阻塞进程直到资源可用。</p>
+<h4 id="安全与不安全的划分">安全与不安全的划分</h4>
+<p>当系统按照一定的顺序调度进程，如<span class="math inline">\(P_1, P_2, P_3...P_n\)</span>，对于其中任何一个进程<span class="math inline">\(P_i\)</span>均应当满足其所请求资源的最大需求，此时则视为安全，否则视为不安全。<br />
+此时，我们就需要构建一个算法用来计算得到这样一个进程序列。同时由于系统中的进程实际上是不断地在申请和释放资源的，故实际上系统的安全和不安全其实是在反复切换的。</p>
+<h4 id="银行家算法">银行家算法</h4>
+<p>银行家算法便是一种著名的用于实现避免死锁的算法。</p>
+<h5 id="数据结构">数据结构</h5>
+<ul>
+<li>可用的资源量：<code>Available</code>，长度为n的向量</li>
+<li>最大需求矩阵：<code>Max</code>，n行m列的矩阵</li>
+<li>分配矩阵：<code>Allocation</code>，n行m列的矩阵</li>
+<li>需求矩阵：<code>Need</code>，n行m列的矩阵</li>
+<li>资源请求向量：<code>Request</code>，长度为m的向量，且<code>Request_i[j]</code>表示i进程对j资源的需求量</li>
+</ul>
+<p>其中<code>Max = Allocation + Need</code></p>
+<h5 id="算法过程">算法过程</h5>
+<p>当进程i提出了Request_i的时候，将会执行以下操作</p>
+<ol type="1">
+<li>若<code>Request_i &gt; Need[i]</code>，出错</li>
+<li>若<code>Request_i &gt; Available</code>，进程被阻塞</li>
+<li>当上述两步均通过，则开始试分配
+<ol type="1">
+<li><code>Available -= Request_i</code></li>
+<li><code>Allocation[i] += Request_i</code></li>
+<li><code>Need[i] -= Request_i</code></li>
+</ol></li>
+<li>允许安全性检测算法</li>
+<li>若第4步得到了一个安全的调度序列，则视作安全，分配内存，否则撤销该次预分配</li>
+</ol>
+<h5 id="安全性检测">安全性检测</h5>
+<p>在这一步中我们将会引入两个向量，分别为</p>
+<ul>
+<li><code>work</code>向量，长度为n，其作为<code>Available</code>的一个替身</li>
+<li><code>finish</code>向量，长度为m，其用于标记各进程的满足情况，初始化为全<code>false</code></li>
+</ul>
+<p>接下来我们需要按照如下的方式来对<code>finish</code>进行迭代<br />
+1. 找到一个同时满足<code>finish[i] = false</code>且<code>Need[i] &lt; work</code>的进程<code>i</code>，假定其很快就会完成他的工作并归还资源，然后进行<code>work += Allocation[i]</code>和<code>finish[i] = true</code>，若找不到，则到第3步 2. 回到第1步 3. 如果<code>finish</code>全部为<code>true</code>则说明安全，反之则为不安全</p>
+<h1 id="总结">总结</h1>
+<p>对于常规条件下的死锁问题，我们还会有很多的解决方案，包括上面提到的哲学家死锁问题，同样也还有其他的解法，本文的目的只在于介绍死锁问题和银行家算法。</p>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+</search>
