@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AcWing 3580.整数配对</title>
+    <url>/2021/05/27/AcWing-3580-%E6%95%B4%E6%95%B0%E9%85%8D%E5%AF%B9/</url>
+    <content><![CDATA[<h2 id="题目详情">题目详情</h2>
+<p>给定 <span class="math inline">\(n\)</span> 个整数 <span class="math inline">\(a_1,a_2,…,a_n\)</span>, <span class="math inline">\(n\)</span> 为偶数。</p>
+<p>现在要将它们两两配对，组成 <span class="math inline">\(n2\)</span> 个数对。</p>
+<p><span class="math inline">\(ai\)</span> 和 <span class="math inline">\(a_j\)</span> 能够配对，当且仅当 <span class="math inline">\(a_i=a_j\)</span>。</p>
+<p>每次增加操作可以使其中的任意一个数 <span class="math inline">\(a_i\)</span> 加一。</p>
+<p>请问，要使得 <span class="math inline">\(n\)</span> 个整数能够成功组成 <span class="math inline">\(\frac{n}{2}\)</span> 个数对，至少要进行多少次增加操作。</p>
+<h3 id="输入格式">输入格式</h3>
+<p>第一行包含整数 <span class="math inline">\(n\)</span>。</p>
+<p>第二行包含 <span class="math inline">\(n\)</span> 个整数 <span class="math inline">\(a_1,a_2,…,a_n\)</span>。</p>
+<h3 id="输出格式">输出格式</h3>
+<p>一个整数，表示所需最少操作次数</p>
+<h3 id="数据范围">数据范围</h3>
+<p><span class="math display">\[1\leq n\leq10^5\]</span>, <span class="math inline">\(1\leq a_i\leq10^4\)</span></p>
+<h3 id="输入样例1">输入样例1</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">6</span><br><span class="line">5 10 2 3 14 5</span><br></pre></td></tr></table></figure>
+<h3 id="输出样例1">输出样例1</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5</span><br></pre></td></tr></table></figure>
+<h3 id="输入样例2">输入样例2</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">1 100</span><br></pre></td></tr></table></figure>
+<h3 id="输出样例2">输出样例2</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">99</span><br></pre></td></tr></table></figure>
+<h2 id="题目思路">题目思路</h2>
+<p>本题中考虑到需要使用最小的修改可以实现所有的整数配对，故实际上最优解一定是将某个数字<code>a[i]</code>修改为离他最近的一个数字<code>a[j]</code>。</p>
+<p>我们可以将排序好的所有数字放到一个数轴上，就可以看到下面的情况</p>
+<figure>
+<img src="https://i.loli.net/2021/05/27/a83RVLOoG4hKdYM.png" alt="" /><figcaption>image.png</figcaption>
+</figure>
+<p>为了使得我们的修改量最少，即数轴上每个点找到和他配对的一个点所需移动的总距离最小，此时我们需要尽量少地越过其他的点，故可以证明对于每个<code>a[i]</code>都必须找其相邻的点进行配对。</p>
+<p>假设我们使用蓝色的方法进行配对，此时<code>a[1]</code>必须越过<code>a[2]</code>和<code>a[3]</code>寻找与其配对的点，此时并非最小。</p>
+<figure>
+<img src="/Users/cydia2001/Library/Application%20Support/typora-user-images/image-20210527191959278.png" alt="" /><figcaption>image-20210527191959278</figcaption>
+</figure>
+<p>同样对于后面的每一个点均适用于该种情况。</p>
+<h2 id="代码实现">代码实现</h2>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> a[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) cin &gt;&gt; a[i];</span><br><span class="line">    <span class="built_in">sort</span>(a + <span class="number">1</span>, a + n + <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i += <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        res += <span class="built_in">abs</span>(a[i + <span class="number">1</span>] - a[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>AcWing</tag>
+        <tag>算法学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AcWing 532. 货币系统</title>
     <url>/2021/05/22/AcWing-532/</url>
     <content><![CDATA[<h2 id="题目描述">题目描述</h2>
@@ -35,8 +79,8 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">25010</span>, CNT = <span class="number">101</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> T, n;</span><br><span class="line"><span class="keyword">int</span> a[CNT];<span class="keyword">long</span> <span class="keyword">long</span> f[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; T;</span><br><span class="line">    <span class="keyword">while</span>(T--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">fill</span>(f, f + N, <span class="number">0</span>);</span><br><span class="line">        f[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        cin &gt;&gt; n;</span><br><span class="line">        <span class="keyword">int</span> mx = <span class="number">0</span>, res = n;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            cin &gt;&gt; a[i]; mx = <span class="built_in">max</span>(a[i], mx);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = a[i]; j &lt;= mx; ++j) f[j] += f[j - a[i]];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (f[a[i]] &gt; <span class="number">1</span>) res--;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; res &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>算法学习</tag>
         <tag>AcWing</tag>
+        <tag>算法学习</tag>
       </tags>
   </entry>
   <entry>
@@ -242,8 +286,8 @@ V操作通常用于释放资源，其的主要过程一般为
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">20010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">int</span> f[N], g[N], q[N];</span><br><span class="line"><span class="keyword">int</span> v, w, s;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; v &gt;&gt; w &gt;&gt; s;</span><br><span class="line">        <span class="built_in">memcpy</span>(g, f, <span class="keyword">sizeof</span> f);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; v; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> hh = <span class="number">0</span>, tt = <span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = j; k &lt;= m; k += v)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (hh &lt;= tt &amp;&amp; q[hh] &lt; k - s * v) hh ++ ; <span class="comment">// 注意这里的k代表了总体积，即当k - s * v大于了队头保存的体积时将会弹出队头</span></span><br><span class="line">                <span class="keyword">while</span> (hh &lt;= tt &amp;&amp; g[q[tt]] - (q[tt] - j) / v * w &lt;= g[k] - (k - j) / v * w) tt -- ; <span class="comment">// 将队列尾部所有小于当前值的元素统统删除</span></span><br><span class="line">                q[ ++ tt] = k;</span><br><span class="line">                f[k] = g[q[hh]] + (k - q[hh]) / v * w; <span class="comment">// 将偏移量加回</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; f[m];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>算法学习</tag>
         <tag>AcWing</tag>
+        <tag>算法学习</tag>
       </tags>
   </entry>
   <entry>
