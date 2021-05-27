@@ -9,6 +9,7 @@
 <p><span class="math inline">\(ai\)</span> 和 <span class="math inline">\(a_j\)</span> 能够配对，当且仅当 <span class="math inline">\(a_i=a_j\)</span>。</p>
 <p>每次增加操作可以使其中的任意一个数 <span class="math inline">\(a_i\)</span> 加一。</p>
 <p>请问，要使得 <span class="math inline">\(n\)</span> 个整数能够成功组成 <span class="math inline">\(\frac{n}{2}\)</span> 个数对，至少要进行多少次增加操作。</p>
+<span id="more"></span>
 <h3 id="输入格式">输入格式</h3>
 <p>第一行包含整数 <span class="math inline">\(n\)</span>。</p>
 <p>第二行包含 <span class="math inline">\(n\)</span> 个整数 <span class="math inline">\(a_1,a_2,…,a_n\)</span>。</p>
