@@ -85,6 +85,48 @@
       </tags>
   </entry>
   <entry>
+    <title>KMP算法</title>
+    <url>/2021/06/30/KMP%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="算法简介">算法简介</h2>
+<p>KMP算法解决的问题主要在于如何实现在一个较长的字符串中匹配得到一个较短的字符串。</p>
+<p>我们知道对于子串匹配的问题，常用的暴力解法是不断枚举起点，并反复遍历字符串以确定是否匹配，而KMP算法则可以简化这一个过程。该算法可以自动跳过一些可能会导致重复匹配的字符串从而减少匹配的次数。</p>
+<h2 id="算法详解">算法详解</h2>
+<p>首先我们假设我们待匹配的字符串是<code>s = abababcafc</code>而子串为<code>p = ababc</code>，整个匹配过程如下所示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">abababcafc</span><br><span class="line">ababc</span><br><span class="line">    ^不匹配</span><br><span class="line"></span><br><span class="line">abababcafc</span><br><span class="line">  ababc</span><br><span class="line">       ^匹配成功</span><br></pre></td></tr></table></figure>
+<p>我们可以发现与暴力匹配不同，字符串直接向后移动了两位然后完成了匹配，我们可以观察第二个字符串存在这样的性质</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ab|ab|abcafc</span><br><span class="line">^1 ^2</span><br><span class="line">   ab|abc</span><br><span class="line">   ^3</span><br></pre></td></tr></table></figure>
+<p>我们可以发现在这个串中1、2、3三个字符串均相同，实际上这里就是KMP移动字符串的依据，在第一次匹配的过程中我们发现字符串<code>0-1</code>位和<code>2-3</code>位相同，而第一次又成功匹配了<code>0-3</code>位的字符串，所以说实际上下一次进行匹配的时候我们的<code>0-1</code>位可以直接移动到当前<code>2-3</code>位的位置上，然后从<code>2</code>位重新开始匹配，从而减少了匹配的次数。</p>
+<p>而此时我们便会面临一个问题，如何获得上面我们需要的这种相同的关系，此时我们可以考虑定义一个数组<code>next[]</code>，假设<code>next[j]</code>表示以<code>j</code>在<code>p</code>串中以<code>j</code>结尾的满足其<strong>前缀</strong>与<strong>后缀</strong>相同子串中前缀结尾的<strong>索引</strong>，而后续匹配时的跳转操作可以直接使用这个数组完成跳转。接下来我们可以尝试来计算这个数组。</p>
+<h3 id="next数组的计算方法">next数组的计算方法</h3>
+<p>为了推导方便，此时我们假设<code>p=ababdababaa</code>，实际使用的时候我们只需要知道如何从<code>next[0~i - 1]</code>推得<code>next[i]</code>即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//此时我们假设我们已知next[8]推导next[9]，我们有如下字符串，可以看到next[8] = 3</span><br><span class="line">|aba|bd|aba|baa</span><br><span class="line">//而正因为我们已知了next[8] = 3，我们知道p[1:3] == p[6:8]同时p[1:4] != p[5:8]，接下来我们继续向后读入一个字符</span><br><span class="line">|aba|bd|aba|baa</span><br><span class="line">     ^      ^p[9]</span><br><span class="line">     p[next[9 - 1] + 1]</span><br><span class="line">//可以发现此时p[next[9 - 1] + 1] == p[9]，故我们可以得到p[9] = p[8] + 1</span><br></pre></td></tr></table></figure>
+<p>但是我们面临着一个问题，如果第一次匹配不成功应该怎么解决，我们假设下面一种情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|abab|d|abab|aa</span><br><span class="line"> 1234 5 6789 01</span><br><span class="line">//此时我们需要计算next[10]，但是很不幸p[next[10 - 1] + 1] != p[10]</span><br></pre></td></tr></table></figure>
+<p>为了求解得到<code>next[10]</code>，我们只能退而求其次，去尝试更短的子串看看是否可以求解。根据<code>next[9]=4</code>我们可以知道<code>p[1:4] == p[6:9]</code>，而我们又可以发现<code>next[next[9]] = next[4] = 2</code>，即<code>p[1:2] == p[3:4]</code>，而根据<code>next[9]</code>的定义我们又知道<code>p[3:4] == p[8:9]</code>，同时<code>p[next[next[9]] + 1] == p[10]</code>，所以我们可以得到<code>p[1:3] == p[8:10]</code>即<code>next[10] = 3</code>。</p>
+<p>而上面的推导存在一个边界，即当<code>next[next[....]] = 0</code>时，此时不再指望<code>next[0~n-1]</code>会对<code>next[n]</code>做出任何贡献。</p>
+<h3 id="next数组构造代码实现">next数组构造代码实现</h3>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>, j = <span class="number">0</span>; i &lt;= m; ++i) <span class="comment">// 假设字符串长度为m，且下标起点为1</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">while</span>(j &amp;&amp; p[i] != p[j + <span class="number">1</span>]) j = next[j]; <span class="comment">// 当出现退无可退（即j回到了0的位置）或匹配成功的时候跳出循环</span></span><br><span class="line">  <span class="keyword">if</span> (p[i] == p[j + <span class="number">1</span>]) j ++; <span class="comment">// 对应了匹配成功的情况</span></span><br><span class="line">  next[i] = j; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="匹配过程">匹配过程</h3>
+<p>既然此时我们获得了<code>next[]</code>，我们便可以开始尝试进行匹配<code>s</code>和<code>p</code>了，匹配过程与<code>next[]</code>构造的过程类似，即在出现第一个无法匹配即<code>s[i] != p[j]</code>或者匹配完全时，将会尝试最大程度的向前移动，这里我们还是继续假设待匹配的字符串是<code>s = ababababfab</code>而子串为<code>p = ababf</code>，匹配的过程可以像这样进行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ababababfab</span><br><span class="line">ababf</span><br><span class="line">    ^出现不匹配</span><br></pre></td></tr></table></figure>
+<p>此时我们要开始找最长的可以移动的距离，我们可以发现<code>s[5] == p[3]</code>，而同时存在<code>p[1:2] == p[3:4]</code>，故此时我们可以作如下的移动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ababababfab</span><br><span class="line">  ababf</span><br><span class="line">     ^下一个判断是否匹配的字符</span><br></pre></td></tr></table></figure>
+<p>可以看到这样我们就成功实现了利用<code>next[]</code>一次性移动多位的操作。这里的思想与求<code>next[]</code>的过程类似，即我们实际上是在<code>s</code>上搜索一个与当前已知前缀相互匹配的后缀，假设存在任何一个可以相互匹配的前后缀即可直接将字符串开头移动到求得的后缀的开头的位置。</p>
+<h3 id="匹配过程代码实现">匹配过程代码实现</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for (int i = 1, j = 0; i &lt;= n; ++i)</span><br><span class="line">&#123;</span><br><span class="line">	while(j &amp;&amp; s[i] != p[j + 1]) j = next[j]; // 在s上匹配一个p的后缀，而由于最终求得的前后缀是前面next数组得到的前后缀，故可以直接获得前文中三个子串相互的关系。</span><br><span class="line">	if (s[i] == p[j + 1]) j ++; // 若当前位置匹配成功则后移待匹配的指针</span><br><span class="line">	if (j == m) // j到达了p的末尾</span><br><span class="line">	&#123;</span><br><span class="line">		// 匹配成功</span><br><span class="line">		j = ne[j]; // 继续后移</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="kmp算法的应用">KMP算法的应用</h2>
+<h3 id="状态机kmpacwing-1052.-设计密码">状态机+KMP(AcWing 1052. 设计密码)</h3>
+<p>该题目中实际上可以将我们需要求得的密码视作<code>n</code>次状态转换，其中第一个状态即<code>state[0]</code>就是不存在任何匹配的状态，而由于我们的要求是不能匹配子串，假设子串长度为<code>m</code>，故我们要求不能到达<code>state[m]</code>。</p>
+<p>由于密码的每一位都存在26种情况（题目中密码组成是全小写字母），故对于每一个状态均存在26种转移方式。而我们又知道对于KMP算法实际上每次在计算匹配情况的时候其都只会关心待匹配串<code>s</code>的一个字母，根据这种性质我们可以利用KMP的匹配方式求得每种状态最远可以匹配的子串长度，只要求得的长度没有到达<code>n</code>那就是一种可用的密码。</p>
+<p>首先我们同样可以计算出KMP所需的<code>next[]</code>，然后可以进行状态转移</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">&#123; </span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; ++j) <span class="comment">// 这里我们假设不能被包含的子串长度为m</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">char</span> k = <span class="string">&#x27;a&#x27;</span>; k &lt;= <span class="string">&#x27;z&#x27;</span>; ++k)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> u = j; <span class="comment">// 这里的u即为我们当前k可以匹配到的最长子串长度</span></span><br><span class="line">			<span class="keyword">while</span>(u &amp;&amp; k != p[u + <span class="number">1</span>]) u = next[u];</span><br><span class="line">			<span class="keyword">if</span> (k == p[u + <span class="number">1</span>]) u++;</span><br><span class="line">			<span class="keyword">if</span> (u &lt; m) f[i + <span class="number">1</span>][u] = (f[i + <span class="number">1</span>][u] + f[i + <span class="number">1</span>][j]) % MOD;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>AcWing</tag>
+        <tag>算法学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>从零开始的Rust生活：00-前言</title>
     <url>/2020/11/20/Rust-00/</url>
     <content><![CDATA[<h1 id="关于我为什么要写这个系列的博客">关于我为什么要写这个系列的博客</h1>
