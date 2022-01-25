@@ -180,6 +180,82 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/01/09/AcWing-1068-%E7%8E%AF%E5%BD%A2%E7%9F%B3%E5%AD%90%E5%90%88%E5%B9%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="anyin233">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dive In World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/09/AcWing-1068-%E7%8E%AF%E5%BD%A2%E7%9F%B3%E5%AD%90%E5%90%88%E5%B9%B6/" class="post-title-link" itemprop="url">AcWing 1068. 环形石子合并</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-01-09 16:41:02" itemprop="dateCreated datePublished" datetime="2022-01-09T16:41:02+00:00">2022-01-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-25 03:37:29" itemprop="dateModified" datetime="2022-01-25T03:37:29+00:00">2022-01-25</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="算法思路">算法思路</h1>
+<p>对于石子合并，对于第<span class="math inline">\(i\)</span>和第<span class="math inline">\(i + 1\)</span>两堆石子进行合并，将会得到得分<span class="math inline">\(a[i] + a[i + 1]\)</span>。</p>
+<p>即可以考虑对于第<span class="math inline">\(1...n\)</span>号石子，最后一次合并的得分必然为所有石子数量的总和，即可以选择一个中间位置<span class="math inline">\(i\)</span>，即第<span class="math inline">\(i\)</span>次合并后的总得分为<span class="math inline">\(sc[1...i] + sc[i + 1...n] + a[1 ... n]\)</span>即为前半段的得分加上后半段的得分再加上当前石子数量的总和。</p>
+<p>针对求和问题，可以考虑直接求区间和，即有</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a[i] += a[i - <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<p>则对于第<span class="math inline">\(i\)</span>到第<span class="math inline">\(j\)</span>的总和为<span class="math inline">\(a[j] - a[i - 1]\)</span>。</p>
+<p>而对于划分问题，可以考虑dp数组的定义，<code>dp[i][j]</code>为第<span class="math inline">\(i\)</span>到第<span class="math inline">\(j\)</span>号石子合并的得分。得到转移方程</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[i][j] = <span class="built_in">max</span>(dp[i][j], d[i][k] + dp[k + <span class="number">1</span>][j]);</span><br></pre></td></tr></table></figure>
+<p>同时对于区间DP问题，我们需要明确需要从小区间向大区间遍历，即<code>for</code>循环遍历的过程是分别遍历<strong>区间长度</strong>和<strong>区间左端点</strong>，并使用二者计算得到区间右端点。</p>
+<p>另外本题中的数组为一个循环数组，为了实现循环数组中的区间DP，可以考虑将数组重复一遍并限定区间DP的长度控制在<code>n</code>，实现对于环形数组的处理</p>
+<p>#代码实现</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">420</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, a[N], dpmx[N][N], dpmn[N][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) cin &gt;&gt; a[i], a[i + n] = a[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n &lt;&lt; <span class="number">1</span>; ++i) a[i] += a[i - <span class="number">1</span>];<span class="comment">//计算区间和</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">memset</span>(dpmn, <span class="number">0x3f</span>, <span class="keyword">sizeof</span> dpmn);<span class="comment">//初始化最小值数组</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> len = <span class="number">1</span>; len &lt;= n; ++len)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">1</span>, r; r = l + len - <span class="number">1</span>, r &lt; n &lt;&lt; <span class="number">1</span>; ++l)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (len == <span class="number">1</span>) dpmx[l][l] = dpmn[l][l] = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = l; k &lt; r; ++k)</span><br><span class="line">                &#123;</span><br><span class="line">                    dpmx[l][r] = <span class="built_in">max</span>(dpmx[l][r], dpmx[l][k] + dpmx[k + <span class="number">1</span>][r] + a[r] - a[l - <span class="number">1</span>]);</span><br><span class="line">                    dpmn[l][r] = <span class="built_in">min</span>(dpmn[l][r], dpmn[l][k] + dpmn[k + <span class="number">1</span>][r] + a[r] - a[l - <span class="number">1</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> maxv = <span class="number">-0x3f3f3f3f</span>;</span><br><span class="line">    <span class="keyword">int</span> minv = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">1</span>; l &lt;= n; ++l)</span><br><span class="line">    &#123;</span><br><span class="line">        maxv = <span class="built_in">max</span>(maxv, dpmx[l][l + n - <span class="number">1</span>]);</span><br><span class="line">        minv = <span class="built_in">min</span>(minv, dpmn[l][l + n - <span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; minv &lt;&lt; <span class="string">&#x27;\n&#x27;</span> &lt;&lt; maxv;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/01/09/AcWing-105-%E4%B8%83%E5%A4%95%E7%A5%AD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -211,7 +287,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-24 07:36:19" itemprop="dateModified" datetime="2022-01-24T07:36:19+00:00">2022-01-24</time>
+                <time title="Modified: 2022-01-25 03:37:29" itemprop="dateModified" datetime="2022-01-25T03:37:29+00:00">2022-01-25</time>
               </span>
 
           
@@ -287,7 +363,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-24 07:36:19" itemprop="dateModified" datetime="2022-01-24T07:36:19+00:00">2022-01-24</time>
+                <time title="Modified: 2022-01-25 03:37:29" itemprop="dateModified" datetime="2022-01-25T03:37:29+00:00">2022-01-25</time>
               </span>
 
           
@@ -359,7 +435,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-24 07:36:19" itemprop="dateModified" datetime="2022-01-24T07:36:19+00:00">2022-01-24</time>
+                <time title="Modified: 2022-01-25 03:37:29" itemprop="dateModified" datetime="2022-01-25T03:37:29+00:00">2022-01-25</time>
               </span>
 
           
@@ -433,7 +509,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-24 07:36:19" itemprop="dateModified" datetime="2022-01-24T07:36:19+00:00">2022-01-24</time>
+                <time title="Modified: 2022-01-25 03:37:29" itemprop="dateModified" datetime="2022-01-25T03:37:29+00:00">2022-01-25</time>
               </span>
 
           
@@ -507,7 +583,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-24 07:36:19" itemprop="dateModified" datetime="2022-01-24T07:36:19+00:00">2022-01-24</time>
+                <time title="Modified: 2022-01-25 03:37:29" itemprop="dateModified" datetime="2022-01-25T03:37:29+00:00">2022-01-25</time>
               </span>
 
           
@@ -584,7 +660,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-24 07:36:19" itemprop="dateModified" datetime="2022-01-24T07:36:19+00:00">2022-01-24</time>
+                <time title="Modified: 2022-01-25 03:37:29" itemprop="dateModified" datetime="2022-01-25T03:37:29+00:00">2022-01-25</time>
               </span>
 
           
@@ -658,7 +734,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-24 07:36:19" itemprop="dateModified" datetime="2022-01-24T07:36:19+00:00">2022-01-24</time>
+                <time title="Modified: 2022-01-25 03:37:29" itemprop="dateModified" datetime="2022-01-25T03:37:29+00:00">2022-01-25</time>
               </span>
 
           
@@ -739,7 +815,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-24 07:36:19" itemprop="dateModified" datetime="2022-01-24T07:36:19+00:00">2022-01-24</time>
+                <time title="Modified: 2022-01-25 03:37:29" itemprop="dateModified" datetime="2022-01-25T03:37:29+00:00">2022-01-25</time>
               </span>
 
           
@@ -812,7 +888,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-24 07:36:19" itemprop="dateModified" datetime="2022-01-24T07:36:19+00:00">2022-01-24</time>
+                <time title="Modified: 2022-01-25 03:37:29" itemprop="dateModified" datetime="2022-01-25T03:37:29+00:00">2022-01-25</time>
               </span>
 
           
@@ -832,90 +908,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/11/23/Rust-02/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2020/11/21/Rust-01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="anyin233">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/21/Rust-01/" class="post-title-link" itemprop="url">从零开始的Rust生活：01-基本类型与基本运算符</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00+00:00">2020-11-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-24 07:36:19" itemprop="dateModified" datetime="2022-01-24T07:36:19+00:00">2022-01-24</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="rust中的基本数据类型">Rust中的基本数据类型</h1>
-<p>Rust中的基本数据类型和大多数的语言一样，都可以简单的被分为整型、浮点型、布尔型等等，同时Rust还有一些专属于自身的一些很奇妙的类型，包括<code>Option&lt;T&gt;</code>,<code>Box&lt;T&gt;</code>等等。</p>
-<p>通常Rust中的类型对应的符号为：</p>
-<ul>
-<li>有符号整型：<code>isize</code>,<code>i8</code>,<code>i16</code>,<code>i32</code>,<code>i64</code>,<code>i128</code></li>
-<li>无符号整型：<code>usize</code>,<code>u8</code>,<code>u16</code>,<code>u32</code>,<code>u64</code>,<code>u128</code></li>
-<li>浮点型：<code>f32</code>,<code>f64</code></li>
-<li>布尔型：<code>bool</code></li>
-<li>unit类型：<code>()</code></li>
-<li>引用：<code>&amp;T</code>,<code>&amp;mut T</code></li>
-<li>裸指针：<code>*mut T</code>,<code>*const T</code></li>
-<li><code>!</code></li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/21/Rust-01/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1007,12 +999,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
