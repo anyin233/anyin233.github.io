@@ -221,6 +221,22 @@
       </tags>
   </entry>
   <entry>
+    <title>AcWing 167.小猫爬山</title>
+    <url>/2022/01/29/AcWing-167-%E5%B0%8F%E7%8C%AB%E7%88%AC%E5%B1%B1/</url>
+    <content><![CDATA[<h1 id="算法思路">算法思路</h1>
+<p>考虑到本算法的时间复杂度，如果遍历全部的情况会导致TLE，故需要进行一定的剪枝。</p>
+<p>所以本题需要进行适当的剪枝，优先搜索状态较少的方案，即从个体质量较大的单位开始搜索。同时对非最优方案进行剪枝，最终可以得到结果</p>
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> n, w;</span><br><span class="line"><span class="keyword">int</span> res;</span><br><span class="line"><span class="keyword">int</span> c[N], group[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> t, <span class="keyword">int</span> g)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (g &gt; res) <span class="keyword">return</span>; <span class="comment">// 非最优剪枝</span></span><br><span class="line">    <span class="keyword">if</span> (t == n) </span><br><span class="line">    &#123;</span><br><span class="line">        res = g;    </span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; g; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (c[t] + group[i] &lt;= w) <span class="comment">//非可行方案剪枝</span></span><br><span class="line">        &#123;</span><br><span class="line">            group[i] += c[t];</span><br><span class="line">            <span class="built_in">dfs</span>(t + <span class="number">1</span>, g);</span><br><span class="line">            group[i] -= c[t];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    group[g] += c[t];</span><br><span class="line">    <span class="built_in">dfs</span>(t + <span class="number">1</span>, g + <span class="number">1</span>);</span><br><span class="line">    group[g] = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    res = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; w;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) cin &gt;&gt; c[i];</span><br><span class="line">    <span class="built_in">sort</span>(c, c + n);</span><br><span class="line">    <span class="built_in">reverse</span>(c, c + n);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">dfs</span>(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法学习</tag>
+        <tag>AcWing</tag>
+        <tag>DFS</tag>
+        <tag>剪枝</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AcWing 173.矩阵距离</title>
     <url>/2022/01/24/AcWing-173-%E7%9F%A9%E9%98%B5%E8%B7%9D%E7%A6%BB/</url>
     <content><![CDATA[<h1 id="算法思路">算法思路</h1>
