@@ -261,6 +261,36 @@
       </tags>
   </entry>
   <entry>
+    <title>AcWing 167.木棒</title>
+    <url>/2022/02/03/AcWing-167-%E6%9C%A8%E6%A3%92/</url>
+    <content><![CDATA[<h1 id="算法思路">算法思路</h1>
+<p>本题需要考虑几种剪枝方式</p>
+<h2 id="减少枚举方案">减少枚举方案</h2>
+<p>同样从大到小依次进行枚举，由于最终答案中木棍长度固定，从更长的小棍开始枚举可以减少产生方案的数量。</p>
+<h2 id="可行性剪枝">可行性剪枝</h2>
+<p>对于<strong>单根木棍无法整除所有小木棍长度之和</strong>的情况和<strong>加入某根小木棍后总长度超过当前枚举的总长度</strong>的情况均可以直接进行剪枝。</p>
+<h2 id="移除冗余方案">移除冗余方案</h2>
+<ol type="1">
+<li>由于本题中只需要求出总和，故基于组合数进行枚举</li>
+<li>当某个长度的小木棍无法用于构造答案的时候，直接跳过所有与其等长的小木棍</li>
+<li>当某个小木棍为当前大木棍的第一根木棍的时候，只要其无法构造答案那么该总长度必然无解</li>
+<li>当某个小木棍为当前大木棍的最后一根木棍的时候，只要其无法构造答案那么该总长度必然无解</li>
+</ol>
+<h3 id="对于剪枝方案3的证明">对于剪枝方案3的证明</h3>
+<p>假定构造当前选定的小木棍为n，其作为x的第一根小木棍构造大木棍，<strong>但是最终该总长度不可行</strong>。假设当前方案可行，即存在一个大木棍y，使得n可以作为第一根木棍，由于本题中大木棍无序，交换x和y，最终可以使得n作为x的第一根木棍，与前面矛盾，故作为剪枝方案。</p>
+<h3 id="对于剪枝方案4的证明">对于剪枝方案4的证明</h3>
+<p>若小木棍n的长度作为大木棍x的最后一根木棍长度，<strong>但是此时该总长度不可行</strong>。可以知道如果<strong>总长度可行</strong>的情况下，x的最后部分必然可以由多个总长度与n相同的木棍构成，此时n实际上可以和这些小木棍实现等价替换，与前面矛盾，故同样可以作为剪枝方案。</p>
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">70</span>;</span><br><span class="line"><span class="keyword">int</span> n, w[N], length, sum;</span><br><span class="line"><span class="keyword">bool</span> st[N];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> s, <span class="keyword">int</span> start)</span> <span class="comment">// 当前已经构造了u根木棍，当前正在构造的木棍长度为s，下一步从start开始(剪枝)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (u * length == sum) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (s == length) <span class="keyword">return</span> <span class="built_in">dfs</span>(u + <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (st[i]) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span> (s + w[i] &gt; length) <span class="keyword">continue</span>;</span><br><span class="line">        </span><br><span class="line">        st[i] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">dfs</span>(u, s + w[i], i + <span class="number">1</span>)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        st[i] = <span class="literal">false</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (!s) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 冗余方案剪枝方案3，采用w[i]作为第一根木棍但是全局失败，则剩余方案均无序进行枚举</span></span><br><span class="line">        <span class="keyword">if</span> (s + w[i] == length) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 冗余方案剪枝方案4，即采用w[i]作为最后一根失败，但是w[i]可以作为最后一根</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> j = i;</span><br><span class="line">        <span class="keyword">while</span>(j &lt; n &amp;&amp; w[j] == w[i]) j ++;</span><br><span class="line">        i = j - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; n, n != <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        sum = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">memset</span>(st, <span class="literal">false</span>, <span class="keyword">sizeof</span> st);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) </span><br><span class="line">        &#123;</span><br><span class="line">            cin &gt;&gt; w[i];</span><br><span class="line">            sum += w[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">sort</span>(w, w + n);</span><br><span class="line">        <span class="built_in">reverse</span>(w, w + n);</span><br><span class="line">        </span><br><span class="line">        length = w[n - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (sum % length == <span class="number">0</span> &amp;&amp; <span class="built_in">dfs</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>))</span><br><span class="line">            &#123;</span><br><span class="line">                cout &lt;&lt; length &lt;&lt; endl;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            length ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法学习</tag>
+        <tag>AcWing</tag>
+        <tag>DFS</tag>
+        <tag>剪枝</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AcWing 173.矩阵距离</title>
     <url>/2022/01/24/AcWing-173-%E7%9F%A9%E9%98%B5%E8%B7%9D%E7%A6%BB/</url>
     <content><![CDATA[<h1 id="算法思路">算法思路</h1>
@@ -497,6 +527,19 @@
       <tags>
         <tag>算法学习</tag>
         <tag>AcWing</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode 1414.和为K的最少斐波纳契数字数目</title>
+    <url>/2022/02/03/LeetCode-1414-%E5%92%8C%E4%B8%BAK%E7%9A%84%E6%9C%80%E5%B0%91%E6%96%90%E6%B3%A2%E7%BA%B3%E5%A5%91%E6%95%B0%E5%AD%97%E6%95%B0%E7%9B%AE/</url>
+    <content><![CDATA[<h1 id="算法思路">算法思路</h1>
+<p>考虑采用深度优先搜索的方式进行，由于每个斐波纳契数字均小于前一个数字的两倍（2除外），可以基于这个特性，每次找到小于当前所求总和的最大的斐波纳契数字x，然后<code>总和 -= x</code>，反复迭代之后即可得到结果。</p>
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> f[<span class="number">50</span>], n, ans;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">        f[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        f[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; f[i] &lt;= k; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            f[i + <span class="number">1</span>] = f[i] + f[i - <span class="number">1</span>];</span><br><span class="line">            n ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMinFibonacciNumbers</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        n = <span class="number">0</span>, ans = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">init</span>(k);</span><br><span class="line">        <span class="comment">//cout &lt;&lt; n;</span></span><br><span class="line">        <span class="keyword">while</span>(k)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span>(f[n] &gt; k) n--;</span><br><span class="line">            k -= f[n];</span><br><span class="line">            ans ++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>LeetCode</tag>
+        <tag>每日一题</tag>
       </tags>
   </entry>
   <entry>
