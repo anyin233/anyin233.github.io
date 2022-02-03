@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>AcWing 100.IncDec序列</title>
-    <url>/2022/01/07/AcWing-100-IncDec%E5%BA%8F%E5%88%97/</url>
-    <content><![CDATA[<h1 id="算法思路">算法思路</h1>
-<p>算法基于查分数组的前缀和即是原数组的思想进行。</p>
-<p>对于在原始数组上[m, n]区间每个数字+n，体现在差分数组上即第m个数字+n同时第n+1个数字-n。</p>
-<hr />
-<p>本题提供的基本操作可以使用差分进行表示，即每次+1或-1的操作可以在差分数组上对两端的数字进行操作实现，对于整个差分数组可以用一个折线图进行表示，可以发现当所有的数字经过该操作到达相同值所需步骤最少的过程必然是所有数字达到重叠的区域内。</p>
-<!---more--->
-<h1 id="算法实现">算法实现</h1>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a[N], n;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> pos = <span class="number">0</span>, neg = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) cin &gt;&gt; a[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &gt; <span class="number">1</span>; --i) a[i] -= a[i - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i] &gt; <span class="number">0</span>) pos += a[i];</span><br><span class="line">        <span class="keyword">else</span> neg -= a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; <span class="built_in">min</span>(pos, neg) + <span class="built_in">abs</span>(pos - neg) &lt;&lt; <span class="string">&#x27;\n&#x27;</span> &lt;&lt; <span class="built_in">abs</span>(pos - neg) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>算法学习</tag>
-        <tag>AcWing</tag>
-        <tag>贪心</tag>
-        <tag>差分</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AcWing 105. 七夕祭</title>
     <url>/2022/01/09/AcWing-105-%E4%B8%83%E5%A4%95%E7%A5%AD/</url>
     <content><![CDATA[<h1 id="算法思路">算法思路</h1>
@@ -63,6 +44,25 @@
         <tag>区间DP</tag>
         <tag>DP</tag>
         <tag>区间和</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AcWing 100.IncDec序列</title>
+    <url>/2022/01/07/AcWing-100-IncDec%E5%BA%8F%E5%88%97/</url>
+    <content><![CDATA[<h1 id="算法思路">算法思路</h1>
+<p>算法基于查分数组的前缀和即是原数组的思想进行。</p>
+<p>对于在原始数组上[m, n]区间每个数字+n，体现在差分数组上即第m个数字+n同时第n+1个数字-n。</p>
+<hr />
+<p>本题提供的基本操作可以使用差分进行表示，即每次+1或-1的操作可以在差分数组上对两端的数字进行操作实现，对于整个差分数组可以用一个折线图进行表示，可以发现当所有的数字经过该操作到达相同值所需步骤最少的过程必然是所有数字达到重叠的区域内。</p>
+<!---more--->
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a[N], n;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> pos = <span class="number">0</span>, neg = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) cin &gt;&gt; a[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &gt; <span class="number">1</span>; --i) a[i] -= a[i - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i] &gt; <span class="number">0</span>) pos += a[i];</span><br><span class="line">        <span class="keyword">else</span> neg -= a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; <span class="built_in">min</span>(pos, neg) + <span class="built_in">abs</span>(pos - neg) &lt;&lt; <span class="string">&#x27;\n&#x27;</span> &lt;&lt; <span class="built_in">abs</span>(pos - neg) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法学习</tag>
+        <tag>AcWing</tag>
+        <tag>贪心</tag>
+        <tag>差分</tag>
       </tags>
   </entry>
   <entry>
@@ -536,6 +536,9 @@
 <p>考虑采用深度优先搜索的方式进行，由于每个斐波纳契数字均小于前一个数字的两倍（2除外），可以基于这个特性，每次找到小于当前所求总和的最大的斐波纳契数字x，然后<code>总和 -= x</code>，反复迭代之后即可得到结果。</p>
 <h1 id="算法实现">算法实现</h1>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> f[<span class="number">50</span>], n, ans;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">        f[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        f[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; f[i] &lt;= k; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            f[i + <span class="number">1</span>] = f[i] + f[i - <span class="number">1</span>];</span><br><span class="line">            n ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMinFibonacciNumbers</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        n = <span class="number">0</span>, ans = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">init</span>(k);</span><br><span class="line">        <span class="comment">//cout &lt;&lt; n;</span></span><br><span class="line">        <span class="keyword">while</span>(k)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">while</span>(f[n] &gt; k) n--;</span><br><span class="line">            k -= f[n];</span><br><span class="line">            ans ++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="https://leetcode-cn.com/problems/find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k">题目🔗</a></p>
+</blockquote>
 ]]></content>
       <tags>
         <tag>LeetCode</tag>
