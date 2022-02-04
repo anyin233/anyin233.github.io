@@ -597,6 +597,24 @@
       </tags>
   </entry>
   <entry>
+    <title>LeetCode LCP28.采购方案</title>
+    <url>/2022/02/04/LeetCode-LCP28-%E9%87%87%E8%B4%AD%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<h1 id="算法思路">算法思路</h1>
+<h2 id="暴力tle">暴力（TLE）</h2>
+<p>直接两重循环双指针进行遍历，每遇到一个合法方案就<code>ans++</code></p>
+<h2 id="二分">二分</h2>
+<p>在暴力的基础上，只枚举双指针的前一个指针，后一个指针使用二分查找得到一个最大可行的位置，方案数直接与两个指针相夹的数量相夹即可。</p>
+<h3 id="优化">优化</h3>
+<p>考虑到存在相同报价，可以在遇到相同报价的时候直接复用之前相同报价的方案数，简单地-1即可。</p>
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">purchasePlans</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> MOD = <span class="number">1000000007</span>;</span><br><span class="line">        <span class="keyword">int</span> pre = <span class="number">-1</span>, pre_cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//cout &lt;&lt; pre &lt;&lt; &#x27; &#x27; &lt;&lt; pre_cnt;</span></span><br><span class="line">            <span class="keyword">if</span> (pre &gt;= <span class="number">0</span> &amp;&amp; nums[i] == nums[pre] &amp;&amp; pre_cnt &gt; <span class="number">0</span>) <span class="comment">// 复用先前的方案</span></span><br><span class="line">            &#123;</span><br><span class="line">                ans = (ans + pre_cnt) % MOD;</span><br><span class="line">                pre_cnt --;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> l = i + <span class="number">1</span>, r = nums.<span class="built_in">size</span>() - <span class="number">1</span>, mid = (l + r + <span class="number">1</span>) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>(l &lt; r)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[mid] + nums[i] &gt; target) r = mid - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">else</span> l = mid;</span><br><span class="line">                mid = (l + r + <span class="number">1</span>) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (nums[r] + nums[i] &lt;= target) ans = (ans + (r - i)) % MOD;</span><br><span class="line">            pre = i, pre_cnt = r - i - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>LeetCode</tag>
+        <tag>LCP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>从零开始的Rust生活：00-前言</title>
     <url>/2020/11/20/Rust-00/</url>
     <content><![CDATA[<h1 id="关于我为什么要写这个系列的博客">关于我为什么要写这个系列的博客</h1>
