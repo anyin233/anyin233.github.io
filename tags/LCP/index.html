@@ -20,21 +20,15 @@
     var CONFIG = {"hostname":"anyin233.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Rust中的基本数据类型 Rust中的基本数据类型和大多数的语言一样，都可以简单的被分为整型、浮点型、布尔型等等，同时Rust还有一些专属于自身的一些很奇妙的类型，包括Option&lt;T&gt;,Box&lt;T&gt;等等。 通常Rust中的类型对应的符号为：  有符号整型：isize,i8,i16,i32,i64,i128 无符号整型：usize,u8,u16,u32,u64,u128 浮">
-<meta property="og:type" content="article">
-<meta property="og:title" content="从零开始的Rust生活：01-基本类型与基本运算符">
-<meta property="og:url" content="http://anyin233.github.io/2020/11/21/Rust-01/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Dive In World">
+<meta property="og:url" content="http://anyin233.github.io/tags/LCP/index.html">
 <meta property="og:site_name" content="Dive In World">
-<meta property="og:description" content="Rust中的基本数据类型 Rust中的基本数据类型和大多数的语言一样，都可以简单的被分为整型、浮点型、布尔型等等，同时Rust还有一些专属于自身的一些很奇妙的类型，包括Option&lt;T&gt;,Box&lt;T&gt;等等。 通常Rust中的类型对应的符号为：  有符号整型：isize,i8,i16,i32,i64,i128 无符号整型：usize,u8,u16,u32,u64,u128 浮">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-11-21T00:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-04T03:13:44.381Z">
 <meta property="article:author" content="anyin233">
-<meta property="article:tag" content="Rust">
-<meta property="article:tag" content="程序语言">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://anyin233.github.io/2020/11/21/Rust-01/">
+<link rel="canonical" href="http://anyin233.github.io/tags/LCP/">
 
 
 <script id="page-configurations">
@@ -42,12 +36,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true,
+    isPost : false,
     lang   : 'en'
   };
 </script>
 <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
-  <title>从零开始的Rust生活：01-基本类型与基本运算符 | Dive In World</title>
+  <title>Tag: LCP | Dive In World</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-X08BTBNGG6"></script>
     <script>
@@ -180,125 +174,51 @@
         <div class="content-wrap">
           
 
-          <div class="content post posts-expand">
+          <div class="content tag">
             
 
-    
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2020/11/21/Rust-01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="anyin233">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          从零开始的Rust生活：01-基本类型与基本运算符
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00+00:00">2020-11-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-04 03:13:44" itemprop="dateModified" datetime="2022-02-04T03:13:44+00:00">2022-02-04</time>
-              </span>
-
-          
-            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+  
+  <div class="post-block">
+    <div class="posts-collapse">
+      <div class="collection-title">
+        <h2 class="collection-header">LCP
+          <small>Tag</small>
+        </h2>
+      </div>
 
       
-        <h1 id="rust中的基本数据类型">Rust中的基本数据类型</h1>
-<p>Rust中的基本数据类型和大多数的语言一样，都可以简单的被分为整型、浮点型、布尔型等等，同时Rust还有一些专属于自身的一些很奇妙的类型，包括<code>Option&lt;T&gt;</code>,<code>Box&lt;T&gt;</code>等等。</p>
-<p>通常Rust中的类型对应的符号为：</p>
-<ul>
-<li>有符号整型：<code>isize</code>,<code>i8</code>,<code>i16</code>,<code>i32</code>,<code>i64</code>,<code>i128</code></li>
-<li>无符号整型：<code>usize</code>,<code>u8</code>,<code>u16</code>,<code>u32</code>,<code>u64</code>,<code>u128</code></li>
-<li>浮点型：<code>f32</code>,<code>f64</code></li>
-<li>布尔型：<code>bool</code></li>
-<li>unit类型：<code>()</code></li>
-<li>引用：<code>&amp;T</code>,<code>&amp;mut T</code></li>
-<li>裸指针：<code>*mut T</code>,<code>*const T</code></li>
-<li><code>!</code></li>
-</ul>
-<span id="more"></span>
-<p>这里值得一提的是，Rust中的<code>!</code>类型在多数情况下实际上代表了<strong>不会返回</strong>，他的功能包括在<code>match()</code>块中实现对各种条件返回类型的补全(因为Rust中对于<code>match()</code>块要求每个分支的返回类型必须相同，当某一个分支不会返回而是导致程序异常退出的时候则可以通过返回一个<code>!</code>来通过编译器检查)</p>
-<p>另外对于Rust还有以下几种常用的类型：</p>
-<ul>
-<li><code>Option&lt;T&gt;</code>：Rust用于解决"空"的一个方案，一个<code>Option&lt;T&gt;</code>枚举量可以是一个<code>Option&lt;T&gt;::Some(n)</code>代表非空，也可以是一个<code>Option&lt;T&gt;::None</code>表示空</li>
-<li><code>Box&lt;T&gt;</code>：堆上分配的指针</li>
-<li><code>Rc&lt;T&gt;</code>,<code>Arc&lt;T&gt;</code>：智能指针(可以这么想)</li>
-<li><code>RefCell&lt;T&gt;</code>：更加神奇的指针(之后会讨论的)</li>
-<li>以及很多</li>
-</ul>
-<p>可以说Rust为了保证其基本的安全可以说是费尽了心思，搞出了一大堆用于应对各种情况的类型，某种意义上这也是Rust难学的一个重要原因。</p>
-<h1 id="类型强制转换">类型强制转换</h1>
-<p>类型强制转换可以说是几乎现役的所有程序语言必备的功能，Rust自然也不例外。<br />
-对于Rust其使用了关键字<code>as</code>用于类型转换。对于Rust来说强制类型转换同样需要各个类型之间是支持强制类型转换的，不然编译器报错警告。同时Rust对于从高类型向低类型转换的时候不会报错，最多一个warning了事，所以也不要指望编译器会帮你解决把一个<code>i32</code>转换到<code>i8</code>导致的溢出问题。</p>
-<h1 id="运算符">运算符</h1>
-<p>作为一款合格的程序语言，Rust自然也具有完备的运算符系统，考虑到运算符的数量实在是太多了(主要是懒)，<a target="_blank" rel="noopener" href="https://kaisery.github.io/trpl-zh-cn/appendix-02-operators.html">这里</a>是官方的运算符列表，各位可以作为参考资料。</p>
-
+    <div class="collection-year">
+      <span class="collection-header">2022</span>
     </div>
 
-    
-    
-    
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Rust/" rel="tag"># Rust</a>
-              <a href="/tags/%E7%A8%8B%E5%BA%8F%E8%AF%AD%E8%A8%80/" rel="tag"># 程序语言</a>
-          </div>
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2022-02-04T11:11:35+00:00"
+              content="2022-02-04">
+          02-04
+        </time>
+      </div>
 
-        
+      <div class="post-title">
+          <a class="post-title-link" href="/2022/02/04/LeetCode-LCP23-%E9%AD%94%E6%9C%AF%E6%8E%92%E5%88%97/" itemprop="url">
+            <span itemprop="name">LeetCode LCP23.魔术排列</span>
+          </a>
+      </div>
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2020/11/20/Rust-00/" rel="prev" title="从零开始的Rust生活：00-前言">
-      <i class="fa fa-chevron-left"></i> 从零开始的Rust生活：00-前言
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/11/23/Rust-02/" rel="next" title="从零开始的Rust生活：02-函数">
-      从零开始的Rust生活：02-函数 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
+    </header>
   </article>
+
+    </div>
+  </div>
   
   
+  
+
   
 
 
@@ -351,7 +271,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#rust%E4%B8%AD%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">Rust中的基本数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2"><span class="nav-number">2.</span> <span class="nav-text">类型强制转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">3.</span> <span class="nav-text">运算符</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
