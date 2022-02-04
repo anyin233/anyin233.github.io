@@ -546,6 +546,22 @@
       </tags>
   </entry>
   <entry>
+    <title>LeetCode 1725.可以形成最大正方形的矩形数目</title>
+    <url>/2022/02/04/LeetCode-1725-%E5%8F%AF%E4%BB%A5%E5%BD%A2%E6%88%90%E6%9C%80%E5%A4%A7%E6%AD%A3%E6%96%B9%E5%BD%A2%E7%9A%84%E7%9F%A9%E5%BD%A2%E6%95%B0%E7%9B%AE/</url>
+    <content><![CDATA[<h1 id="算法思路">算法思路</h1>
+<p>还能有什么思路，每个矩形既然只能用于切割一个正方形，那么自然能够切割出最大的边长自然就是短边长度。</p>
+<blockquote>
+<p>本题使用索引的效率比迭代器更高</p>
+</blockquote>
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">countGoodRectangles</span><span class="params">(vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt;&amp; rectangles)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> maxLen = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> v : rectangles)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = <span class="built_in">min</span>(v[<span class="number">0</span>], v[<span class="number">1</span>]);</span><br><span class="line">            <span class="keyword">if</span> (temp &gt; maxLen)</span><br><span class="line">            &#123;</span><br><span class="line">                maxLen = temp;</span><br><span class="line">                cnt = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (temp == maxLen)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt ++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>LeetCode</tag>
+        <tag>每日一题</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LeetCode 29.两数相除</title>
     <url>/2022/02/03/LeetCode-29-%E4%B8%A4%E6%95%B0%E7%9B%B8%E9%99%A4/</url>
     <content><![CDATA[<h1 id="算法思路">算法思路</h1>
