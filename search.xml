@@ -291,6 +291,22 @@
       </tags>
   </entry>
   <entry>
+    <title>AcWing 170.加成序列</title>
+    <url>/2022/02/05/AcWing-170-%E5%8A%A0%E6%88%90%E5%BA%8F%E5%88%97/</url>
+    <content><![CDATA[<h1 id="算法思路">算法思路</h1>
+<p>迭代加深实际上是DFS中常用的一种剪枝方法。针对某些DFS的情况，其完整DFS的树非常深，但是答案却在较浅的位置时可以使用。常见的命题思路为求一个最短路。</p>
+<p>本题采用迭代加深的算法进行，不断扩大搜索范围（深度），最终得到最短路径。</p>
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">110</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> path[N];</span><br><span class="line"><span class="keyword">bool</span> st[N];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> depth)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (u &gt; depth) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (path[u - <span class="number">1</span>] == n) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = u - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt;= <span class="number">0</span>; --j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> s = path[i] + path[j];</span><br><span class="line">            <span class="keyword">if</span> (s &gt; n || s &lt;= path[u - <span class="number">1</span>] || st[s]) <span class="keyword">continue</span>;</span><br><span class="line">            </span><br><span class="line">            st[s] = <span class="literal">true</span>;</span><br><span class="line">            path[u] = s;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">dfs</span>(u + <span class="number">1</span>, depth)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            st[s] = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    path[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(cin &gt;&gt; n, n)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> depth = <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">memset</span>(st, <span class="literal">false</span>, <span class="keyword">sizeof</span> st);</span><br><span class="line">        <span class="keyword">while</span>(!<span class="built_in">dfs</span>(<span class="number">1</span>, depth)) depth ++;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; depth; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; path[i] &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法学习</tag>
+        <tag>AcWing</tag>
+        <tag>DFS</tag>
+        <tag>迭代加深</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AcWing 173.矩阵距离</title>
     <url>/2022/01/24/AcWing-173-%E7%9F%A9%E9%98%B5%E8%B7%9D%E7%A6%BB/</url>
     <content><![CDATA[<h1 id="算法思路">算法思路</h1>
@@ -625,6 +641,20 @@
       <tags>
         <tag>LeetCode</tag>
         <tag>LCP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode LCP30.魔塔游戏</title>
+    <url>/2022/02/05/LeetCode-LCP30-%E9%AD%94%E5%A1%94%E6%B8%B8%E6%88%8F/</url>
+    <content><![CDATA[<h1 id="算法思路">算法思路</h1>
+<p>在本题中每次只能将一个负数移动到数列的最后，我们可以考虑维护一个大根堆保存所有的负数，优先移动所有较大的负数可以使得结果最优。</p>
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">magicTower</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); ++i) sum += nums[i];</span><br><span class="line">        <span class="keyword">if</span> (sum &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        </span><br><span class="line">        sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        priority_queue&lt;<span class="keyword">int</span>, vector&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt;&gt; heap;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            sum += nums[i];</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &lt; <span class="number">0</span>) heap.<span class="built_in">push</span>(nums[i]);</span><br><span class="line">            <span class="keyword">while</span> (sum &lt; <span class="number">0</span> &amp;&amp; heap.<span class="built_in">size</span>())</span><br><span class="line">            &#123;</span><br><span class="line">                cnt ++;</span><br><span class="line">                nums.<span class="built_in">push_back</span>(heap.<span class="built_in">top</span>());</span><br><span class="line">                sum -= heap.<span class="built_in">top</span>();</span><br><span class="line">                <span class="comment">//cout &lt;&lt; sum &lt;&lt; &#x27; &#x27; &lt;&lt; heap.top()&lt;&lt; endl;</span></span><br><span class="line">                heap.<span class="built_in">pop</span>();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>LeetCode</tag>
+        <tag>LCP</tag>
+        <tag>优先队列</tag>
       </tags>
   </entry>
   <entry>
