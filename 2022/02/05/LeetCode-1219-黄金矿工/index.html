@@ -20,21 +20,21 @@
     var CONFIG = {"hostname":"anyin233.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前言 作为一款合格的程序语言，基本的控制语句是必须有的，而对于Rust来说她的控制流语句相对于传统的语言来说都要更为丰富，本文将会大体地介绍Rust的各类控制语句及其的基本用法。">
+  <meta name="description" content="算法思路 简单的DFS，由于题目中允许从任意点出发，故需要遍历每一个格子作为起点进行DFS。其余的和常规DFS相同 算法实现 123456789101112131415161718192021222324252627282930313233343536class Solution &amp;#123;public:    void dfs(int x, int y, vector&lt;vector&amp;lt">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从零开始的Rust生活：03-控制流与逻辑运算符">
-<meta property="og:url" content="http://anyin233.github.io/2020/11/27/Rust-03/index.html">
+<meta property="og:title" content="LeetCode 1219.黄金矿工">
+<meta property="og:url" content="http://anyin233.github.io/2022/02/05/LeetCode-1219-%E9%BB%84%E9%87%91%E7%9F%BF%E5%B7%A5/index.html">
 <meta property="og:site_name" content="Dive In World">
-<meta property="og:description" content="前言 作为一款合格的程序语言，基本的控制语句是必须有的，而对于Rust来说她的控制流语句相对于传统的语言来说都要更为丰富，本文将会大体地介绍Rust的各类控制语句及其的基本用法。">
+<meta property="og:description" content="算法思路 简单的DFS，由于题目中允许从任意点出发，故需要遍历每一个格子作为起点进行DFS。其余的和常规DFS相同 算法实现 123456789101112131415161718192021222324252627282930313233343536class Solution &amp;#123;public:    void dfs(int x, int y, vector&lt;vector&amp;lt">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-11-27T22:23:00.000Z">
+<meta property="article:published_time" content="2022-02-05T11:38:18.000Z">
 <meta property="article:modified_time" content="2022-02-05T03:41:14.882Z">
 <meta property="article:author" content="anyin233">
-<meta property="article:tag" content="Rust">
-<meta property="article:tag" content="程序语言">
+<meta property="article:tag" content="LeetCode">
+<meta property="article:tag" content="每日一题">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://anyin233.github.io/2020/11/27/Rust-03/">
+<link rel="canonical" href="http://anyin233.github.io/2022/02/05/LeetCode-1219-%E9%BB%84%E9%87%91%E7%9F%BF%E5%B7%A5/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 <script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
-  <title>从零开始的Rust生活：03-控制流与逻辑运算符 | Dive In World</title>
+  <title>LeetCode 1219.黄金矿工 | Dive In World</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-X08BTBNGG6"></script>
     <script>
@@ -187,7 +187,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2020/11/27/Rust-03/">
+    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/02/05/LeetCode-1219-%E9%BB%84%E9%87%91%E7%9F%BF%E5%B7%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -200,7 +200,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          从零开始的Rust生活：03-控制流与逻辑运算符
+          LeetCode 1219.黄金矿工
         </h1>
 
         <div class="post-meta">
@@ -209,16 +209,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2020-11-27 22:23:00" itemprop="dateCreated datePublished" datetime="2020-11-27T22:23:00+00:00">2020-11-27</time>
+              <time title="Created: 2022-02-05 11:38:18 / Modified: 03:41:14" itemprop="dateCreated datePublished" datetime="2022-02-05T11:38:18+00:00">2022-02-05</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-05 03:41:14" itemprop="dateModified" datetime="2022-02-05T03:41:14+00:00">2022-02-05</time>
-              </span>
 
           
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
@@ -238,26 +232,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="前言">前言</h1>
-<p>作为一款合格的程序语言，基本的控制语句是必须有的，而对于Rust来说她的控制流语句相对于传统的语言来说都要更为丰富，本文将会大体地介绍Rust的各类控制语句及其的基本用法。</p>
-<span id="more"></span>
-<h1 id="if">if</h1>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">```rust</span><br><span class="line">if condition &#123;</span><br><span class="line">    // do something</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    // do something</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="match">match</h1>
-<p>说到了<code>if</code>，自然少不了我们的好朋友<code>switch</code>，不过非常喜闻乐见的是Rust并没有<code>switch</code>，取而代之的是功能强大的<code>match</code>。<code>match</code>作为Rust中著名的条件选择语句，它不止用于多条件的判断控制，它还经常出现于<code>Option</code>的判断等等各类<code>None</code>类型或者错误处理的场景。常见的<code>match</code>的使用场景如下</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">match</span>(item)&#123;</span><br><span class="line">    condition_1 =&gt; <span class="comment">//do something</span></span><br><span class="line">    condition_2 =&gt; &#123;</span><br><span class="line">        <span class="comment">//do something</span></span><br><span class="line">    &#125;</span><br><span class="line">    _=&gt; <span class="comment">//do default thing</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里我们可以看到Rust的<code>match</code>语句支持单行或者多行的情况，其中多行的情况必须使用大括号包起来，同时<code>match</code>同样有一个<code>_</code>分支，这个分支一般是作为default分支存在。有一点非常重要，所有分支的返回值类型必须相同。</p>
-<p>但是前面又提到了<code>match</code>相对于<code>switch</code>更为强大，所以这里我们将会探讨之所以<code>match</code>强大的原因</p>
-<h2 id="match可以作为表达式">match可以作为表达式</h2>
-<p>在Rust中，match有一个非常常用的用法，在这种情况下所有的分支都必须要有返回值，就像这样</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="keyword">match</span> (item)&#123;</span><br><span class="line">    condition_1 =&gt; &#123;</span><br><span class="line">        <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    condition_2 =&gt; &#123;</span><br><span class="line">        <span class="number">1</span> * <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">    _=&gt; &#123;</span><br><span class="line">        <span class="number">3</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在这种情况下各个代码块最终的执行后的返回值将会被赋给<code>s</code></p>
-<h2 id="match的分支条件可以用于解包各类enum">match的分支条件可以用于解包各类enum</h2>
-<p>上面也说到了<code>match</code>可以用于处理<code>Option&lt;T&gt;</code>类型，在Rust中我们可以这样用</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="literal">Some</span>(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">match</span>(s)&#123;</span><br><span class="line">    <span class="literal">Some</span>(x) =&gt; &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="literal">None</span> =&gt; &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;is none&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">// 输出5</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>就像这样，Rust可以利用<code>match</code>语句轻松地解决<code>Option&lt;T&gt;</code>类型的问题。</p>
-<h1 id="后记">后记</h1>
-<p>在写了四篇Rust的博客之后，我突然发现自己对Rust的理解非常的零散肤浅，所以从本篇开始《从零开始的Rust生活》系列将会暂时停更，待到我更加了解Rust后再继续进行更新。接下来本博客将会开始逐步更新本人的Rust学习记录，同步于本人的Rust的学习进程。</p>
+        <h1 id="算法思路">算法思路</h1>
+<p>简单的DFS，由于题目中允许从任意点出发，故需要遍历每一个格子作为起点进行DFS。其余的和常规DFS相同</p>
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt;&amp; grid, <span class="keyword">int</span> st[<span class="number">110</span>][<span class="number">110</span>], <span class="keyword">int</span> sum, <span class="keyword">int</span>&amp; res)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> dx[] = &#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> dy[] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line"></span><br><span class="line">        res = <span class="built_in">max</span>(res, sum);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> nx = dx[i] + x, ny = dy[i] + y;</span><br><span class="line">            <span class="keyword">if</span> (nx &lt; <span class="number">0</span> || ny &lt; <span class="number">0</span> || nx &gt;= grid.<span class="built_in">size</span>() || ny &gt;= grid[<span class="number">0</span>].<span class="built_in">size</span>()) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span> (st[nx][ny] || grid[nx][ny] == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            st[nx][ny] = <span class="literal">true</span>;</span><br><span class="line">            <span class="built_in">dfs</span>(nx, ny, grid, st, sum + grid[nx][ny], res);</span><br><span class="line">            st[nx][ny] = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getMaximumGold</span><span class="params">(vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt;&amp; grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> st[<span class="number">110</span>][<span class="number">110</span>];</span><br><span class="line">        <span class="built_in">memset</span>(st, <span class="literal">false</span>, <span class="keyword">sizeof</span> st);</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; grid.<span class="built_in">size</span>(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; grid[<span class="number">0</span>].<span class="built_in">size</span>(); ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (grid[i][j] == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">                st[i][j] = <span class="literal">true</span>;</span><br><span class="line">                <span class="built_in">dfs</span>(i, j, grid, st, grid[i][j], res);</span><br><span class="line">                st[i][j] = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -267,8 +245,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Rust/" rel="tag"># Rust</a>
-              <a href="/tags/%E7%A8%8B%E5%BA%8F%E8%AF%AD%E8%A8%80/" rel="tag"># 程序语言</a>
+              <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
+              <a href="/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" rel="tag"># 每日一题</a>
           </div>
 
         
@@ -277,13 +255,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/11/23/Rust-02/" rel="prev" title="从零开始的Rust生活：02-函数">
-      <i class="fa fa-chevron-left"></i> 从零开始的Rust生活：02-函数
+    <a href="/2022/02/04/LeetCode-LCP28-%E9%87%87%E8%B4%AD%E6%96%B9%E6%A1%88/" rel="prev" title="LeetCode LCP28.采购方案">
+      <i class="fa fa-chevron-left"></i> LeetCode LCP28.采购方案
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/05/22/AcWing-532/" rel="next" title="AcWing 532. 货币系统">
-      AcWing 532. 货币系统 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -342,7 +317,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#if"><span class="nav-number">2.</span> <span class="nav-text">if</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#match"><span class="nav-number">3.</span> <span class="nav-text">match</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#match%E5%8F%AF%E4%BB%A5%E4%BD%9C%E4%B8%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">match可以作为表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#match%E7%9A%84%E5%88%86%E6%94%AF%E6%9D%A1%E4%BB%B6%E5%8F%AF%E4%BB%A5%E7%94%A8%E4%BA%8E%E8%A7%A3%E5%8C%85%E5%90%84%E7%B1%BBenum"><span class="nav-number">3.2.</span> <span class="nav-text">match的分支条件可以用于解包各类enum</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">4.</span> <span class="nav-text">后记</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">算法思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">算法实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
