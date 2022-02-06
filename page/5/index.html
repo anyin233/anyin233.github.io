@@ -180,6 +180,164 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2020/11/23/Rust-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="anyin233">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dive In World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/23/Rust-02/" class="post-title-link" itemprop="url">从零开始的Rust生活：02-函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-23 09:16:13" itemprop="dateCreated datePublished" datetime="2020-11-23T09:16:13+00:00">2020-11-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-06 15:17:43" itemprop="dateModified" datetime="2022-02-06T15:17:43+00:00">2022-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="函数是什么">函数是什么</h1>
+<p>相信各位学Rust的读者应该多少接触过至少一门程序语言，不过这里我还是会按照我的理解尽可能的去为函数做一个相对更为简单的定义。</p>
+<p>对于Rust来说，函数的意义与大多数的程序语言都很相似，我们可以将其视作程序中的一个功能模块。这个功能模块可以对一些我们会反复使用的代码进行封装，从而大幅度简化程序的开发过程。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/23/Rust-02/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2020/11/21/Rust-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="anyin233">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dive In World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/21/Rust-01/" class="post-title-link" itemprop="url">从零开始的Rust生活：01-基本类型与基本运算符</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-21 00:00:00" itemprop="dateCreated datePublished" datetime="2020-11-21T00:00:00+00:00">2020-11-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-02-06 15:17:43" itemprop="dateModified" datetime="2022-02-06T15:17:43+00:00">2022-02-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="rust中的基本数据类型">Rust中的基本数据类型</h1>
+<p>Rust中的基本数据类型和大多数的语言一样，都可以简单的被分为整型、浮点型、布尔型等等，同时Rust还有一些专属于自身的一些很奇妙的类型，包括<code>Option&lt;T&gt;</code>,<code>Box&lt;T&gt;</code>等等。</p>
+<p>通常Rust中的类型对应的符号为：</p>
+<ul>
+<li>有符号整型：<code>isize</code>,<code>i8</code>,<code>i16</code>,<code>i32</code>,<code>i64</code>,<code>i128</code></li>
+<li>无符号整型：<code>usize</code>,<code>u8</code>,<code>u16</code>,<code>u32</code>,<code>u64</code>,<code>u128</code></li>
+<li>浮点型：<code>f32</code>,<code>f64</code></li>
+<li>布尔型：<code>bool</code></li>
+<li>unit类型：<code>()</code></li>
+<li>引用：<code>&amp;T</code>,<code>&amp;mut T</code></li>
+<li>裸指针：<code>*mut T</code>,<code>*const T</code></li>
+<li><code>!</code></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/21/Rust-01/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2020/11/20/Rust-00/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -211,7 +369,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-06 05:28:56" itemprop="dateModified" datetime="2022-02-06T05:28:56+00:00">2022-02-06</time>
+                <time title="Modified: 2022-02-06 15:17:43" itemprop="dateModified" datetime="2022-02-06T15:17:43+00:00">2022-02-06</time>
               </span>
 
           
@@ -284,7 +442,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-06 05:28:56" itemprop="dateModified" datetime="2022-02-06T05:28:56+00:00">2022-02-06</time>
+                <time title="Modified: 2022-02-06 15:17:43" itemprop="dateModified" datetime="2022-02-06T15:17:43+00:00">2022-02-06</time>
               </span>
 
           
@@ -357,7 +515,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-02-06 05:28:56" itemprop="dateModified" datetime="2022-02-06T05:28:56+00:00">2022-02-06</time>
+                <time title="Modified: 2022-02-06 15:17:43" itemprop="dateModified" datetime="2022-02-06T15:17:43+00:00">2022-02-06</time>
               </span>
 
           
@@ -489,12 +647,12 @@ V操作通常用于释放资源，其的主要过程一般为
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
