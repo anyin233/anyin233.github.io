@@ -842,6 +842,29 @@
       </tags>
   </entry>
   <entry>
+    <title>Rust 异步与多线程</title>
+    <url>/2022/02/18/Rust-%E5%BC%82%E6%AD%A5%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
+    <content><![CDATA[<blockquote>
+<p>该文档为个人学习记录，可能存在大量错误</p>
+</blockquote>
+<h1 id="概述">概述</h1>
+<p>Rust中std库实现异步与多线程的方式包括了<code>async/await</code>和<code>thread</code>，二者在官方文档中分别对应了<code>high-level</code>和<code>low-level</code>的场景。</p>
+<h1 id="rust中的数据同步">Rust中的数据同步</h1>
+<p>实现多线程必须要考虑到数据同步的问题，Rust给出的解决方案是<code>Mutex&lt;T&gt;</code>和<code>Arc&lt;T&gt;</code>，二者可以分别对应到不具备线程安全的<code>RefCell&lt;T&gt;</code>和<code>Rc&lt;T&gt;</code>。两组容器的使用方式基本一致，通常情况下的一个使用实例是<code>Arc&lt;Mutex&lt;T&gt;&gt;</code>从而保证某个共享的数据可以存在多个所有者，同时实现内部可变性。</p>
+<h1 id="stdthread">std::thread</h1>
+<p>该实现方式为 <em>The Book</em> 中讲述的实现方式，最基本的代码实现形式为</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> handler = thread::spawn(<span class="keyword">move</span> || &#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上面的代码实现创建了一个新的线程，并返回对应线程的<code>handler</code>，基于对<code>handler</code>的控制可以实现对该线程的管理。其中<code>handler</code>具有<code>JoinHandler</code>类型，实现了三个有关多线程的方法，分别是<code>join()</code>，<code>thread()</code>和<code>is_running()</code>。其中<code>join()</code>方法使得执行该方法的线程会在执行到<code>handler.join()</code>时阻塞等待线程的退出，<code>thread()</code>返回<code>handler</code>对应的线程信息，<code>is_running()</code>则指示线程是否正在运行。</p>
+<h1 id="asyncawait">async/await</h1>
+<p><strong>TODO</strong></p>
+]]></content>
+      <tags>
+        <tag>Rust</tag>
+        <tag>程序语言</tag>
+        <tag>异步</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>信号量机制与管程</title>
     <url>/2020/11/18/Semaphore-and-Monitor/</url>
     <content><![CDATA[<h1 id="信号量机制">信号量机制</h1>
