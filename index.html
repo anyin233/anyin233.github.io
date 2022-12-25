@@ -180,6 +180,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/12/25/MPI-topology-with-MPI-Cart-Create/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="anyin233">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dive In World">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/25/MPI-topology-with-MPI-Cart-Create/" class="post-title-link" itemprop="url">MPI_Cart_Create 使用方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-25 22:05:10 / Modified: 14:30:03" itemprop="dateCreated datePublished" datetime="2022-12-25T22:05:10+00:00">2022-12-25</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在使用MPI的过程中可能会涉及到一些针对特定的拓扑关系的模拟情况，如<strong>FOX算法求矩阵乘积</strong>。此时需要涉及到如何简便地模拟出特定的方阵以及元素之间的关系。MPI提供了一套简便地API可以快速地创建出携带所需要的拓扑关系的<code>MPI_Comm</code>。</p>
+<h1 id="mpi-process-topology-functions">MPI Process Topology Functions</h1>
+<p>该系列的函数即是MPI中用于处理相关的拓扑关系的相关工具。常用的包括了<code>MPI_Cart_create</code>等方法，具体的API可以参考<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/message-passing-interface/mpi-process-topology-functions">MSDN</a>。其中较为常用的包括<code>MPI_Cart_create</code>、<code>MPI_Dims_create</code>等方法。</p>
+<h2 id="mpi_cart_create"><code>MPI_Cart_create</code></h2>
+<p>该方法API如下所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> MPIAPI <span class="title">MPI_Cart_create</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">        MPI_Comm              comm_old,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="keyword">int</span>                   ndims,</span></span></span><br><span class="line"><span class="params"><span class="function">        _In_count_(ndims) <span class="keyword">int</span> *dims,</span></span></span><br><span class="line"><span class="params"><span class="function">        _In_count_(ndims) <span class="keyword">int</span> *periods,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="keyword">int</span>                   reorder,</span></span></span><br><span class="line"><span class="params"><span class="function">  _Out_ MPI_Comm              *comm_cart</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>其中<code>ndims</code>表示维度数量，<code>dims</code>表示全局的各个维度的大小，<code>periods</code>表示（不知道），<code>reorder</code>表示是否按照划分的小块重新计算rank值。</p>
+<p>使用该方法后产生的<code>MPI_Comm</code>将会携带所需要的维度信息，例如</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MPI_Cart_create(MPI_COMM_WORLD, <span class="number">2</span>, dims, periods, <span class="literal">false</span>, &amp;cart_comm);</span><br></pre></td></tr></table></figure>
+<p>执行后，<code>cart_comm</code>携带的维度信息为全局为一个<code>dims[0] * dims[1]</code>的矩阵。</p>
+<h2 id="mpi_dims_create"><code>MPI_Dims_create</code></h2>
+<blockquote>
+<p>未使用过，故不确定其真实效果</p>
+</blockquote>
+<h1 id="使用案例">使用案例</h1>
+<p>Fox算法求矩阵乘积</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RIDX(i, j, dim) (i * dim + j)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">256</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MPI_Init(<span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> rank_num, world_size;</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;world_size);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank_num);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">pow</span>(<span class="keyword">int</span>(<span class="built_in">sqrt</span>(world_size)), <span class="number">2</span>) != world_size) </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Wrong world size\n&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> proc_sqrt = <span class="built_in">floor</span>(<span class="built_in">sqrt</span>(<span class="keyword">static_cast</span>&lt;<span class="keyword">double</span>&gt;(world_size)));</span><br><span class="line">    <span class="keyword">int</span> n = N / proc_sqrt; <span class="comment">// N is big matrix size</span></span><br><span class="line">    <span class="keyword">int</span> n_sqrt = n * n; <span class="comment">// small matrix size (n * n)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* check for pragmas */</span></span><br><span class="line">    <span class="keyword">if</span> (world_size &lt; <span class="number">4</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;This algorithm requires at least 4 processors\n&quot;</span>);</span><br><span class="line">        MPI_Finalize();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (proc_sqrt * proc_sqrt != world_size)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;processor count must be square.\n&quot;</span>);</span><br><span class="line">        MPI_Finalize();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (N % proc_sqrt !=<span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;N mod procs_sqrt !=0  &quot;</span>);</span><br><span class="line">        MPI_Finalize();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (rank_num == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Computing %d * %d matrix, submatrix size is %d * %d\n&quot;</span>, N, N, n, n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* create matrixs */</span></span><br><span class="line">    <span class="keyword">int</span> *A = <span class="keyword">new</span> <span class="keyword">int</span>[n_sqrt];</span><br><span class="line">    <span class="keyword">int</span> *B = <span class="keyword">new</span> <span class="keyword">int</span>[n_sqrt];</span><br><span class="line">    <span class="keyword">int</span> *C = <span class="keyword">new</span> <span class="keyword">int</span>[n_sqrt];</span><br><span class="line">    <span class="keyword">int</span> *T = <span class="keyword">new</span> <span class="keyword">int</span>[n_sqrt];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            A[RIDX(i, j, n)] = (i + j) * rank_num;</span><br><span class="line">            B[RIDX(i, j, n)] = (i + j) * rank_num;</span><br><span class="line">            C[RIDX(i, j, n)] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* split comm */</span></span><br><span class="line">    MPI_Comm cart_comm, cart_col, cart_row;</span><br><span class="line">    <span class="keyword">int</span> all_rank, col_rank, row_rank;</span><br><span class="line">    <span class="keyword">int</span> cart_coords[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">int</span> dims[<span class="number">2</span>], periods[<span class="number">2</span>];</span><br><span class="line">    dims[<span class="number">0</span>] = dims[<span class="number">1</span>] = proc_sqrt;</span><br><span class="line">    periods[<span class="number">0</span>] = periods[<span class="number">1</span>] = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">/* create global node matrix */</span></span><br><span class="line">    MPI_Cart_create(MPI_COMM_WORLD, <span class="number">2</span>, dims, periods, <span class="literal">false</span>, &amp;cart_comm);</span><br><span class="line">    MPI_Comm_rank(cart_comm, &amp;all_rank);</span><br><span class="line">    MPI_Cart_coords(cart_comm, all_rank, <span class="number">2</span>, cart_coords);</span><br><span class="line">    <span class="comment">/* split comm via col &amp; row */</span></span><br><span class="line">    MPI_Comm_split(cart_comm, cart_coords[<span class="number">0</span>], cart_coords[<span class="number">1</span>], &amp;cart_row);</span><br><span class="line">    MPI_Comm_split(cart_comm, cart_coords[<span class="number">1</span>], cart_coords[<span class="number">0</span>], &amp;cart_col);</span><br><span class="line">    MPI_Comm_rank(cart_row, &amp;row_rank);</span><br><span class="line">    MPI_Comm_rank(cart_col, &amp;col_rank);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    MPI_Request req_send, req_recv;</span><br><span class="line">    MPI_Status status;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; proc_sqrt; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/* swap rows of B */</span></span><br><span class="line">        MPI_Isend(B, n_sqrt, MPI_INT, (cart_coords[<span class="number">0</span>] - <span class="number">1</span> + proc_sqrt) % proc_sqrt, <span class="number">1</span>, cart_col, &amp;req_send);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> broader = (i + cart_coords[<span class="number">0</span>]) % proc_sqrt;</span><br><span class="line">        <span class="keyword">if</span> (broader == cart_coords[<span class="number">1</span>]) <span class="built_in">std</span>::copy(A, A + n_sqrt, T);</span><br><span class="line">        <span class="comment">/* boardcast A */</span></span><br><span class="line">        MPI_Bcast(T, n_sqrt, MPI_INT, broader, cart_row);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* local mul */</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; n; ++r)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c &lt; n; ++c)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; ++k)</span><br><span class="line">                &#123;</span><br><span class="line">                    C[RIDX(r, c, n)] = T[RIDX(r, k, n)] * B[RIDX(k, c, n)];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        MPI_Wait(&amp;req_send, &amp;status);</span><br><span class="line">        <span class="comment">/* finish row swap */</span></span><br><span class="line">        MPI_Recv(T, n_sqrt, MPI_INT, (cart_coords[<span class="number">0</span>] + <span class="number">1</span>) % proc_sqrt, <span class="number">1</span>, cart_col, &amp;status);</span><br><span class="line">        <span class="built_in">std</span>::copy(T, T + n_sqrt, B);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* gather global matrix */</span></span><br><span class="line">    <span class="keyword">int</span> *matrixA = <span class="keyword">new</span> <span class="keyword">int</span>[N * N];</span><br><span class="line">    <span class="keyword">int</span> *matrixB = <span class="keyword">new</span> <span class="keyword">int</span>[N * N];</span><br><span class="line">    <span class="keyword">int</span> *matrixC = <span class="keyword">new</span> <span class="keyword">int</span>[N * N];</span><br><span class="line"></span><br><span class="line">    MPI_Gather(A, n_sqrt, MPI_INT, matrixA, n_sqrt, MPI_INT, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line">    MPI_Gather(B, n_sqrt, MPI_INT, matrixB, n_sqrt, MPI_INT, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line">    MPI_Gather(C, n_sqrt, MPI_INT, matrixC, n_sqrt, MPI_INT, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (rank_num == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="function">ofstream <span class="title">Af</span><span class="params">(<span class="string">&quot;c.data/a.txt&quot;</span>)</span>, <span class="title">Bf</span><span class="params">(<span class="string">&quot;c.data/b.txt&quot;</span>)</span>, <span class="title">Cf</span><span class="params">(<span class="string">&quot;c.data/c.txt&quot;</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                Af &lt;&lt; matrixA[RIDX(i, j, N)] &lt;&lt; <span class="string">&quot;\t&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            Af &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                Bf &lt;&lt; matrixB[RIDX(i, j, N)] &lt;&lt; <span class="string">&quot;\t&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            Bf &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                Cf &lt;&lt; C[RIDX(i, j, N)] &lt;&lt; <span class="string">&quot;\t&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            Cf &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Af.close(), Bf.close(), Cf.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* free resources */</span></span><br><span class="line">    MPI_Comm_free(&amp;cart_comm);</span><br><span class="line">    MPI_Comm_free(&amp;cart_col);</span><br><span class="line">    MPI_Comm_free(&amp;cart_row);</span><br><span class="line">    <span class="keyword">delete</span>[] A;</span><br><span class="line">    <span class="keyword">delete</span>[] B;</span><br><span class="line">    <span class="keyword">delete</span>[] C;</span><br><span class="line">    <span class="keyword">delete</span>[] T;</span><br><span class="line">    <span class="keyword">delete</span>[] matrixA;</span><br><span class="line">    <span class="keyword">delete</span>[] matrixB;</span><br><span class="line">    <span class="keyword">delete</span>[] matrixC;</span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/03/02/%E4%B8%AD%E7%A7%91%E5%A4%A72019-5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -203,10 +278,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-03-02 21:14:48 / Modified: 13:26:38" itemprop="dateCreated datePublished" datetime="2022-03-02T21:14:48+00:00">2022-03-02</time>
+              <time title="Created: 2022-03-02 21:14:48" itemprop="dateCreated datePublished" datetime="2022-03-02T21:14:48+00:00">2022-03-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-12-25 14:30:03" itemprop="dateModified" datetime="2022-12-25T14:30:03+00:00">2022-12-25</time>
+              </span>
 
           
 
@@ -288,7 +369,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-02 13:26:38" itemprop="dateModified" datetime="2022-03-02T13:26:38+00:00">2022-03-02</time>
+                <time title="Modified: 2022-12-25 14:30:03" itemprop="dateModified" datetime="2022-12-25T14:30:03+00:00">2022-12-25</time>
               </span>
 
           
@@ -363,7 +444,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-02 13:26:38" itemprop="dateModified" datetime="2022-03-02T13:26:38+00:00">2022-03-02</time>
+                <time title="Modified: 2022-12-25 14:30:03" itemprop="dateModified" datetime="2022-12-25T14:30:03+00:00">2022-12-25</time>
               </span>
 
           
@@ -440,7 +521,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-02 13:26:38" itemprop="dateModified" datetime="2022-03-02T13:26:38+00:00">2022-03-02</time>
+                <time title="Modified: 2022-12-25 14:30:03" itemprop="dateModified" datetime="2022-12-25T14:30:03+00:00">2022-12-25</time>
               </span>
 
           
@@ -515,7 +596,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-02 13:26:38" itemprop="dateModified" datetime="2022-03-02T13:26:38+00:00">2022-03-02</time>
+                <time title="Modified: 2022-12-25 14:30:03" itemprop="dateModified" datetime="2022-12-25T14:30:03+00:00">2022-12-25</time>
               </span>
 
           
@@ -597,7 +678,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-02 13:26:38" itemprop="dateModified" datetime="2022-03-02T13:26:38+00:00">2022-03-02</time>
+                <time title="Modified: 2022-12-25 14:30:03" itemprop="dateModified" datetime="2022-12-25T14:30:03+00:00">2022-12-25</time>
               </span>
 
           
@@ -667,7 +748,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-02 13:26:38" itemprop="dateModified" datetime="2022-03-02T13:26:38+00:00">2022-03-02</time>
+                <time title="Modified: 2022-12-25 14:30:03" itemprop="dateModified" datetime="2022-12-25T14:30:03+00:00">2022-12-25</time>
               </span>
 
           
@@ -736,7 +817,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-02 13:26:38" itemprop="dateModified" datetime="2022-03-02T13:26:38+00:00">2022-03-02</time>
+                <time title="Modified: 2022-12-25 14:30:03" itemprop="dateModified" datetime="2022-12-25T14:30:03+00:00">2022-12-25</time>
               </span>
 
           
@@ -804,7 +885,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-02 13:26:38" itemprop="dateModified" datetime="2022-03-02T13:26:38+00:00">2022-03-02</time>
+                <time title="Modified: 2022-12-25 14:30:03" itemprop="dateModified" datetime="2022-12-25T14:30:03+00:00">2022-12-25</time>
               </span>
 
           
@@ -822,79 +903,6 @@
 <p>简单的DFS，由于题目中允许从任意点出发，故需要遍历每一个格子作为起点进行DFS。其余的和常规DFS相同</p>
 <h1 id="算法实现">算法实现</h1>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt;&amp; grid, <span class="keyword">int</span> st[<span class="number">110</span>][<span class="number">110</span>], <span class="keyword">int</span> sum, <span class="keyword">int</span>&amp; res)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> dx[] = &#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> dy[] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line"></span><br><span class="line">        res = <span class="built_in">max</span>(res, sum);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> nx = dx[i] + x, ny = dy[i] + y;</span><br><span class="line">            <span class="keyword">if</span> (nx &lt; <span class="number">0</span> || ny &lt; <span class="number">0</span> || nx &gt;= grid.<span class="built_in">size</span>() || ny &gt;= grid[<span class="number">0</span>].<span class="built_in">size</span>()) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span> (st[nx][ny] || grid[nx][ny] == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            st[nx][ny] = <span class="literal">true</span>;</span><br><span class="line">            <span class="built_in">dfs</span>(nx, ny, grid, st, sum + grid[nx][ny], res);</span><br><span class="line">            st[nx][ny] = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getMaximumGold</span><span class="params">(vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt;&amp; grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> st[<span class="number">110</span>][<span class="number">110</span>];</span><br><span class="line">        <span class="built_in">memset</span>(st, <span class="literal">false</span>, <span class="keyword">sizeof</span> st);</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; grid.<span class="built_in">size</span>(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; grid[<span class="number">0</span>].<span class="built_in">size</span>(); ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (grid[i][j] == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">                st[i][j] = <span class="literal">true</span>;</span><br><span class="line">                <span class="built_in">dfs</span>(i, j, grid, st, grid[i][j], res);</span><br><span class="line">                st[i][j] = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/02/04/LeetCode-LCP28-%E9%87%87%E8%B4%AD%E6%96%B9%E6%A1%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="anyin233">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/04/LeetCode-LCP28-%E9%87%87%E8%B4%AD%E6%96%B9%E6%A1%88/" class="post-title-link" itemprop="url">LeetCode LCP28.采购方案</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-02-04 11:45:11" itemprop="dateCreated datePublished" datetime="2022-02-04T11:45:11+00:00">2022-02-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-02 13:26:38" itemprop="dateModified" datetime="2022-03-02T13:26:38+00:00">2022-03-02</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="算法思路">算法思路</h1>
-<h2 id="暴力tle">暴力（TLE）</h2>
-<p>直接两重循环双指针进行遍历，每遇到一个合法方案就<code>ans++</code></p>
-<h2 id="二分">二分</h2>
-<p>在暴力的基础上，只枚举双指针的前一个指针，后一个指针使用二分查找得到一个最大可行的位置，方案数直接与两个指针相夹的数量相夹即可。</p>
-<h3 id="优化">优化</h3>
-<p>考虑到存在相同报价，可以在遇到相同报价的时候直接复用之前相同报价的方案数，简单地-1即可。</p>
-<h1 id="算法实现">算法实现</h1>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">purchasePlans</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> MOD = <span class="number">1000000007</span>;</span><br><span class="line">        <span class="keyword">int</span> pre = <span class="number">-1</span>, pre_cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//cout &lt;&lt; pre &lt;&lt; &#x27; &#x27; &lt;&lt; pre_cnt;</span></span><br><span class="line">            <span class="keyword">if</span> (pre &gt;= <span class="number">0</span> &amp;&amp; nums[i] == nums[pre] &amp;&amp; pre_cnt &gt; <span class="number">0</span>) <span class="comment">// 复用先前的方案</span></span><br><span class="line">            &#123;</span><br><span class="line">                ans = (ans + pre_cnt) % MOD;</span><br><span class="line">                pre_cnt --;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> l = i + <span class="number">1</span>, r = nums.<span class="built_in">size</span>() - <span class="number">1</span>, mid = (l + r + <span class="number">1</span>) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>(l &lt; r)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[mid] + nums[i] &gt; target) r = mid - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">else</span> l = mid;</span><br><span class="line">                mid = (l + r + <span class="number">1</span>) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (nums[r] + nums[i] &lt;= target) ans = (ans + (r - i)) % MOD;</span><br><span class="line">            pre = i, pre_cnt = r - i - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -982,12 +990,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

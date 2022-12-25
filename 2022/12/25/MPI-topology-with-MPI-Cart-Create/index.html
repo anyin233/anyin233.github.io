@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"anyin233.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在使用MPI的过程中可能会涉及到一些针对特定的拓扑关系的模拟情况，如FOX算法求矩阵乘积。此时需要涉及到如何简便地模拟出特定的方阵以及元素之间的关系。MPI提供了一套简便地API可以快速地创建出携带所需要的拓扑关系的MPI_Comm。 MPI Process Topology Functions 该系列的函数即是MPI中用于处理相关的拓扑关系的相关工具。常用的包括了MPI_Cart_create等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MPI_Cart_Create 使用方法">
+<meta property="og:url" content="http://anyin233.github.io/2022/12/25/MPI-topology-with-MPI-Cart-Create/index.html">
+<meta property="og:site_name" content="Dive In World">
+<meta property="og:description" content="在使用MPI的过程中可能会涉及到一些针对特定的拓扑关系的模拟情况，如FOX算法求矩阵乘积。此时需要涉及到如何简便地模拟出特定的方阵以及元素之间的关系。MPI提供了一套简便地API可以快速地创建出携带所需要的拓扑关系的MPI_Comm。 MPI Process Topology Functions 该系列的函数即是MPI中用于处理相关的拓扑关系的相关工具。常用的包括了MPI_Cart_create等">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-12-25T22:05:10.000Z">
+<meta property="article:modified_time" content="2022-12-25T14:30:03.210Z">
+<meta property="article:author" content="anyin233">
+<meta property="article:tag" content="MPI,并行编程">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://anyin233.github.io/2022/12/25/MPI-topology-with-MPI-Cart-Create/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+  <title>MPI_Cart_Create 使用方法 | Dive In World</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X08BTBNGG6"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-X08BTBNGG6');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Dive In World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+  <a href="https://github.com/anyin233" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/12/25/MPI-topology-with-MPI-Cart-Create/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="anyin233">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dive In World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MPI_Cart_Create 使用方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-12-25 22:05:10 / Modified: 14:30:03" itemprop="dateCreated datePublished" datetime="2022-12-25T22:05:10+00:00">2022-12-25</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在使用MPI的过程中可能会涉及到一些针对特定的拓扑关系的模拟情况，如<strong>FOX算法求矩阵乘积</strong>。此时需要涉及到如何简便地模拟出特定的方阵以及元素之间的关系。MPI提供了一套简便地API可以快速地创建出携带所需要的拓扑关系的<code>MPI_Comm</code>。</p>
+<h1 id="mpi-process-topology-functions">MPI Process Topology Functions</h1>
+<p>该系列的函数即是MPI中用于处理相关的拓扑关系的相关工具。常用的包括了<code>MPI_Cart_create</code>等方法，具体的API可以参考<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/message-passing-interface/mpi-process-topology-functions">MSDN</a>。其中较为常用的包括<code>MPI_Cart_create</code>、<code>MPI_Dims_create</code>等方法。</p>
+<h2 id="mpi_cart_create"><code>MPI_Cart_create</code></h2>
+<p>该方法API如下所示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> MPIAPI <span class="title">MPI_Cart_create</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">        MPI_Comm              comm_old,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="keyword">int</span>                   ndims,</span></span></span><br><span class="line"><span class="params"><span class="function">        _In_count_(ndims) <span class="keyword">int</span> *dims,</span></span></span><br><span class="line"><span class="params"><span class="function">        _In_count_(ndims) <span class="keyword">int</span> *periods,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="keyword">int</span>                   reorder,</span></span></span><br><span class="line"><span class="params"><span class="function">  _Out_ MPI_Comm              *comm_cart</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>其中<code>ndims</code>表示维度数量，<code>dims</code>表示全局的各个维度的大小，<code>periods</code>表示（不知道），<code>reorder</code>表示是否按照划分的小块重新计算rank值。</p>
+<p>使用该方法后产生的<code>MPI_Comm</code>将会携带所需要的维度信息，例如</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MPI_Cart_create(MPI_COMM_WORLD, <span class="number">2</span>, dims, periods, <span class="literal">false</span>, &amp;cart_comm);</span><br></pre></td></tr></table></figure>
+<p>执行后，<code>cart_comm</code>携带的维度信息为全局为一个<code>dims[0] * dims[1]</code>的矩阵。</p>
+<h2 id="mpi_dims_create"><code>MPI_Dims_create</code></h2>
+<blockquote>
+<p>未使用过，故不确定其真实效果</p>
+</blockquote>
+<h1 id="使用案例">使用案例</h1>
+<p>Fox算法求矩阵乘积</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mpi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RIDX(i, j, dim) (i * dim + j)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">256</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MPI_Init(<span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> rank_num, world_size;</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;world_size);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank_num);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">pow</span>(<span class="keyword">int</span>(<span class="built_in">sqrt</span>(world_size)), <span class="number">2</span>) != world_size) </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Wrong world size\n&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> proc_sqrt = <span class="built_in">floor</span>(<span class="built_in">sqrt</span>(<span class="keyword">static_cast</span>&lt;<span class="keyword">double</span>&gt;(world_size)));</span><br><span class="line">    <span class="keyword">int</span> n = N / proc_sqrt; <span class="comment">// N is big matrix size</span></span><br><span class="line">    <span class="keyword">int</span> n_sqrt = n * n; <span class="comment">// small matrix size (n * n)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* check for pragmas */</span></span><br><span class="line">    <span class="keyword">if</span> (world_size &lt; <span class="number">4</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;This algorithm requires at least 4 processors\n&quot;</span>);</span><br><span class="line">        MPI_Finalize();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (proc_sqrt * proc_sqrt != world_size)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;processor count must be square.\n&quot;</span>);</span><br><span class="line">        MPI_Finalize();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (N % proc_sqrt !=<span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;N mod procs_sqrt !=0  &quot;</span>);</span><br><span class="line">        MPI_Finalize();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (rank_num == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Computing %d * %d matrix, submatrix size is %d * %d\n&quot;</span>, N, N, n, n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* create matrixs */</span></span><br><span class="line">    <span class="keyword">int</span> *A = <span class="keyword">new</span> <span class="keyword">int</span>[n_sqrt];</span><br><span class="line">    <span class="keyword">int</span> *B = <span class="keyword">new</span> <span class="keyword">int</span>[n_sqrt];</span><br><span class="line">    <span class="keyword">int</span> *C = <span class="keyword">new</span> <span class="keyword">int</span>[n_sqrt];</span><br><span class="line">    <span class="keyword">int</span> *T = <span class="keyword">new</span> <span class="keyword">int</span>[n_sqrt];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            A[RIDX(i, j, n)] = (i + j) * rank_num;</span><br><span class="line">            B[RIDX(i, j, n)] = (i + j) * rank_num;</span><br><span class="line">            C[RIDX(i, j, n)] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* split comm */</span></span><br><span class="line">    MPI_Comm cart_comm, cart_col, cart_row;</span><br><span class="line">    <span class="keyword">int</span> all_rank, col_rank, row_rank;</span><br><span class="line">    <span class="keyword">int</span> cart_coords[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">int</span> dims[<span class="number">2</span>], periods[<span class="number">2</span>];</span><br><span class="line">    dims[<span class="number">0</span>] = dims[<span class="number">1</span>] = proc_sqrt;</span><br><span class="line">    periods[<span class="number">0</span>] = periods[<span class="number">1</span>] = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">/* create global node matrix */</span></span><br><span class="line">    MPI_Cart_create(MPI_COMM_WORLD, <span class="number">2</span>, dims, periods, <span class="literal">false</span>, &amp;cart_comm);</span><br><span class="line">    MPI_Comm_rank(cart_comm, &amp;all_rank);</span><br><span class="line">    MPI_Cart_coords(cart_comm, all_rank, <span class="number">2</span>, cart_coords);</span><br><span class="line">    <span class="comment">/* split comm via col &amp; row */</span></span><br><span class="line">    MPI_Comm_split(cart_comm, cart_coords[<span class="number">0</span>], cart_coords[<span class="number">1</span>], &amp;cart_row);</span><br><span class="line">    MPI_Comm_split(cart_comm, cart_coords[<span class="number">1</span>], cart_coords[<span class="number">0</span>], &amp;cart_col);</span><br><span class="line">    MPI_Comm_rank(cart_row, &amp;row_rank);</span><br><span class="line">    MPI_Comm_rank(cart_col, &amp;col_rank);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    MPI_Request req_send, req_recv;</span><br><span class="line">    MPI_Status status;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; proc_sqrt; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/* swap rows of B */</span></span><br><span class="line">        MPI_Isend(B, n_sqrt, MPI_INT, (cart_coords[<span class="number">0</span>] - <span class="number">1</span> + proc_sqrt) % proc_sqrt, <span class="number">1</span>, cart_col, &amp;req_send);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> broader = (i + cart_coords[<span class="number">0</span>]) % proc_sqrt;</span><br><span class="line">        <span class="keyword">if</span> (broader == cart_coords[<span class="number">1</span>]) <span class="built_in">std</span>::copy(A, A + n_sqrt, T);</span><br><span class="line">        <span class="comment">/* boardcast A */</span></span><br><span class="line">        MPI_Bcast(T, n_sqrt, MPI_INT, broader, cart_row);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* local mul */</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; n; ++r)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c &lt; n; ++c)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; ++k)</span><br><span class="line">                &#123;</span><br><span class="line">                    C[RIDX(r, c, n)] = T[RIDX(r, k, n)] * B[RIDX(k, c, n)];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        MPI_Wait(&amp;req_send, &amp;status);</span><br><span class="line">        <span class="comment">/* finish row swap */</span></span><br><span class="line">        MPI_Recv(T, n_sqrt, MPI_INT, (cart_coords[<span class="number">0</span>] + <span class="number">1</span>) % proc_sqrt, <span class="number">1</span>, cart_col, &amp;status);</span><br><span class="line">        <span class="built_in">std</span>::copy(T, T + n_sqrt, B);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* gather global matrix */</span></span><br><span class="line">    <span class="keyword">int</span> *matrixA = <span class="keyword">new</span> <span class="keyword">int</span>[N * N];</span><br><span class="line">    <span class="keyword">int</span> *matrixB = <span class="keyword">new</span> <span class="keyword">int</span>[N * N];</span><br><span class="line">    <span class="keyword">int</span> *matrixC = <span class="keyword">new</span> <span class="keyword">int</span>[N * N];</span><br><span class="line"></span><br><span class="line">    MPI_Gather(A, n_sqrt, MPI_INT, matrixA, n_sqrt, MPI_INT, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line">    MPI_Gather(B, n_sqrt, MPI_INT, matrixB, n_sqrt, MPI_INT, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line">    MPI_Gather(C, n_sqrt, MPI_INT, matrixC, n_sqrt, MPI_INT, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (rank_num == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        <span class="function">ofstream <span class="title">Af</span><span class="params">(<span class="string">&quot;c.data/a.txt&quot;</span>)</span>, <span class="title">Bf</span><span class="params">(<span class="string">&quot;c.data/b.txt&quot;</span>)</span>, <span class="title">Cf</span><span class="params">(<span class="string">&quot;c.data/c.txt&quot;</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                Af &lt;&lt; matrixA[RIDX(i, j, N)] &lt;&lt; <span class="string">&quot;\t&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            Af &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                Bf &lt;&lt; matrixB[RIDX(i, j, N)] &lt;&lt; <span class="string">&quot;\t&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            Bf &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                Cf &lt;&lt; C[RIDX(i, j, N)] &lt;&lt; <span class="string">&quot;\t&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            Cf &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Af.close(), Bf.close(), Cf.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* free resources */</span></span><br><span class="line">    MPI_Comm_free(&amp;cart_comm);</span><br><span class="line">    MPI_Comm_free(&amp;cart_col);</span><br><span class="line">    MPI_Comm_free(&amp;cart_row);</span><br><span class="line">    <span class="keyword">delete</span>[] A;</span><br><span class="line">    <span class="keyword">delete</span>[] B;</span><br><span class="line">    <span class="keyword">delete</span>[] C;</span><br><span class="line">    <span class="keyword">delete</span>[] T;</span><br><span class="line">    <span class="keyword">delete</span>[] matrixA;</span><br><span class="line">    <span class="keyword">delete</span>[] matrixB;</span><br><span class="line">    <span class="keyword">delete</span>[] matrixC;</span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MPI-%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B/" rel="tag"># MPI,并行编程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/02/%E4%B8%AD%E7%A7%91%E5%A4%A72019-5/" rel="prev" title="中科大2019.5">
+      <i class="fa fa-chevron-left"></i> 中科大2019.5
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mpi-process-topology-functions"><span class="nav-number">1.</span> <span class="nav-text">MPI Process Topology Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mpi_cart_create"><span class="nav-number">1.1.</span> <span class="nav-text">MPI_Cart_create</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mpi_dims_create"><span class="nav-number">1.2.</span> <span class="nav-text">MPI_Dims_create</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text">使用案例</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="anyin233"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">anyin233</p>
+  <div class="site-description" itemprop="description"></div>
+  <img src="https://github.com/anyin233/blog_source/actions/workflows/deploy.yml/badge.svg" alt="Build Status" />
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://anyin233.github.io/kaoyan-review-logseq-pub/" title="https:&#x2F;&#x2F;anyin233.github.io&#x2F;kaoyan-review-logseq-pub&#x2F;">考研复习-Logseq</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">anyin233</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
