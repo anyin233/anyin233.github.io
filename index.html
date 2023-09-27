@@ -112,12 +112,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -134,6 +134,80 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2023/09/27/dkms-build-error-after-upgrade/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anyin233">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dive In World">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Dive In World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/27/dkms-build-error-after-upgrade/" class="post-title-link" itemprop="url">记录如何解决更新PVE后apt编译某dkms模块出错</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-09-27 16:54:40 / Modified: 09:09:32" itemprop="dateCreated datePublished" datetime="2023-09-27T16:54:40+00:00">2023-09-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="问题描述">问题描述</h1>
+<p>在PVE从7更新至8后，内核版本得到了更新，至此我再也不需要通过安装非官方支持的内核来提供对我所使用的核显的支持。但是更新后由于kernel版本更新到了6.2.16，同时编译器可能发生了某些变化，导致在PVE7使用过程中安装的用于支持sriov的内核模块无法正常通过编译，导致每次执行apt都会陷入漫长的编译中并失败。</p>
+<h1 id="解决方案">解决方案</h1>
+<p>由于目前这台机器未来将会作为专用的软路由设备，故不再需要通过sriov实现核显的虚拟化，解决上述问题只需要移除这个dkms模块即可</p>
+<p>如果直接执行<code>dkms remove i915-sroiv-dkms/6.2</code>可以看到系统会提示该模块并未被安装到当前的内核中，自动跳过，遇到这种情况只需要将命令改为<code>dkms remove i915-sroiv-dkms/6.2 --all</code>即可</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -179,7 +253,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -272,7 +346,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -355,7 +429,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -449,7 +523,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -535,7 +609,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -622,7 +696,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -708,7 +782,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -801,7 +875,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -882,7 +956,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -918,87 +992,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/02/05/LeetCode-LCP30-%E9%AD%94%E5%A1%94%E6%B8%B8%E6%88%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/05/LeetCode-LCP30-%E9%AD%94%E5%A1%94%E6%B8%B8%E6%88%8F/" class="post-title-link" itemprop="url">LeetCode LCP30.魔塔游戏</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-05 16:06:04" itemprop="dateCreated datePublished" datetime="2022-02-05T16:06:04+00:00">2022-02-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="算法思路">算法思路</h1>
-<p>在本题中每次只能将一个负数移动到数列的最后，我们可以考虑维护一个大根堆保存所有的负数，优先移动所有较大的负数可以使得结果最优。</p>
-<h1 id="算法实现">算法实现</h1>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">magicTower</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="type">long</span> <span class="type">long</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); ++i) sum += nums[i];</span><br><span class="line">        <span class="keyword">if</span> (sum &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        </span><br><span class="line">        sum = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        priority_queue&lt;<span class="type">int</span>, vector&lt;<span class="type">int</span>&gt;, greater&lt;<span class="type">int</span>&gt;&gt; heap;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            sum += nums[i];</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &lt; <span class="number">0</span>) heap.<span class="built_in">push</span>(nums[i]);</span><br><span class="line">            <span class="keyword">while</span> (sum &lt; <span class="number">0</span> &amp;&amp; heap.<span class="built_in">size</span>())</span><br><span class="line">            &#123;</span><br><span class="line">                cnt ++;</span><br><span class="line">                nums.<span class="built_in">push_back</span>(heap.<span class="built_in">top</span>());</span><br><span class="line">                sum -= heap.<span class="built_in">top</span>();</span><br><span class="line">                <span class="comment">//cout &lt;&lt; sum &lt;&lt; &#x27; &#x27; &lt;&lt; heap.top()&lt;&lt; endl;</span></span><br><span class="line">                heap.<span class="built_in">pop</span>();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

@@ -971,6 +971,20 @@ V操作通常用于释放资源，其的主要过程一般为
       </tags>
   </entry>
   <entry>
+    <title>记录如何解决更新PVE后apt编译某dkms模块出错</title>
+    <url>/2023/09/27/dkms-build-error-after-upgrade/</url>
+    <content><![CDATA[<h1 id="问题描述">问题描述</h1>
+<p>在PVE从7更新至8后，内核版本得到了更新，至此我再也不需要通过安装非官方支持的内核来提供对我所使用的核显的支持。但是更新后由于kernel版本更新到了6.2.16，同时编译器可能发生了某些变化，导致在PVE7使用过程中安装的用于支持sriov的内核模块无法正常通过编译，导致每次执行apt都会陷入漫长的编译中并失败。</p>
+<h1 id="解决方案">解决方案</h1>
+<p>由于目前这台机器未来将会作为专用的软路由设备，故不再需要通过sriov实现核显的虚拟化，解决上述问题只需要移除这个dkms模块即可</p>
+<p>如果直接执行<code>dkms remove i915-sroiv-dkms/6.2</code>可以看到系统会提示该模块并未被安装到当前的内核中，自动跳过，遇到这种情况只需要将命令改为<code>dkms remove i915-sroiv-dkms/6.2 --all</code>即可</p>
+]]></content>
+      <tags>
+        <tag>PVE</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>记录一次宿舍NAS的搭建</title>
     <url>/2023/02/21/new-nas-build/</url>
     <content><![CDATA[<h1 id="前期准备">前期准备</h1>

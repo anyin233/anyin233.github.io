@@ -112,12 +112,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -134,6 +134,85 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/01/24/AcWing-1100-%E6%8A%93%E4%BD%8F%E9%82%A3%E5%A4%B4%E7%89%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anyin233">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dive In World">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Dive In World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/24/AcWing-1100-%E6%8A%93%E4%BD%8F%E9%82%A3%E5%A4%B4%E7%89%9B/" class="post-title-link" itemprop="url">AcWing 1100.抓住那头牛</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-24 11:07:42" itemprop="dateCreated datePublished" datetime="2022-01-24T11:07:42+00:00">2022-01-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="算法思路">算法思路</h1>
+<p>这道题更为简单粗暴，相比188和1076的二维搜索问题，本题将搜索放到了一维层面，实际上更加简单了，具体思路同dijkstra模板</p>
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, k;</span><br><span class="line"><span class="type">int</span> dist[N], st[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    </span><br><span class="line">    queue&lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    q.<span class="built_in">push</span>(n);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">memset</span>(dist, <span class="number">0x3f</span>, <span class="keyword">sizeof</span> dist);</span><br><span class="line">    dist[n] = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">auto</span> t = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">if</span> (st[t]) <span class="keyword">continue</span>;</span><br><span class="line">        st[t] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (t - <span class="number">1</span> &gt;= <span class="number">0</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            dist[t - <span class="number">1</span>] = <span class="built_in">min</span>(dist[t - <span class="number">1</span>], dist[t] + <span class="number">1</span>);</span><br><span class="line">            q.<span class="built_in">push</span>(t - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (t + <span class="number">1</span> &lt; N)</span><br><span class="line">        &#123;</span><br><span class="line">            dist[t + <span class="number">1</span>] = <span class="built_in">min</span>(dist[t + <span class="number">1</span>], dist[t] + <span class="number">1</span>);</span><br><span class="line">            q.<span class="built_in">push</span>(t + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (t * <span class="number">2</span> &lt; N)</span><br><span class="line">        &#123;</span><br><span class="line">            dist[t * <span class="number">2</span>] = <span class="built_in">min</span>(dist[t * <span class="number">2</span>], dist[t] + <span class="number">1</span>);</span><br><span class="line">            q.<span class="built_in">push</span>(t * <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; dist[k];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -179,7 +258,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -258,7 +337,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -337,7 +416,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -416,7 +495,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -495,7 +574,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -574,7 +653,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -657,7 +736,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -744,7 +823,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -831,7 +910,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
+      <time title="Modified: 2023-09-27 09:09:32" itemprop="dateModified" datetime="2023-09-27T09:09:32+00:00">2023-09-27</time>
     </span>
 
   
@@ -870,93 +949,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/01/07/AcWing-91-%E6%9C%80%E7%9F%ADHamilton%E8%B7%AF%E5%BE%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/07/AcWing-91-%E6%9C%80%E7%9F%ADHamilton%E8%B7%AF%E5%BE%84/" class="post-title-link" itemprop="url">AcWing 91.最短Hamilton路径</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-01-07 16:21:12" itemprop="dateCreated datePublished" datetime="2022-01-07T16:21:12+00:00">2022-01-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-22 03:14:54" itemprop="dateModified" datetime="2023-05-22T03:14:54+00:00">2023-05-22</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="算法逻辑">算法逻辑</h1>
-<p>本题采用状态压缩DP方式实现。</p>
-<p>定义状态<code>i</code>为一个二进制串，其中1代表已访问的点，0代表未访问的点。DP数组定义为 当前状态*当前正在访问的点。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/07/AcWing-91-%E6%9C%80%E7%9F%ADHamilton%E8%B7%AF%E5%BE%84/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
