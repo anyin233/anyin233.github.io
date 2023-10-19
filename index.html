@@ -1,1068 +1,802 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-default-color-scheme=auto>
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="anyin233">
+  <meta name="keywords" content="">
+  
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Dive In World">
+<meta property="og:url" content="http://anyin233.github.io/index.html">
+<meta property="og:site_name" content="Dive In World">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="anyin233">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Dive In World</title>
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"anyin233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<link rel="canonical" href="http://anyin233.github.io/">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Dive In World</title>
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
 
-  <script data-pjax defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;c38d3dee9d2348fbbef638186d4f7de7&quot;}'></script>
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"anyin233.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
 
 
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
+<body>
+  
 
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
-</head>
+  <header>
+    
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <h1 class="site-title">Dive In World</h1>
-      <i class="logo-line"></i>
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dive Into World</strong>
     </a>
-  </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
-  </ul>
 </nav>
 
-
-
-
-</header>
-        
   
-  <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
+<div id="banner" class="banner" parallax=true
+     style="background: url('/images/header.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="暗を駆ける星に愿いを もう一度だけ走るから"></span>
+          
         </div>
-        <!--/noindex-->
 
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">anyin233</p>
-  <div class="site-description" itemprop="description"></div>
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
 </div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">52</span>
-          <span class="site-state-item-name">posts</span>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/10/19/lji-ebike-controller/" target="_self">
+          小牛uqi2022改装记录
         </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/10/19/lji-ebike-controller/" target="_self">
+        <div>
+          为什么要改装 众所周知的是，在中国，多数的省会都是禁摩的，为了回应禁摩政策，满足广大人民群众的出行需求，电瓶车这种抽象玩意儿走入了人们的视野。与之同时，国内为了回应电瓶车这种抽象玩意儿的发展，提出了更加抽象的玩意儿：新国标电动自行车。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-10-19 11:44" pubdate>
+              2023-10-19
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%96%B0%E5%9B%BD%E6%A0%87%E7%94%B5%E8%87%AA/">#新国标电自</a>
+            
+              <a href="/tags/%E6%94%B9%E8%A3%85/">#改装</a>
+            
+          </div>
+        
       </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">37</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/anyin233" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anyin233" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
+    </article>
   </div>
 
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/09/27/dkms-build-error-after-upgrade/" target="_self">
+          记录如何解决更新PVE后apt编译某dkms模块出错
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/27/dkms-build-error-after-upgrade/" target="_self">
+        <div>
+          问题描述 在PVE从7更新至8后，内核版本得到了更新，至此我再也不需要通过安装非官方支持的内核来提供对我所使用的核显的支持。但是更新后由于kernel版本更新到了6.2.16，同时编译器可能发生了某些变化，导致在PVE7使用过程中安装的用于支持sriov的内核模块无法正常通过编译，导致每次执行apt都会陷入漫长的编译中并失败。 解决方案 由于目前这台机器未来将会作为专用的软路由设备，故不再需要通过
         </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-27 16:54" pubdate>
+              2023-09-27
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/PVE/">#PVE</a>
+            
+              <a href="/tags/Linux/">#Linux</a>
+            
+          </div>
+        
       </div>
-        <div class="back-to-top animated" role="button" aria-label="Back to top">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
-        </div>
-    </div>
+    </article>
+  </div>
 
-    
-  </aside>
-
-
-    </div>
-
-    <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2023/10/19/lji-ebike-controller/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/10/19/lji-ebike-controller/" class="post-title-link" itemprop="url">小牛uqi2022改装记录</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2023-10-19 11:44:41 / Modified: 05:28:10" itemprop="dateCreated datePublished" datetime="2023-10-19T11:44:41+00:00">2023-10-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
+  <div class="row mx-auto index-card">
     
     
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="为什么要改装">为什么要改装</h1>
-<p>众所周知的是，在中国，多数的省会都是禁摩的，为了回应禁摩政策，满足广大人民群众的出行需求，电瓶车这种抽象玩意儿走入了人们的视野。与之同时，国内为了回应电瓶车这种抽象玩意儿的发展，提出了更加抽象的玩意儿：新国标电动自行车。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/10/19/lji-ebike-controller/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
         
+        <a href="/2023/02/21/new-nas-build/" target="_self">
+          记录一次宿舍NAS的搭建
+        </a>
+      </h2>
+
       
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2023/09/27/dkms-build-error-after-upgrade/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/09/27/dkms-build-error-after-upgrade/" class="post-title-link" itemprop="url">记录如何解决更新PVE后apt编译某dkms模块出错</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-09-27 16:54:40" itemprop="dateCreated datePublished" datetime="2023-09-27T16:54:40+00:00">2023-09-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-19 05:28:10" itemprop="dateModified" datetime="2023-10-19T05:28:10+00:00">2023-10-19</time>
-    </span>
-
-  
-</div>
-
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/02/21/new-nas-build/" target="_self">
+        <div>
+          前期准备 起因与需求 为了不被叔叔恶心，同时简化自己的追番流程，另外还考虑到可以整点homelab，故选择了在宿舍搭建自己的第一台nas，主要目的当然是方便自己进行高画质追番，次要的目的就是随时可以搞点奇奇怪怪的东西来玩。 既然是宿舍装机，那需求和限制都非常明确  7 * 24h 运行 静音 小体积 功率低于3200w 可用容量至少有个8T
         </div>
-      </header>
+      </a>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="问题描述">问题描述</h1>
-<p>在PVE从7更新至8后，内核版本得到了更新，至此我再也不需要通过安装非官方支持的内核来提供对我所使用的核显的支持。但是更新后由于kernel版本更新到了6.2.16，同时编译器可能发生了某些变化，导致在PVE7使用过程中安装的用于支持sriov的内核模块无法正常通过编译，导致每次执行apt都会陷入漫长的编译中并失败。</p>
-<h1 id="解决方案">解决方案</h1>
-<p>由于目前这台机器未来将会作为专用的软路由设备，故不再需要通过sriov实现核显的虚拟化，解决上述问题只需要移除这个dkms模块即可</p>
-<p>如果直接执行<code>dkms remove i915-sroiv-dkms/6.2</code>可以看到系统会提示该模块并未被安装到当前的内核中，自动跳过，遇到这种情况只需要将命令改为<code>dkms remove i915-sroiv-dkms/6.2 --all</code>即可</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2023/02/21/new-nas-build/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/02/21/new-nas-build/" class="post-title-link" itemprop="url">记录一次宿舍NAS的搭建</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-02-21 10:35:09" itemprop="dateCreated datePublished" datetime="2023-02-21T10:35:09+00:00">2023-02-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-19 05:28:10" itemprop="dateModified" datetime="2023-10-19T05:28:10+00:00">2023-10-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前期准备">前期准备</h1>
-<h2 id="起因与需求">起因与需求</h2>
-<p>为了不被叔叔恶心，同时简化自己的追番流程，另外还考虑到可以整点homelab，故选择了在宿舍搭建自己的第一台nas，主要目的当然是方便自己进行高画质追番，次要的目的就是随时可以搞点奇奇怪怪的东西来玩。</p>
-<p>既然是宿舍装机，那需求和限制都非常明确</p>
-<ul>
-<li>7 * 24h 运行</li>
-<li>静音</li>
-<li>小体积</li>
-<li>功率低于3200w</li>
-<li>可用容量至少有个8T</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/02/21/new-nas-build/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
+      <div class="index-btm post-metas">
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/12/25/MPI-topology-with-MPI-Cart-Create/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/12/25/MPI-topology-with-MPI-Cart-Create/" class="post-title-link" itemprop="url">MPI_Cart_Create 使用方法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-12-25 22:05:10" itemprop="dateCreated datePublished" datetime="2022-12-25T22:05:10+00:00">2022-12-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-19 05:28:10" itemprop="dateModified" datetime="2023-10-19T05:28:10+00:00">2023-10-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在使用MPI的过程中可能会涉及到一些针对特定的拓扑关系的模拟情况，如<strong>FOX算法求矩阵乘积</strong>。此时需要涉及到如何简便地模拟出特定的方阵以及元素之间的关系。MPI提供了一套简便地API可以快速地创建出携带所需要的拓扑关系的<code>MPI_Comm</code>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/12/25/MPI-topology-with-MPI-Cart-Create/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-02-21 10:35" pubdate>
+              2023-02-21
+            </time>
+          </div>
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/03/02/%E4%B8%AD%E7%A7%91%E5%A4%A72019-5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/02/%E4%B8%AD%E7%A7%91%E5%A4%A72019-5/" class="post-title-link" itemprop="url">中科大2019.5</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-02 21:14:48" itemprop="dateCreated datePublished" datetime="2022-03-02T21:14:48+00:00">2022-03-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-19 05:28:10" itemprop="dateModified" datetime="2023-10-19T05:28:10+00:00">2023-10-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="题目描述">题目描述</h1>
-<p>给出一个二叉排序树的层次遍历，求从它的一个叶子结点到另一个叶子结点的路径，要求路径上经过结点的数值之和最大。二叉树的层次遍历序列从文件<code>expr.in</code>中读取，结点数值大于0，将结果输出到标准输出中。</p>
-<h2 id="样例">样例</h2>
-<p>input:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">25 15 40 5 20 30 50 10 35</span><br></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">170</span><br></pre></td></tr></table></figure>
-<h1 id="算法思路">算法思路</h1>
-<p>本题对应模板：求树的直径。</p>
-<p>树的直径指的是对于树的任意两个叶子节点最远的距离，即可以简化为对于树中的任意一个节点，到达叶子节点的最长路径和次长路径的长度之和。</p>
-<p>基于这一点，可以将求树的直径转化为两个过程</p>
-<ul>
-<li>从下向上传递（求树高度）</li>
-<li>从上向下传递</li>
-</ul>
-<p>对于自下而上的传递过程，基本的方式和求树的高度相同，但是需要记录次高的路径，但是返回最高的路径。</p>
-<p>对于自上而下的过程，需要明确对于任意节点，最长路径和次长路径只会来源于<code>parent</code>和两个<code>children</code>，故需要将<code>parent</code>的某一个长边传递给当前正在计算的节点。通常情况下传入<code>parent</code>的最长边，但是当<code>parent</code>的最长边经过当前点的时候则使用<code>parent</code>的次长边更新当前节点的信息。同时易证使用<code>parent</code>的最长边（次长边）和当前节点的两个长边更新得到的长边必然可以得到以该节点为中心得到的直径长度（并非全局直径）。</p>
-<h1 id="算法实现">算法实现</h1>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> tree[N], mx[N], mx2[N], mxr[N], mx2r[N]; <span class="comment">// longest, 2nd longest, next node of longest, next node of 2nd longest</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">down</span><span class="params">(<span class="type">int</span> u)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!tree[u])</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> llen = <span class="built_in">down</span>(u &lt;&lt; <span class="number">1</span>);</span><br><span class="line">    <span class="type">int</span> rlen = <span class="built_in">down</span>((u &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (llen &gt; rlen)</span><br><span class="line">        mxr[u] = u &lt;&lt; <span class="number">1</span>, mx2r[u] = (u &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        mxr[u] = (u &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>, mx2r[u] = u &lt;&lt; <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    mx[u] = <span class="built_in">max</span>(llen, rlen) + tree[u];</span><br><span class="line">    mx2[u] = <span class="built_in">min</span>(llen, rlen) + tree[u];</span><br><span class="line">    <span class="keyword">return</span> mx[u];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">up</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!tree[u])</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (p != <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (mxr[p] != u) <span class="comment">// parent&#x27;s longest edge doesn&#x27;t contain this node</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (mx[p] &gt; mx[u])</span><br><span class="line">            &#123;</span><br><span class="line">                mx2[u] = mx[u];</span><br><span class="line">                mx[u] = mx[p];</span><br><span class="line">                mx2r[u] = mxr[u];</span><br><span class="line">                mxr[u] = p; <span class="comment">// longest edge from parent</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (mx[p] &gt; mx2[u])</span><br><span class="line">            &#123;</span><br><span class="line">                mx2[u] = mx[p];</span><br><span class="line">                mx2r[u] = p;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (mx2[p] &gt; mx[u])</span><br><span class="line">            &#123;</span><br><span class="line">                mx2[u] = mx[u];</span><br><span class="line">                mx[u] = mx2[p];</span><br><span class="line">                mx2r[u] = mxr[u];</span><br><span class="line">                mxr[u] = p; <span class="comment">// longest edge from parent</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (mx2[p] &gt; mx2[u])</span><br><span class="line">            &#123;</span><br><span class="line">                mx2[u] = mx2[p];</span><br><span class="line">                mx2r[u] = p;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">up</span>(u &lt;&lt; <span class="number">1</span>, u);</span><br><span class="line">    <span class="built_in">up</span>((u &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>, u);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">ifstream <span class="title">ifs</span><span class="params">(<span class="string">&quot;expr.in&quot;</span>)</span></span>;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (; ifs &gt;&gt; tree[i]; i++)</span><br><span class="line">        ;</span><br><span class="line">    <span class="built_in">down</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">up</span>(<span class="number">1</span>, <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= i; ++j)</span><br><span class="line">        res = <span class="built_in">max</span>(res, mx[j] + mx2[j] - tree[j]);</span><br><span class="line">    cout &lt;&lt; res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/02/21/AcWing-343-%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/21/AcWing-343-%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">AcWing 343.排序</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-21 21:30:35" itemprop="dateCreated datePublished" datetime="2022-02-21T21:30:35+00:00">2022-02-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-19 05:28:10" itemprop="dateModified" datetime="2023-10-19T05:28:10+00:00">2023-10-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="算法思路">算法思路</h1>
-<p>本题的基本思路为基于floyd算法实现传递闭包，即将所有的大小关系进行传递，得到一个全局的大小关系，基于该大小关系判断是否存在矛盾的情况。</p>
-<p>矛盾的情况有两种</p>
-<ul>
-<li><code>A &lt; A &amp;&amp; A &gt; A</code></li>
-<li><code>A &lt; B &amp;&amp; B &lt; A</code></li>
-</ul>
-<p>二者可以在构造整个大小关系图的过程中被逐渐排查出来，即可以一边建图一边检查，当其中出现了任何一个冲突的时候便会终止后续的检查操作，大幅度减少计算量。</p>
-<p>对于最终输出序列的方法，考虑到本题的数据规模较小，可以考虑直接使用暴力枚举的方式，枚举每一个大小关系并标记，直接得到序列。</p>
-<h1 id="算法实现">算法实现</h1>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> g[N][N];</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">bool</span> st[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">floyd</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; n; ++k)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                g[i][j] |= g[i][k] &amp;&amp; g[k][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">check</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) </span><br><span class="line">        <span class="keyword">if</span> (g[i][i]) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; i; ++j)</span><br><span class="line">            <span class="keyword">if</span> (!g[i][j] &amp;&amp; !g[j][i])</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;    </span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">get_min</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (!st[i])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">bool</span> flag = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (!st[j] &amp;&amp; g[j][i])</span><br><span class="line">                &#123;</span><br><span class="line">                    flag = <span class="literal">false</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (flag)</span><br><span class="line">            &#123;</span><br><span class="line">                st[i] = <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(cin &gt;&gt; n &gt;&gt; m, n || m)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">memset</span>(g, <span class="number">0</span>, <span class="keyword">sizeof</span> g);</span><br><span class="line">        <span class="built_in">memset</span>(st, <span class="literal">false</span>, <span class="keyword">sizeof</span> st);</span><br><span class="line">        <span class="type">int</span> typ = <span class="number">0</span>, t;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>;  i &lt; m; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">char</span> a[<span class="number">4</span>];</span><br><span class="line">            cin &gt;&gt; a;</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (!typ)</span><br><span class="line">            &#123;</span><br><span class="line">                g[a[<span class="number">0</span>] - <span class="string">&#x27;A&#x27;</span>][a[<span class="number">2</span>] - <span class="string">&#x27;A&#x27;</span>] = <span class="number">1</span>;</span><br><span class="line">                <span class="built_in">floyd</span>();</span><br><span class="line">                typ = <span class="built_in">check</span>();</span><br><span class="line">                <span class="keyword">if</span> (typ) t = i + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!typ) cout &lt;&lt; <span class="string">&quot;Sorted sequence cannot be determined.\n&quot;</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (typ == <span class="number">2</span>) cout &lt;&lt; <span class="string">&quot;Inconsistency found after &quot;</span>&lt;&lt; t &lt;&lt; <span class="string">&quot; relations.\n&quot;</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Sorted sequence determined after &quot;</span>&lt;&lt; t&lt;&lt; <span class="string">&quot; relations: &quot;</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) cout &lt;&lt; <span class="built_in">char</span>(<span class="string">&#x27;A&#x27;</span> + <span class="built_in">get_min</span>());</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;.\n&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/02/18/Rust-%E5%BC%82%E6%AD%A5%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/18/Rust-%E5%BC%82%E6%AD%A5%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="post-title-link" itemprop="url">Rust 异步与多线程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-18 21:38:28" itemprop="dateCreated datePublished" datetime="2022-02-18T21:38:28+00:00">2022-02-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-19 05:28:10" itemprop="dateModified" datetime="2023-10-19T05:28:10+00:00">2023-10-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>该文档为个人学习记录，可能存在大量错误</p>
-</blockquote>
-<h1 id="概述">概述</h1>
-<p>Rust中std库实现异步与多线程的方式包括了<code>async/await</code>和<code>thread</code>，二者在官方文档中分别对应了<code>high-level</code>和<code>low-level</code>的场景。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/02/18/Rust-%E5%BC%82%E6%AD%A5%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2022/12/25/MPI-topology-with-MPI-Cart-Create/" target="_self">
+          MPI_Cart_Create 使用方法
+        </a>
+      </h2>
+
       
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/02/06/AcWing-181-%E5%9B%9E%E8%BD%AC%E6%B8%B8%E6%88%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/06/AcWing-181-%E5%9B%9E%E8%BD%AC%E6%B8%B8%E6%88%8F/" class="post-title-link" itemprop="url">AcWing 181.回转游戏</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-06 22:48:11" itemprop="dateCreated datePublished" datetime="2022-02-06T22:48:11+00:00">2022-02-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-19 05:28:10" itemprop="dateModified" datetime="2023-10-19T05:28:10+00:00">2023-10-19</time>
-    </span>
-
-  
-</div>
-
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/12/25/MPI-topology-with-MPI-Cart-Create/" target="_self">
+        <div>
+          在使用MPI的过程中可能会涉及到一些针对特定的拓扑关系的模拟情况，如FOX算法求矩阵乘积。此时需要涉及到如何简便地模拟出特定的方阵以及元素之间的关系。MPI提供了一套简便地API可以快速地创建出携带所需要的拓扑关系的MPI_Comm。
         </div>
-      </header>
+      </a>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="算法思路">算法思路</h1>
-<p>该算法基本大体框架同AcWing.180，但是题目中涉及到的8种操作需要一定的处理技巧</p>
-<h2 id="八种回转操作">八种回转操作</h2>
-<p>首先可以考虑对八种操作进行硬编码，此处采用顺时针从0到7。然后由于题目中传入的数字序列并非便于操作的方式，我们可以进行一个打表操作，提前确定会被影响到的位置。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">        A     B</span><br><span class="line">        0     1</span><br><span class="line">        2     3</span><br><span class="line">H 4  5  6  7  8  9  10 C</span><br><span class="line">        11    12      </span><br><span class="line">G 13 14 15 16 17 18 19 D</span><br><span class="line">        20    21</span><br><span class="line">        22    23</span><br><span class="line">        F     E</span><br></pre></td></tr></table></figure>
-<p>即可以生成一个<code>op</code>数组</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> op[<span class="number">8</span>][<span class="number">7</span>] = &#123;</span><br><span class="line">  &#123;<span class="number">0</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">11</span>, <span class="number">15</span>, <span class="number">20</span>, <span class="number">22</span>&#125;, <span class="comment">// A</span></span><br><span class="line">  &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">12</span>, <span class="number">17</span> ,<span class="number">21</span>, <span class="number">23</span>&#125;, <span class="comment">// B</span></span><br><span class="line">  &#123;<span class="number">10</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>&#125;, <span class="comment">// C</span></span><br><span class="line">  &#123;<span class="number">19</span>, <span class="number">18</span>, <span class="number">17</span>, <span class="number">16</span>, <span class="number">15</span>, <span class="number">14</span>, <span class="number">13</span>&#125;, <span class="comment">// D</span></span><br><span class="line">  &#123;<span class="number">23</span>, <span class="number">21</span>, <span class="number">17</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">3</span>, <span class="number">1</span>&#125;, <span class="comment">// E</span></span><br><span class="line">  &#123;<span class="number">22</span>, <span class="number">20</span>, <span class="number">15</span>, <span class="number">11</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">0</span>&#125;, <span class="comment">// F</span></span><br><span class="line">  &#123;<span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>&#125;, <span class="comment">// G</span></span><br><span class="line">  &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;, <span class="comment">// H</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>同样可以生成一个相反操作的数组，防止出现两次相反的操作导致无效操作</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> opposite = &#123;<span class="number">5</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">2</span>&#125;;</span><br></pre></td></tr></table></figure>
-<h1 id="算法实现">算法实现</h1>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">24</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> op[<span class="number">8</span>][<span class="number">7</span>] = &#123;</span><br><span class="line">  &#123;<span class="number">0</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">11</span>, <span class="number">15</span>, <span class="number">20</span>, <span class="number">22</span>&#125;, <span class="comment">// A</span></span><br><span class="line">  &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">12</span>, <span class="number">17</span> ,<span class="number">21</span>, <span class="number">23</span>&#125;, <span class="comment">// B</span></span><br><span class="line">  &#123;<span class="number">10</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>&#125;, <span class="comment">// C</span></span><br><span class="line">  &#123;<span class="number">19</span>, <span class="number">18</span>, <span class="number">17</span>, <span class="number">16</span>, <span class="number">15</span>, <span class="number">14</span>, <span class="number">13</span>&#125;, <span class="comment">// D</span></span><br><span class="line">  &#123;<span class="number">23</span>, <span class="number">21</span>, <span class="number">17</span>, <span class="number">12</span>, <span class="number">8</span>, <span class="number">3</span>, <span class="number">1</span>&#125;, <span class="comment">// E</span></span><br><span class="line">  &#123;<span class="number">22</span>, <span class="number">20</span>, <span class="number">15</span>, <span class="number">11</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">0</span>&#125;, <span class="comment">// F</span></span><br><span class="line">  &#123;<span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>&#125;, <span class="comment">// G</span></span><br><span class="line">  &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;, <span class="comment">// H</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> oppsite[] = &#123;<span class="number">5</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">2</span>&#125;;</span><br><span class="line"><span class="type">int</span> center[] = &#123;<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> g[N];</span><br><span class="line"><span class="type">int</span> path[<span class="number">100</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">int</span> sum[<span class="number">4</span>];</span><br><span class="line">    <span class="built_in">memset</span>(sum, <span class="number">0</span>, <span class="keyword">sizeof</span> sum);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; ++i) sum[g[center[i]]] ++;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> s = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">3</span>; ++i) s = <span class="built_in">max</span>(s, sum[i]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">8</span> - s;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">move</span><span class="params">(<span class="type">int</span> ac)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> t = g[op[ac][<span class="number">0</span>]];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; ++i) g[op[ac][i]] = g[op[ac][i + <span class="number">1</span>]];</span><br><span class="line">    g[op[ac][<span class="number">6</span>]] = t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> depth, <span class="type">int</span> last)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (u + <span class="built_in">f</span>() &gt; depth) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">f</span>() == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (oppsite[i] != last) <span class="comment">// prevent it goes back</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">move</span>(i);</span><br><span class="line">            path[u] = i;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">dfs</span>(u + <span class="number">1</span>, depth, i)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            <span class="built_in">move</span>(oppsite[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(cin &gt;&gt; g[<span class="number">0</span>], g[<span class="number">0</span>])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; N; ++i) cin &gt;&gt; g[i];</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> depth = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(!<span class="built_in">dfs</span>(<span class="number">0</span>, depth, <span class="number">-1</span>)) depth ++;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (!depth) cout &lt;&lt; <span class="string">&quot;No moves needed&quot;</span>;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; depth; ++i) cout &lt;&lt; (<span class="type">char</span>) (path[i] + <span class="string">&#x27;A&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="string">&#x27;\n&#x27;</span> &lt;&lt; g[center[<span class="number">0</span>]] &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/02/06/AcWing-180-%E6%8E%92%E4%B9%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/06/AcWing-180-%E6%8E%92%E4%B9%A6/" class="post-title-link" itemprop="url">AcWing 180.排书</a>
-        </h2>
-
-        <div class="post-meta-container">
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-12-25 22:05" pubdate>
+              2022-12-25
+            </time>
+          </div>
+        
+        
+        
           <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/MPI-%E5%B9%B6%E8%A1%8C%E7%BC%96%E7%A8%8B/">#MPI,并行编程</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
-      <time title="Created: 2022-02-06 21:38:01" itemprop="dateCreated datePublished" datetime="2022-02-06T21:38:01+00:00">2022-02-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-19 05:28:10" itemprop="dateModified" datetime="2023-10-19T05:28:10+00:00">2023-10-19</time>
-    </span>
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2022/03/02/%E4%B8%AD%E7%A7%91%E5%A4%A72019-5/" target="_self">
+          中科大2019.5
+        </a>
+      </h2>
 
-  
-</div>
-
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/03/02/%E4%B8%AD%E7%A7%91%E5%A4%A72019-5/" target="_self">
+        <div>
+          题目描述 给出一个二叉排序树的层次遍历，求从它的一个叶子结点到另一个叶子结点的路径，要求路径上经过结点的数值之和最大。二叉树的层次遍历序列从文件expr.in中读取，结点数值大于0，将结果输出到标准输出中。 样例 input: 125 15 40 5 20 30 50 10 35 output: 1170 算法思路 本题对应模板：求树的直径。 树的直径指的是对于树的任意两个叶子节点最远的距离，即可
         </div>
-      </header>
+      </a>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="算法思路">算法思路</h1>
-<h2 id="ida">IDA*</h2>
-<p>该算法为A*和迭代加深的结合，其中相对于A*的估价函数额外增加了基于估价函数超过迭代层数的剪枝。</p>
-<h2 id="排书交换">排书交换</h2>
-<p>本题中由于可以一次性将连续的一串书本直接插入到后面的某个位置，故可以考虑从遍历长度入手。</p>
-<p>交换的过程可以如下所示</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-----|-----|------|--------</span><br><span class="line">     l     r      k   </span><br></pre></td></tr></table></figure>
-<p>整个交换过程可以分为下面几步</p>
-<ul>
-<li>首先将原始的数组<code>b</code>复制一份到备用数组<code>w[depth]</code></li>
-<li>将<code>w[depth]</code>的<code>r + 1</code>到<code>k</code>的部分复制到<code>p</code>的<code>l</code>到<code>l + k - r</code>区域</li>
-<li>将<code>w[depth]</code>的<code>l</code>到<code>r</code>部分复制到<code>p</code>的对应剩余部分。</li>
-<li>...</li>
-</ul>
-<p>在这里我们需要将<code>l</code>到<code>r</code>的书籍插入到<code>r + 1</code>的位置，可以考虑使用如下方式</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x, y;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> x = r + <span class="number">1</span>, y = l; x &lt;= k; ++x, ++y) b[y] = w[depth][x];</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> x = l; x &lt;= r; ++x, ++y) b[y] = w[depth][x];</span><br></pre></td></tr></table></figure>
-<h1 id="算法实现">算法实现</h1>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">16</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> b[N], n, c;</span><br><span class="line"><span class="type">int</span> w[<span class="number">5</span>][N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (b[i] != b[i + <span class="number">1</span>] - <span class="number">1</span>) cnt ++;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> (cnt + <span class="number">2</span>) / <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">check</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (b[i] != b[i + <span class="number">1</span>] - <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u, <span class="type">int</span> max_step)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (u + <span class="built_in">f</span>() &gt; max_step) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">check</span>()) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> len = <span class="number">1</span>; len &lt;= n; ++len)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> l = <span class="number">0</span>; l + len - <span class="number">1</span> &lt; n; ++l)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> r = l + len - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> k = r + <span class="number">1</span>; k &lt; n; ++k)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">memcpy</span>(w[u], b, <span class="keyword">sizeof</span> w[u]);</span><br><span class="line">                <span class="type">int</span> x, y;</span><br><span class="line">                <span class="keyword">for</span> (x = r + <span class="number">1</span>, y = l; x &lt;= k; x ++, y ++) b[y] = w[u][x];</span><br><span class="line">                <span class="keyword">for</span> (x = l; x &lt;= r; x ++, y ++) b[y] = w[u][x];</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">dfs</span>(u + <span class="number">1</span>, max_step)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                <span class="built_in">memcpy</span>(b, w[u], <span class="keyword">sizeof</span> w[u]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; c;</span><br><span class="line">    <span class="keyword">while</span>(c --)</span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; n;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) cin &gt;&gt; b[i];</span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> max_step = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(max_step &lt; <span class="number">5</span> &amp;&amp; !<span class="built_in">dfs</span>(<span class="number">0</span>, max_step)) max_step ++;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (max_step &gt;= <span class="number">5</span>) cout &lt;&lt; <span class="string">&quot;5 or more\n&quot;</span>;</span><br><span class="line">        <span class="keyword">else</span> cout &lt;&lt; max_step &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/02/06/LeetCode-LCP33-%E8%93%84%E6%B0%B4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/06/LeetCode-LCP33-%E8%93%84%E6%B0%B4/" class="post-title-link" itemprop="url">LeetCode LCP33.蓄水</a>
-        </h2>
-
-        <div class="post-meta-container">
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-03-02 21:14" pubdate>
+              2022-03-02
+            </time>
+          </div>
+        
+        
+        
           <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">#算法学习</a>
+            
+              <a href="/tags/%E6%A0%91/">#树</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
-      <time title="Created: 2022-02-06 13:22:48" itemprop="dateCreated datePublished" datetime="2022-02-06T13:22:48+00:00">2022-02-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-19 05:28:10" itemprop="dateModified" datetime="2023-10-19T05:28:10+00:00">2023-10-19</time>
-    </span>
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2022/02/21/AcWing-343-%E6%8E%92%E5%BA%8F/" target="_self">
+          AcWing 343.排序
+        </a>
+      </h2>
 
-  
-</div>
-
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/21/AcWing-343-%E6%8E%92%E5%BA%8F/" target="_self">
+        <div>
+          算法思路 本题的基本思路为基于floyd算法实现传递闭包，即将所有的大小关系进行传递，得到一个全局的大小关系，基于该大小关系判断是否存在矛盾的情况。 矛盾的情况有两种  A &lt; A &amp;&amp; A &gt; A A &lt; B &amp;&amp; B &lt; A  二者可以在构造整个大小关系图的过程中被逐渐排查出来，即可以一边建图一边检查，当其中出现了任何一个冲突的时候便会终
         </div>
-      </header>
+      </a>
 
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-21 21:30" pubdate>
+              2022-02-21
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">#算法学习</a>
+            
+              <a href="/tags/AcWing/">#AcWing</a>
+            
+              <a href="/tags/floyd/">#floyd</a>
+            
+              <a href="/tags/%E4%BC%A0%E9%80%92%E9%97%AD%E5%8C%85/">#传递闭包</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
     
     
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="算法思路">算法思路</h1>
-<p>基于给出的操作，即每次操作可以让所有的水桶进行一次注水或者升级<strong>一个</strong>水桶，我们可以考虑使用贪心的思路。<br />
-由于总共<strong>倒水</strong>的次数取决于需要倒水次数最多的水桶，我们可以考虑采用一个堆，每次取出需要倒水次数最多的那个水桶进行升级，从而最小化倒水的次数。通过不断遍历直到最大的倒水次数只有一次的时候即可跳出升级循环。<br />
-另外，由于本题中存在容量为0的水缸，为了避免不必要的判断，可以考虑直接进行跳过处理。</p>
-<h1 id="算法实现">算法实现</h1>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">storeWater</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; bucket, vector&lt;<span class="type">int</span>&gt;&amp; vat)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> cnt = <span class="number">0</span>, res = <span class="number">0x3f3f3f3f</span>; <span class="comment">// upgrade count and result</span></span><br><span class="line">        priority_queue&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;, vector&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt;, less&lt;pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt;&gt;&gt; heap;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; bucket.<span class="built_in">size</span>(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (bucket[i] == <span class="number">0</span> &amp;&amp; vat[i] != <span class="number">0</span>) cnt ++, bucket[i] ++;</span><br><span class="line">            <span class="keyword">if</span> (bucket[i] == <span class="number">0</span> &amp;&amp; vat[i] == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            heap.<span class="built_in">push</span>(&#123;(<span class="type">int</span>)(vat[i] / bucket[i] + (vat[i] % bucket[i] &gt; <span class="number">0</span>)), i&#125;);</span><br><span class="line">        &#125; <span class="comment">// 预处理，防止出现为0的情况</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(<span class="literal">true</span> &amp;&amp; heap.<span class="built_in">size</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">auto</span> p = heap.<span class="built_in">top</span>();</span><br><span class="line">            heap.<span class="built_in">pop</span>();</span><br><span class="line">            <span class="type">int</span> buk = bucket[p.second] + <span class="number">1</span>, v = vat[p.second];</span><br><span class="line">            res = <span class="built_in">min</span>(res, cnt + p.first);</span><br><span class="line">            bucket[p.second] ++; <span class="comment">// upgrade;</span></span><br><span class="line">            cnt ++;</span><br><span class="line">            <span class="keyword">if</span> (v / buk &lt;= <span class="number">1</span>) <span class="keyword">break</span>; </span><br><span class="line">            heap.<span class="built_in">push</span>(&#123;v / buk + (v % buk &gt; <span class="number">0</span>), p.second&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res == <span class="number">0x3f3f3f3f</span>? <span class="number">0</span> : res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2022/02/18/Rust-%E5%BC%82%E6%AD%A5%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/" target="_self">
+          Rust 异步与多线程
+        </a>
+      </h2>
 
       
-    </div>
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/18/Rust-%E5%BC%82%E6%AD%A5%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/" target="_self">
+        <div>
+          该文档为个人学习记录，可能存在大量错误  概述 Rust中std库实现异步与多线程的方式包括了async/await和thread，二者在官方文档中分别对应了high-level和low-level的场景。
+        </div>
+      </a>
 
-    
-    
-    
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-18 21:38" pubdate>
+              2022-02-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Rust/">#Rust</a>
+            
+              <a href="/tags/%E7%A8%8B%E5%BA%8F%E8%AF%AD%E8%A8%80/">#程序语言</a>
+            
+              <a href="/tags/%E5%BC%82%E6%AD%A5/">#异步</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
-    <footer class="post-footer">
-        <div class="post-eof"></div>
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2022/02/06/AcWing-181-%E5%9B%9E%E8%BD%AC%E6%B8%B8%E6%88%8F/" target="_self">
+          AcWing 181.回转游戏
+        </a>
+      </h2>
+
       
-    </footer>
-  </article>
-</div>
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/06/AcWing-181-%E5%9B%9E%E8%BD%AC%E6%B8%B8%E6%88%8F/" target="_self">
+        <div>
+          算法思路 该算法基本大体框架同AcWing.180，但是题目中涉及到的8种操作需要一定的处理技巧 八种回转操作 首先可以考虑对八种操作进行硬编码，此处采用顺时针从0到7。然后由于题目中传入的数字序列并非便于操作的方式，我们可以进行一个打表操作，提前确定会被影响到的位置。 123456789        A     B        0     1        2     3H 4  5  6
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-06 22:48" pubdate>
+              2022-02-06
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">#算法学习</a>
+            
+              <a href="/tags/AcWing/">#AcWing</a>
+            
+              <a href="/tags/DFS/">#DFS</a>
+            
+              <a href="/tags/IDA/">#IDA*</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2022/02/06/AcWing-180-%E6%8E%92%E4%B9%A6/" target="_self">
+          AcWing 180.排书
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/06/AcWing-180-%E6%8E%92%E4%B9%A6/" target="_self">
+        <div>
+          算法思路 IDA* 该算法为A*和迭代加深的结合，其中相对于A*的估价函数额外增加了基于估价函数超过迭代层数的剪枝。 排书交换 本题中由于可以一次性将连续的一串书本直接插入到后面的某个位置，故可以考虑从遍历长度入手。 交换的过程可以如下所示 12-----|-----|------|--------     l     r      k    整个交换过程可以分为下面几步  首先将原始的数组b复制
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-06 21:38" pubdate>
+              2022-02-06
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">#算法学习</a>
+            
+              <a href="/tags/AcWing/">#AcWing</a>
+            
+              <a href="/tags/DFS/">#DFS</a>
+            
+              <a href="/tags/IDA/">#IDA*</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2022/02/06/LeetCode-LCP33-%E8%93%84%E6%B0%B4/" target="_self">
+          LeetCode LCP33.蓄水
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/06/LeetCode-LCP33-%E8%93%84%E6%B0%B4/" target="_self">
+        <div>
+          算法思路 基于给出的操作，即每次操作可以让所有的水桶进行一次注水或者升级一个水桶，我们可以考虑使用贪心的思路。 由于总共倒水的次数取决于需要倒水次数最多的水桶，我们可以考虑采用一个堆，每次取出需要倒水次数最多的那个水桶进行升级，从而最小化倒水的次数。通过不断遍历直到最大的倒水次数只有一次的时候即可跳出升级循环。 另外，由于本题中存在容量为0的水缸，为了避免不必要的判断，可以考虑直接进行跳过处理。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-06 13:22" pubdate>
+              2022-02-06
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/LeetCode/">#LeetCode</a>
+            
+              <a href="/tags/LCP/">#LCP</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
 
 
-
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
   </nav>
 
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
 </div>
+
+    
+
+    
   </main>
 
-  <footer class="footer">
+  <footer>
     <div class="footer-inner">
-
-
-<div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">anyin233</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
-  </div>
-
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
+  
+  
+  
+  
+</div>
+
   </footer>
 
+  <!-- Scripts -->
   
-  <div class="reading-progress-bar"></div>
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        jQuery.ajax({
+          type: 'GET',
+          url: 'https://v1.hitokoto.cn?c=a&c=b&encode=json',
+          headers: {},
+          dataType: 'json',
+          success: function(result) {
+            var apiText;
+            if (result) {
+              var keys = 'hitokoto'.split(',');
+              if (result instanceof Array) {
+                result = result[0];
+              }
+              for (const k of keys) {
+                var value = result[k];
+                if (typeof value === 'string') {
+                  apiText = value;
+                  break;
+                } else if (value instanceof Object) {
+                  result = value;
+                }
+              }
+            }
+            apiText ? typing(apiText) : typing(text);
+          },
+          error: function(xhr, status, error) {
+            if (error) {
+              console.error('Failed to request https://v1.hitokoto.cn?c=a&amp;c=b&amp;encode=json:', error);
+            }
+            typing(text);
+          }
+        })
+      
+    })(window, document);
+  </script>
+
+
 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
-
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
 
 
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
 
   
 
-
-
-
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js"></script>
-
-
-
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>

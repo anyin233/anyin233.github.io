@@ -1,225 +1,299 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-default-color-scheme=auto>
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="anyin233">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="死锁 死锁作为多进(线)程开发中经常遇到的问题，其通常体现为多个进程和线程同时处于阻塞状态并且在没有任何外力干扰的情况下完全无法解除这种状态的情况。我们可以通过一个著名的场景来具体地理解死锁的概念。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="死锁与银行家算法">
+<meta property="og:url" content="http://anyin233.github.io/2020/11/19/%E6%AD%BB%E9%94%81%E4%B8%8E%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Dive In World">
+<meta property="og:description" content="死锁 死锁作为多进(线)程开发中经常遇到的问题，其通常体现为多个进程和线程同时处于阻塞状态并且在没有任何外力干扰的情况下完全无法解除这种状态的情况。我们可以通过一个著名的场景来具体地理解死锁的概念。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2020/11/19/5BZeJAtpYKHfzuS.png">
+<meta property="article:published_time" content="2020-11-19T10:18:46.000Z">
+<meta property="article:modified_time" content="2023-10-19T05:52:43.135Z">
+<meta property="article:author" content="anyin233">
+<meta property="article:tag" content="操作系统">
+<meta property="article:tag" content="多线程">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.loli.net/2020/11/19/5BZeJAtpYKHfzuS.png">
+  
+  
+  
+  <title>死锁与银行家算法 - Dive In World</title>
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"anyin233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-
-
-<link rel="canonical" href="http://anyin233.github.io/2020/11/19/%E6%AD%BB%E9%94%81%E4%B8%8E%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95/">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://anyin233.github.io/2020/11/19/%E6%AD%BB%E9%94%81%E4%B8%8E%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95/","path":"2020/11/19/死锁与银行家算法/","title":"死锁与银行家算法"}</script>
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>死锁与银行家算法 | Dive In World</title>
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
 
-  <script data-pjax defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;c38d3dee9d2348fbbef638186d4f7de7&quot;}'></script>
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"anyin233.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
 
 
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
+<body>
+  
 
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
-</head>
+  <header>
+    
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">Dive In World</p>
-      <i class="logo-line"></i>
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dive Into World</strong>
     </a>
-  </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
-  </ul>
 </nav>
 
-
-
-
-</header>
-        
   
-  <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%BB%E9%94%81"><span class="nav-number">1.</span> <span class="nav-text">死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%B2%E5%AD%A6%E5%AE%B6%E7%94%A8%E9%A4%90%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">哲学家用餐问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%B2%E5%AD%A6%E5%AE%B6%E7%94%A8%E9%A4%90%E9%97%AE%E9%A2%98%E4%B8%8E%E6%AD%BB%E9%94%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">哲学家用餐问题与死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.2.</span> <span class="nav-text">常规的解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%94%9F%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">服务生机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AE%E6%B5%81%E8%BF%9B%E9%A4%90%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">轮流进餐机制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">死锁的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E8%A7%A3%E5%86%B3"><span class="nav-number">1.3.</span> <span class="nav-text">死锁的解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E9%98%B2%E6%AD%BB%E9%94%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">预防死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E6%AD%BB%E9%94%81"><span class="nav-number">1.3.2.</span> <span class="nav-text">避免死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E4%B8%8E%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%E5%88%92%E5%88%86"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">安全与不安全的划分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">银行家算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.2.2.1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.2.2.2.</span> <span class="nav-text">算法过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E6%A3%80%E6%B5%8B"><span class="nav-number">1.3.2.2.3.</span> <span class="nav-text">安全性检测</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+<div id="banner" class="banner" parallax=true
+     style="background: url('/images/header.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="死锁与银行家算法"></span>
+          
         </div>
-        <!--/noindex-->
 
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">anyin233</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">52</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">37</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/anyin233" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anyin233" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-11-19 10:18" pubdate>
+          November 19, 2020 am
+        </time>
       </span>
+    
   </div>
 
-        </div>
-      </div>
-        <div class="back-to-top animated" role="button" aria-label="Back to top">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
-        </div>
-    </div>
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k words
+        
+      </span>
+    
 
     
-  </aside>
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
 
 
+        
+      </div>
+
+      
     </div>
-
-    <div class="main-inner post posts-expand">
-
-
-  
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2020/11/19/%E6%AD%BB%E9%94%81%E4%B8%8E%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="死锁与银行家算法 | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          死锁与银行家算法
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-11-19 10:18:46" itemprop="dateCreated datePublished" datetime="2020-11-19T10:18:46+00:00">2020-11-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-19 05:28:10" itemprop="dateModified" datetime="2023-10-19T05:28:10+00:00">2023-10-19</time>
-    </span>
-
-  
+  </div>
 </div>
 
-        </div>
-      </header>
+</div>
 
+  </header>
+
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody"><h1 id="死锁">死锁</h1>
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">死锁与银行家算法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="死锁">死锁</h1>
 <p>死锁作为多进(线)程开发中经常遇到的问题，其通常体现为多个进程和线程同时处于阻塞状态并且在没有任何外力干扰的情况下完全无法解除这种状态的情况。我们可以通过一个著名的场景来具体地理解死锁的概念。</p>
 <span id="more"></span>
 <h2 id="哲学家用餐问题">哲学家用餐问题</h2>
 <p>哲学家用餐问题主要模型在一个<strong>圆桌</strong>上坐着n位哲学家，而每位哲学家的间隔处均放着一只筷子，所有的哲学家均处拥有进餐和思考两种状态，其中如果希望进入用餐状态则需要同时获得左右两边的筷子。<br />
-现在假设总共有5个哲学家，对应的就是5只筷子，画成图就如下所示 <img src="https://i.loli.net/2020/11/19/5BZeJAtpYKHfzuS.png" alt="image.png" /> 这张图来自于维基百科<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%B0%B1%E9%A4%90%E9%97%AE%E9%A2%98">哲学家就餐问题</a>,故筷子变成了叉子，将就看看吧(笑)</p>
+现在假设总共有5个哲学家，对应的就是5只筷子，画成图就如下所示 <img src="https://i.loli.net/2020/11/19/5BZeJAtpYKHfzuS.png" srcset="/img/loading.gif" lazyload alt="image.png" /> 这张图来自于维基百科<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%B0%B1%E9%A4%90%E9%97%AE%E9%A2%98">哲学家就餐问题</a>,故筷子变成了叉子，将就看看吧(笑)</p>
 <h3 id="哲学家用餐问题与死锁">哲学家用餐问题与死锁</h3>
 <p>现在我们要在这个问题中引入死锁的问题，我们假设所有的哲学家同时希望就餐，此时他们同时拿起了他们左侧的筷子(叉子)，由于这群哲学家都是自私自利的，他们在成功就餐之前<strong>不会放弃</strong>手上的筷子(叉子)，故接下来他们在请求自己右边的叉子的时候所有的哲学家都不会获得在他们右手的筷子(叉子)，因为右边的筷子(叉子)均被他们各自右边的哲学家取走了，所以从这个时刻开始所有的哲学家均无法就餐，由于他们都不愿意放弃手上已经获得的筷子(叉子)，所以没有人会打破这个僵局，也就是说现在发生了<strong>死锁</strong></p>
 <h3 id="常规的解决方案">常规的解决方案</h3>
 <p>由于哲学家问题涉及到的请求的资源种类单一，我们可以使用在之前学到的信号量机制轻松地解决这个问题。</p>
 <h4 id="服务生机制">服务生机制</h4>
 <p>第一种方法就是引入一个服务生，当哲学家需要进餐的时候他们将不会自己拿起自己的筷子(叉子)，而是由服务生检查他两侧是否有筷子(叉子)，如果都有的时候便由服务生拿起两侧的餐具交给这位哲学家，这样实现了在请求资源之前对资源进行检查，防止出现死锁的情况。 我们可以用伪代码实现如下，我们将会对哲学家进行编号，顺时针0-4，其中0号哲学家左边的筷子视作0号筷子，右边为1号，依次递增。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">waiter</span>: Semaphore = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">fork</span>: <span class="type">Vec</span>&lt;Semaphore&gt; = [<span class="number">1</span>; <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">philosopher</span>(code:<span class="type">i32</span>)&#123;</span><br><span class="line">    waiter.<span class="title function_ invoke__">wait</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">ready</span> = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> fork[left].<span class="title function_ invoke__">available</span>() and fork[right].<span class="title function_ invoke__">available</span>()&#123;</span><br><span class="line">        fork[left].<span class="title function_ invoke__">wait</span>();</span><br><span class="line">        fork[right].<span class="title function_ invoke__">wait</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    waiter.<span class="title function_ invoke__">signal</span>();</span><br><span class="line">    <span class="keyword">if</span> ready&#123;</span><br><span class="line">        <span class="comment">//进餐</span></span><br><span class="line">        fork[left].<span class="title function_ invoke__">signal</span>();</span><br><span class="line">        fork[right].<span class="title function_ invoke__">signal</span>():</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//左右筷子被占用，无法就餐</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">waiter</span>: Semaphore = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">fork</span>: <span class="hljs-type">Vec</span>&lt;Semaphore&gt; = [<span class="hljs-number">1</span>; <span class="hljs-number">5</span>];<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">philosopher</span>(code:<span class="hljs-type">i32</span>)&#123;<br>    waiter.<span class="hljs-title function_ invoke__">wait</span>();<br>    <span class="hljs-keyword">let</span> <span class="hljs-variable">ready</span> = <span class="hljs-literal">false</span>;<br>    <span class="hljs-keyword">if</span> fork[left].<span class="hljs-title function_ invoke__">available</span>() and fork[right].<span class="hljs-title function_ invoke__">available</span>()&#123;<br>        fork[left].<span class="hljs-title function_ invoke__">wait</span>();<br>        fork[right].<span class="hljs-title function_ invoke__">wait</span>();<br>    &#125;<br>    waiter.<span class="hljs-title function_ invoke__">signal</span>();<br>    <span class="hljs-keyword">if</span> ready&#123;<br>        <span class="hljs-comment">//进餐</span><br>        fork[left].<span class="hljs-title function_ invoke__">signal</span>();<br>        fork[right].<span class="hljs-title function_ invoke__">signal</span>():<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-comment">//左右筷子被占用，无法就餐</span><br>    &#125; <br>&#125;<br></code></pre></td></tr></table></figure>
 <h4 id="轮流进餐机制">轮流进餐机制</h4>
 <p>第二种方法便是要求每次只能由一个哲学家要求进餐，也就是说当某个哲学家宣布自己要进餐的时候其他所有人都不能对自己身边的餐具进行请求，只能由要求进餐的这位哲学家拿起自己两侧的餐具进行就餐，就餐完毕之后其他人才能再次宣布自己要就餐。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">house</span>: Semaphore = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">fork</span>: <span class="type">Vec</span>&lt;<span class="type">i32</span>&gt; = [<span class="number">1</span>; <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">philosopher</span>(code: <span class="type">i32</span>)&#123;</span><br><span class="line">    house.<span class="title function_ invoke__">wait</span>();</span><br><span class="line">    fork[left] = <span class="number">0</span>;</span><br><span class="line">    fork[right] = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//就餐</span></span><br><span class="line">    fork[left] = <span class="number">1</span>;</span><br><span class="line">    fork[right] = <span class="number">1</span>;</span><br><span class="line">    house.<span class="title function_ invoke__">signal</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">house</span>: Semaphore = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">fork</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; = [<span class="hljs-number">1</span>; <span class="hljs-number">5</span>];<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">philosopher</span>(code: <span class="hljs-type">i32</span>)&#123;<br>    house.<span class="hljs-title function_ invoke__">wait</span>();<br>    fork[left] = <span class="hljs-number">0</span>;<br>    fork[right] = <span class="hljs-number">0</span>;<br>    <span class="hljs-comment">//就餐</span><br>    fork[left] = <span class="hljs-number">1</span>;<br>    fork[right] = <span class="hljs-number">1</span>;<br>    house.<span class="hljs-title function_ invoke__">signal</span>();<br>&#125;<br><br></code></pre></td></tr></table></figure>
 <h2 id="死锁的概念">死锁的概念</h2>
 <p>从上面的问题，相信读者也对死锁有了一定的概念，对于死锁来说其自身的产生实际上有四个必要条件，而后续探讨的系统性的对死锁的解决同样基于这四个必要条件进行</p>
 <ul>
@@ -278,93 +352,353 @@
 <h1 id="总结">总结</h1>
 <p>对于常规条件下的死锁问题，我们还会有很多的解决方案，包括上面提到的哲学家死锁问题，同样也还有其他的解法，本文的目的只在于介绍死锁问题和银行家算法。</p>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="print-no-link">#操作系统</a>
+      
+        <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="print-no-link">#多线程</a>
+      
     </div>
+  
+</div>
 
-    
-    
-    
 
-    <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
-              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"># 多线程</a>
-          </div>
+              
+  
 
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2020/11/18/Semaphore-and-Monitor/" rel="prev" title="信号量机制与管程">
-                  <i class="fa fa-chevron-left"></i> 信号量机制与管程
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>死锁与银行家算法</div>
+      <div>http://anyin233.github.io/2020/11/19/死锁与银行家算法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>anyin233</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 19, 2020</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
                 </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2020/11/20/Rust-00/" rel="next" title="从零开始的Rust生活：00-前言">
-                  从零开始的Rust生活：00-前言 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
+              
+            
           </div>
-    </footer>
-  </article>
-</div>
-
-
-
-
-
-
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-
-<div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">anyin233</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
   </div>
 
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/20/Rust-00/" title="从零开始的Rust生活：00-前言">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">从零开始的Rust生活：00-前言</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/18/Semaphore-and-Monitor/" title="信号量机制与管程">
+                        <span class="hidden-mobile">信号量机制与管程</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
     </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
   </footer>
 
+  <!-- Scripts -->
   
-  <div class="reading-progress-bar"></div>
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
-
-  
-
-
-
-
-
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
 
 
   
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
 
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js"></script>
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>

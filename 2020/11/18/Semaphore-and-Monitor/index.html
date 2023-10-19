@@ -1,210 +1,281 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-default-color-scheme=auto>
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="anyin233">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="信号量机制 信号量机制最早由提出图论的Dijkstra提出，其被广泛地使用于操作系统中用于解决同步问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信号量机制与管程">
+<meta property="og:url" content="http://anyin233.github.io/2020/11/18/Semaphore-and-Monitor/index.html">
+<meta property="og:site_name" content="Dive In World">
+<meta property="og:description" content="信号量机制 信号量机制最早由提出图论的Dijkstra提出，其被广泛地使用于操作系统中用于解决同步问题。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-11-18T19:38:10.000Z">
+<meta property="article:modified_time" content="2023-10-19T05:52:43.131Z">
+<meta property="article:author" content="anyin233">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>信号量机制与管程 - Dive In World</title>
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"anyin233.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-
-
-<link rel="canonical" href="http://anyin233.github.io/2020/11/18/Semaphore-and-Monitor/">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://anyin233.github.io/2020/11/18/Semaphore-and-Monitor/","path":"2020/11/18/Semaphore-and-Monitor/","title":"信号量机制与管程"}</script>
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
 
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>信号量机制与管程 | Dive In World</title>
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
 
-  <script data-pjax defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{&quot;token&quot;: &quot;c38d3dee9d2348fbbef638186d4f7de7&quot;}'></script>
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"anyin233.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
 
 
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
+<body>
+  
 
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
-</head>
+  <header>
+    
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">Dive In World</p>
-      <i class="logo-line"></i>
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Dive Into World</strong>
     </a>
-  </div>
 
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a></li>
-  </ul>
 </nav>
 
-
-
-
-</header>
-        
   
-  <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">信号量机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">信号量简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">生产者-消费者问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%85%E6%99%AF0%E5%A4%9A%E6%B6%88%E8%B4%B9%E8%80%85-%E6%97%A0%E7%94%9F%E4%BA%A7%E8%80%85-%E7%9B%92%E5%AD%90%E5%86%85%E7%9A%84%E8%B5%84%E6%BA%90%E6%97%A0%E9%99%90"><span class="nav-number">1.2.1.</span> <span class="nav-text">情景0：多消费者-无生产者-盒子内的资源无限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%85%E6%99%AF1%E5%8D%95%E6%B6%88%E8%B4%B9%E8%80%85-%E5%8D%95%E7%94%9F%E4%BA%A7%E8%80%85-%E7%9B%92%E5%AD%90%E5%AE%B9%E9%87%8F%E4%B8%BA%E4%B8%80"><span class="nav-number">1.2.2.</span> <span class="nav-text">情景1：单消费者-单生产者-盒子容量为一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%85%E6%99%AF2%E5%A4%9A%E6%B6%88%E8%B4%B9%E8%80%85-%E5%8D%95%E7%94%9F%E4%BA%A7%E8%80%85-%E7%9B%92%E5%AD%90%E5%AE%B9%E9%87%8F%E4%B8%BAn"><span class="nav-number">1.2.3.</span> <span class="nav-text">情景2：多消费者-单生产者-盒子容量为n</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%A1%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">管程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="nav-number">2.1.</span> <span class="nav-text">条件变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%AE%A1%E7%A8%8B%E5%AE%9E%E7%8E%B0%E8%AF%BB%E8%80%85-%E5%86%99%E8%80%85%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">使用管程实现读者-写者问题</span></a></li></ol></li></ol></div>
+<div id="banner" class="banner" parallax=true
+     style="background: url('/images/header.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="信号量机制与管程"></span>
+          
         </div>
-        <!--/noindex-->
 
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">anyin233</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">52</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">37</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/anyin233" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;anyin233" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-11-18 19:38" pubdate>
+          November 18, 2020 pm
+        </time>
       </span>
+    
   </div>
 
-        </div>
-      </div>
-        <div class="back-to-top animated" role="button" aria-label="Back to top">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
-        </div>
-    </div>
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k words
+        
+      </span>
+    
 
     
-  </aside>
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
 
 
+        
+      </div>
+
+      
     </div>
-
-    <div class="main-inner post posts-expand">
-
-
-  
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2020/11/18/Semaphore-and-Monitor/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="信号量机制与管程 | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          信号量机制与管程
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-11-18 19:38:10" itemprop="dateCreated datePublished" datetime="2020-11-18T19:38:10+00:00">2020-11-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-10-19 05:28:10" itemprop="dateModified" datetime="2023-10-19T05:28:10+00:00">2023-10-19</time>
-    </span>
-
-  
+  </div>
 </div>
 
-        </div>
-      </header>
+</div>
 
+  </header>
+
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody"><h1 id="信号量机制">信号量机制</h1>
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">信号量机制与管程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="信号量机制">信号量机制</h1>
 <p>信号量机制最早由提出图论的Dijkstra提出，其被广泛地使用于操作系统中用于解决同步问题。</p>
 <span id="more"></span>
 <h2 id="信号量简介">信号量简介</h2>
@@ -235,12 +306,12 @@ V操作通常用于释放资源，其的主要过程一般为
 <p>首先我们假设现在我们有一个盒子，x个消费者和y个生产者。并且我们规定同时可以有消费者从盒子中取出东西，同时只能由一位生产者向盒子中放入东西，且消费者和生产者同样不能同时从盒子中取出或者放入东西。</p>
 <h3 id="情景0多消费者-无生产者-盒子内的资源无限">情景0：多消费者-无生产者-盒子内的资源无限</h3>
 <p>情景0并不是定义上的生产者-消费者问题，这种情况只是提出用于具体了解信号量的工作方式的情景，故在本情景中我们假设同时只能有一位消费者从盒子中取出东西。<br />
-这种情况实际上可以退化为多个等价的个体竞争一个资源的情况，由于我们规定了盒子同时只能由一位消费者进行访问，所以我们这里就可以使用一个信号量表示盒子的占用情况，由上文中的信号量的定义我们可以得知当任何消费者对盒子进行访问后下一次对<code>res.wait()</code>的调用就会将新的进程阻塞，直到访问盒子的消费者调用<code>res.signal()</code>进行唤醒。 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">res</span>: Semaphore = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">consumer</span>()&#123;</span><br><span class="line">    res.<span class="title function_ invoke__">wait</span>();</span><br><span class="line">    <span class="comment">//对盒子中的资源进行消费</span></span><br><span class="line">    res.<span class="title function_ invoke__">signal</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+这种情况实际上可以退化为多个等价的个体竞争一个资源的情况，由于我们规定了盒子同时只能由一位消费者进行访问，所以我们这里就可以使用一个信号量表示盒子的占用情况，由上文中的信号量的定义我们可以得知当任何消费者对盒子进行访问后下一次对<code>res.wait()</code>的调用就会将新的进程阻塞，直到访问盒子的消费者调用<code>res.signal()</code>进行唤醒。 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">res</span>: Semaphore = <span class="hljs-number">1</span>;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">consumer</span>()&#123;<br>    res.<span class="hljs-title function_ invoke__">wait</span>();<br>    <span class="hljs-comment">//对盒子中的资源进行消费</span><br>    res.<span class="hljs-title function_ invoke__">signal</span>();<br>&#125;<br></code></pre></td></tr></table></figure></p>
 <h3 id="情景1单消费者-单生产者-盒子容量为一">情景1：单消费者-单生产者-盒子容量为一</h3>
-<p>从情景1开始才是真正意义上的消费者生产者问题，但是这里我们还是限制了消费者和生产者的数量均为1。对于本情景中的条件，我们可以构造得到下述的伪代码 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">full</span>: Semaphore = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">empty</span>: Semaphore = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">consumer</span>()&#123;</span><br><span class="line">    full.<span class="title function_ invoke__">wait</span>();</span><br><span class="line">    <span class="comment">//对盒子内的资源进行消费</span></span><br><span class="line">    empty.<span class="title function_ invoke__">signal</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">provider</span>()&#123;</span><br><span class="line">    empty.<span class="title function_ invoke__">wait</span>();</span><br><span class="line">    <span class="comment">//向盒子中生产内容</span></span><br><span class="line">    full.<span class="title function_ invoke__">signal</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 从上面的代码就可以看到我们创建了两个信号量而非一个，原因也很简单，当盒子为空的时候消费者无法进行消费，当盒子为满的时候生产者无法进行生产，所以我们就可以让消费者对<code>full</code>作<code>wait()</code>标志空间已经被释放，同样生产者也可以使用<code>full.signal()</code>实现标志盒子中已经放入了资源。</p>
+<p>从情景1开始才是真正意义上的消费者生产者问题，但是这里我们还是限制了消费者和生产者的数量均为1。对于本情景中的条件，我们可以构造得到下述的伪代码 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">full</span>: Semaphore = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">empty</span>: Semaphore = <span class="hljs-number">1</span>;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">consumer</span>()&#123;<br>    full.<span class="hljs-title function_ invoke__">wait</span>();<br>    <span class="hljs-comment">//对盒子内的资源进行消费</span><br>    empty.<span class="hljs-title function_ invoke__">signal</span>();<br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">provider</span>()&#123;<br>    empty.<span class="hljs-title function_ invoke__">wait</span>();<br>    <span class="hljs-comment">//向盒子中生产内容</span><br>    full.<span class="hljs-title function_ invoke__">signal</span>();<br>&#125;<br></code></pre></td></tr></table></figure> 从上面的代码就可以看到我们创建了两个信号量而非一个，原因也很简单，当盒子为空的时候消费者无法进行消费，当盒子为满的时候生产者无法进行生产，所以我们就可以让消费者对<code>full</code>作<code>wait()</code>标志空间已经被释放，同样生产者也可以使用<code>full.signal()</code>实现标志盒子中已经放入了资源。</p>
 <h3 id="情景2多消费者-单生产者-盒子容量为n">情景2：多消费者-单生产者-盒子容量为n</h3>
 <p>现在我们引入了多个消费者，我们知道当任何消费者在访问盒子的时候生产者都不能朝盒子中放入东西，但是我们只需要对上面的代码稍作修改即可解决这个问题。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="variable">full</span>: Semaphore = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">empty</span>: Semaphore = n;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">mutex</span>: Semaphore = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">using</span>: Semaphore = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="variable">count</span>: <span class="type">i32</span> = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">consumer</span>()&#123;</span><br><span class="line">    full.<span class="title function_ invoke__">wait</span>();<span class="comment">//当盒中有资源的时候</span></span><br><span class="line">    mutex.<span class="title function_ invoke__">wait</span>();<span class="comment">//当生产者未占用(盒子空闲)</span></span><br><span class="line">    using.<span class="title function_ invoke__">wait</span>();</span><br><span class="line">    count += <span class="number">1</span>;</span><br><span class="line">    using.<span class="title function_ invoke__">signal</span>();</span><br><span class="line">    <span class="comment">//从此处才正式开始消费</span></span><br><span class="line">    empty.<span class="title function_ invoke__">signal</span>();</span><br><span class="line">    <span class="comment">//从盒子中取出资源</span></span><br><span class="line">    using.<span class="title function_ invoke__">signal</span>();</span><br><span class="line">    using.<span class="title function_ invoke__">wait</span>();</span><br><span class="line">    count -= <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> count == <span class="number">0</span>&#123;</span><br><span class="line">        mutex.<span class="title function_ invoke__">signal</span>();<span class="comment">//当所有消费者退出之后才释放mutex</span></span><br><span class="line">    &#125;</span><br><span class="line">    using.<span class="title function_ invoke__">signal</span>();</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">fn</span> <span class="title function_">provider</span>()&#123;</span><br><span class="line">    empty.<span class="title function_ invoke__">wait</span>();<span class="comment">//当盒子还有空间的时候</span></span><br><span class="line">    mutex.<span class="title function_ invoke__">wait</span>();<span class="comment">//当消费者未占用(盒子空闲)</span></span><br><span class="line">    <span class="keyword">if</span> count == <span class="number">0</span>&#123;</span><br><span class="line">        <span class="comment">//向盒子中放入东西</span></span><br><span class="line">        full.<span class="title function_ invoke__">signal</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    mutex.<span class="title function_ invoke__">signal</span>();   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">full</span>: Semaphore = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">empty</span>: Semaphore = n;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">mutex</span>: Semaphore = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">using</span>: Semaphore = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">let</span> <span class="hljs-variable">count</span>: <span class="hljs-type">i32</span> = <span class="hljs-number">0</span>;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">consumer</span>()&#123;<br>    full.<span class="hljs-title function_ invoke__">wait</span>();<span class="hljs-comment">//当盒中有资源的时候</span><br>    mutex.<span class="hljs-title function_ invoke__">wait</span>();<span class="hljs-comment">//当生产者未占用(盒子空闲)</span><br>    using.<span class="hljs-title function_ invoke__">wait</span>();<br>    count += <span class="hljs-number">1</span>;<br>    using.<span class="hljs-title function_ invoke__">signal</span>();<br>    <span class="hljs-comment">//从此处才正式开始消费</span><br>    empty.<span class="hljs-title function_ invoke__">signal</span>();<br>    <span class="hljs-comment">//从盒子中取出资源</span><br>    using.<span class="hljs-title function_ invoke__">signal</span>();<br>    using.<span class="hljs-title function_ invoke__">wait</span>();<br>    count -= <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span> count == <span class="hljs-number">0</span>&#123;<br>        mutex.<span class="hljs-title function_ invoke__">signal</span>();<span class="hljs-comment">//当所有消费者退出之后才释放mutex</span><br>    &#125;<br>    using.<span class="hljs-title function_ invoke__">signal</span>();<br>    <br>&#125;<br><br><span class="hljs-keyword">fn</span> <span class="hljs-title function_">provider</span>()&#123;<br>    empty.<span class="hljs-title function_ invoke__">wait</span>();<span class="hljs-comment">//当盒子还有空间的时候</span><br>    mutex.<span class="hljs-title function_ invoke__">wait</span>();<span class="hljs-comment">//当消费者未占用(盒子空闲)</span><br>    <span class="hljs-keyword">if</span> count == <span class="hljs-number">0</span>&#123;<br>        <span class="hljs-comment">//向盒子中放入东西</span><br>        full.<span class="hljs-title function_ invoke__">signal</span>();<br>    &#125;<br>    mutex.<span class="hljs-title function_ invoke__">signal</span>();   <br>&#125;<br></code></pre></td></tr></table></figure>
 <p>从上面的代码我们可以看到这里我们加入了两个信号量，一个负责控制消费者和生产者分别对共享的盒子的访问，另外一个用于控制消费者的计数器。<br />
 在上面的代码中我们实际上将多个消费者和单一生产者的问题抽象为了第一个消费者和生产者之间的问题，当消费者全部完成消费并退出之后我们才会释放掉<code>mutex</code>使得生产者可以向盒子中放入东西。同时务必要记住在多进(线)程对共享变量的操作中必须要使用信号量管理访问的权限。</p>
 <h1 id="管程">管程</h1>
@@ -251,92 +322,348 @@ V操作通常用于释放资源，其的主要过程一般为
 <p>这里我们就可以清楚地看到条件变量和信号量的区别，对于条件变量来说由于调用其的进(线)程已经在管程中，故其的<code>wait()</code>和<code>signal()</code>无需成对，且在条件变量执行完成<code>wait()</code>操作后进(线)程必定阻塞，但是对于信号量的<code>V()</code>操作则不一定会阻塞。且在条件变量执行<code>wait()</code>操作或<code>signal()</code>的时候已经默认获得了互斥锁。</p>
 <p>光谈概念感觉管程本身还是比较晦涩的，下面还是会用著名的读者-写者问题讨论管程</p>
 <h2 id="使用管程实现读者-写者问题">使用管程实现读者-写者问题</h2>
-<p>通过使用管程，我们可以将读者-写者问题包装为一个面向对象的类 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Database</span>&#123;</span><br><span class="line">    lock: Lock,</span><br><span class="line">    AC: <span class="type">i32</span>, <span class="comment">//已经激活的读者</span></span><br><span class="line">    AP: <span class="type">i32</span>, <span class="comment">//已经激活的写者</span></span><br><span class="line">    WC: <span class="type">i32</span>, <span class="comment">//正在等待的读者</span></span><br><span class="line">    WP: <span class="type">i32</span>, <span class="comment">//正在等待的写者</span></span><br><span class="line">    buffer: <span class="type">i32</span>,</span><br><span class="line">    Condition okToRead, okToWrite;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> <span class="title class_">Database</span>&#123;</span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">start_consume</span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.lock.<span class="title function_ invoke__">aquire</span>();</span><br><span class="line">        <span class="title function_ invoke__">if</span> (WP + AP) &gt; <span class="number">0</span>&#123; <span class="comment">// 相当于还有写者处于激活状态的时候</span></span><br><span class="line">            WC++;</span><br><span class="line">            okToRead.<span class="title function_ invoke__">wait</span>(<span class="keyword">mut</span> <span class="keyword">self</span>.lock); <span class="comment">// 将自己阻塞</span></span><br><span class="line">            WC--;</span><br><span class="line">        &#125;</span><br><span class="line">        AC++;<span class="comment">//此处为未阻塞或者被唤醒</span></span><br><span class="line">        <span class="keyword">self</span>.lock.<span class="title function_ invoke__">release</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">end_consume</span>(&amp;<span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.lock.<span class="title function_ invoke__">aquire</span>();</span><br><span class="line">        AC--;</span><br><span class="line">        <span class="keyword">if</span> AC == <span class="number">0</span> &amp;&amp; WP &gt; <span class="number">0</span>&#123;</span><br><span class="line">            okToWrite.<span class="title function_ invoke__">signal</span>(); <span class="comment">// 当激活的读者退出的时候唤醒阻塞在队列中的写者</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">self</span>.lock.<span class="title function_ invoke__">release</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">start_produce</span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.lock.<span class="title function_ invoke__">aquire</span>();</span><br><span class="line">        <span class="title function_ invoke__">if</span> (WC + AC) &gt; <span class="number">0</span>&#123;</span><br><span class="line">            WP++;</span><br><span class="line">            okToWrite.<span class="title function_ invoke__">wait</span>(<span class="keyword">mut</span> <span class="keyword">self</span>.lock); <span class="comment">// 同样当任何读者在执行的时候将自身阻塞</span></span><br><span class="line">            WP--;</span><br><span class="line">        &#125;</span><br><span class="line">        AP++; <span class="comment">//此处为未阻塞或者被唤醒</span></span><br><span class="line">        <span class="keyword">self</span>.lock.<span class="title function_ invoke__">release</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">fn</span> <span class="title function_">end_produce</span>(&amp;<span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.lock.<span class="title function_ invoke__">aquire</span>();</span><br><span class="line">        AP--;</span><br><span class="line">        <span class="keyword">if</span> AP == <span class="number">0</span> &amp;&amp; WC &gt; <span class="number">0</span>&#123;</span><br><span class="line">            okToRead.<span class="title function_ invoke__">signal</span>(); <span class="comment">// 当激活的写者退出的时候唤醒正在排队的读者线程</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">self</span>.lock.<span class="title function_ invoke__">release</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">read</span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="title function_ invoke__">start_consume</span>();</span><br><span class="line">        <span class="comment">// do consume</span></span><br><span class="line">        <span class="keyword">self</span>.<span class="title function_ invoke__">end_consume</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">fn</span> <span class="title function_">write</span>(&amp;<span class="keyword">mut</span> <span class="keyword">self</span>)&#123;</span><br><span class="line">        <span class="keyword">self</span>.<span class="title function_ invoke__">start_produce</span>();</span><br><span class="line">        <span class="comment">// do produce</span></span><br><span class="line">        <span class="keyword">self</span>.<span class="title function_ invoke__">end_produce</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过使用管程，我们可以将读者-写者问题包装为一个面向对象的类 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Database</span>&#123;<br>    lock: Lock,<br>    AC: <span class="hljs-type">i32</span>, <span class="hljs-comment">//已经激活的读者</span><br>    AP: <span class="hljs-type">i32</span>, <span class="hljs-comment">//已经激活的写者</span><br>    WC: <span class="hljs-type">i32</span>, <span class="hljs-comment">//正在等待的读者</span><br>    WP: <span class="hljs-type">i32</span>, <span class="hljs-comment">//正在等待的写者</span><br>    buffer: <span class="hljs-type">i32</span>,<br>    Condition okToRead, okToWrite;<br>&#125;<br><br><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Database</span>&#123;<br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">start_consume</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        <span class="hljs-title function_ invoke__">if</span> (WP + AP) &gt; <span class="hljs-number">0</span>&#123; <span class="hljs-comment">// 相当于还有写者处于激活状态的时候</span><br>            WC++;<br>            okToRead.<span class="hljs-title function_ invoke__">wait</span>(<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>.lock); <span class="hljs-comment">// 将自己阻塞</span><br>            WC--;<br>        &#125;<br>        AC++;<span class="hljs-comment">//此处为未阻塞或者被唤醒</span><br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">end_consume</span>(&amp;<span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        AC--;<br>        <span class="hljs-keyword">if</span> AC == <span class="hljs-number">0</span> &amp;&amp; WP &gt; <span class="hljs-number">0</span>&#123;<br>            okToWrite.<span class="hljs-title function_ invoke__">signal</span>(); <span class="hljs-comment">// 当激活的读者退出的时候唤醒阻塞在队列中的写者</span><br>        &#125;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">start_produce</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        <span class="hljs-title function_ invoke__">if</span> (WC + AC) &gt; <span class="hljs-number">0</span>&#123;<br>            WP++;<br>            okToWrite.<span class="hljs-title function_ invoke__">wait</span>(<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>.lock); <span class="hljs-comment">// 同样当任何读者在执行的时候将自身阻塞</span><br>            WP--;<br>        &#125;<br>        AP++; <span class="hljs-comment">//此处为未阻塞或者被唤醒</span><br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">end_produce</span>(&amp;<span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        AP--;<br>        <span class="hljs-keyword">if</span> AP == <span class="hljs-number">0</span> &amp;&amp; WC &gt; <span class="hljs-number">0</span>&#123;<br>            okToRead.<span class="hljs-title function_ invoke__">signal</span>(); <span class="hljs-comment">// 当激活的写者退出的时候唤醒正在排队的读者线程</span><br>        &#125;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">read</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">start_consume</span>();<br>        <span class="hljs-comment">// do consume</span><br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">end_consume</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">write</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">start_produce</span>();<br>        <span class="hljs-comment">// do produce</span><br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">end_produce</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
 <p>这里我们使用了四个整形变量、一个锁和两个条件变量完成了对消费者-生产者的控制，我们可以看到对于读和写操作我们均使用两个函数来完成其的同步控制。</p>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="print-no-link">#操作系统</a>
+      
     </div>
+  
+</div>
 
-    
-    
-    
 
-    <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
-          </div>
+              
+  
 
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-            </div>
-            <div class="post-nav-item">
-                <a href="/2020/11/19/%E6%AD%BB%E9%94%81%E4%B8%8E%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95/" rel="next" title="死锁与银行家算法">
-                  死锁与银行家算法 <i class="fa fa-chevron-right"></i>
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>信号量机制与管程</div>
+      <div>http://anyin233.github.io/2020/11/18/Semaphore-and-Monitor/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>anyin233</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 18, 2020</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
                 </a>
-            </div>
+              
+            
           </div>
-    </footer>
-  </article>
-</div>
-
-
-
-
-
-
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-
-<div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">anyin233</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
   </div>
 
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/19/%E6%AD%BB%E9%94%81%E4%B8%8E%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95/" title="死锁与银行家算法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">死锁与银行家算法</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
     </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
   </footer>
 
+  <!-- Scripts -->
   
-  <div class="reading-progress-bar"></div>
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
 
 
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
-
-  
-
-
-
-
-
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
 
 
   
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/js/third-party/math/mathjax.js"></script>
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>
