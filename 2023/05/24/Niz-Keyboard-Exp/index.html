@@ -18,23 +18,21 @@
   <meta name="author" content="anyin233">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言 作为一款合格的程序语言，基本的控制语句是必须有的，而对于Rust来说她的控制流语句相对于传统的语言来说都要更为丰富，本文将会大体地介绍Rust的各类控制语句及其的基本用法。">
+    <meta name="description" content="购买动机 由于编码需求日渐提升，MacBook自带的键盘过于敲钢板，故开始着眼于购买一把新的键盘用于日常输入。在仔细研究当前的键盘市场以及遭到某位客制化狂魔洗脑后，我购入了一把Keychron的Q1 Pro，并将其轴体更换为了TTC的钢铁红轴。虽然输入体验相较于内置键盘提升巨大，但是对于我来说45g的键盘还是些许不适合长时间进行输入。在对键盘圈进行进一步了解之后，我逐渐看上了静电容键盘，这一类键盘">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从零开始的Rust生活：03-控制流与逻辑运算符">
-<meta property="og:url" content="http://anyin233.github.io/2020/11/27/Rust-03/index.html">
+<meta property="og:title" content="宁芝静电容键盘体验">
+<meta property="og:url" content="http://anyin233.github.io/2023/05/24/Niz-Keyboard-Exp/index.html">
 <meta property="og:site_name" content="Dive In World">
-<meta property="og:description" content="前言 作为一款合格的程序语言，基本的控制语句是必须有的，而对于Rust来说她的控制流语句相对于传统的语言来说都要更为丰富，本文将会大体地介绍Rust的各类控制语句及其的基本用法。">
+<meta property="og:description" content="购买动机 由于编码需求日渐提升，MacBook自带的键盘过于敲钢板，故开始着眼于购买一把新的键盘用于日常输入。在仔细研究当前的键盘市场以及遭到某位客制化狂魔洗脑后，我购入了一把Keychron的Q1 Pro，并将其轴体更换为了TTC的钢铁红轴。虽然输入体验相较于内置键盘提升巨大，但是对于我来说45g的键盘还是些许不适合长时间进行输入。在对键盘圈进行进一步了解之后，我逐渐看上了静电容键盘，这一类键盘">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-11-27T22:23:00.000Z">
+<meta property="article:published_time" content="2023-05-24T15:29:00.000Z">
 <meta property="article:modified_time" content="2023-10-19T17:10:51.816Z">
 <meta property="article:author" content="anyin233">
-<meta property="article:tag" content="Rust">
-<meta property="article:tag" content="程序语言">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>从零开始的Rust生活：03-控制流与逻辑运算符 - Dive In World</title>
+  <title>宁芝静电容键盘体验 - Dive In World</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -212,7 +210,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="从零开始的Rust生活：03-控制流与逻辑运算符"></span>
+            <span id="subtitle" data-typed-text="宁芝静电容键盘体验"></span>
           
         </div>
 
@@ -223,8 +221,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2020-11-27 22:23" pubdate>
-          November 27, 2020 pm
+        <time datetime="2023-05-24 15:29" pubdate>
+          May 24, 2023 pm
         </time>
       </span>
     
@@ -235,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          1.5k words
         
       </span>
     
@@ -246,7 +244,7 @@
         
         
         
-          11 mins
+          13 mins
         
       </span>
     
@@ -283,31 +281,30 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">从零开始的Rust生活：03-控制流与逻辑运算符</h1>
+            <h1 id="seo-header">宁芝静电容键盘体验</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="前言">前言</h1>
-<p>作为一款合格的程序语言，基本的控制语句是必须有的，而对于Rust来说她的控制流语句相对于传统的语言来说都要更为丰富，本文将会大体地介绍Rust的各类控制语句及其的基本用法。</p>
-<span id="more"></span>
-<h1 id="if">if</h1>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs if```语句作为大多数语言的标配，在Rust中自然也没有缺席，对于Rust来说与```if```搭配的同样是```else```，但是不同于经常拿来和Rust对比的C++，Rust的```if```语句后面的条件并不需要括号包裹起来，如果你用括号把它包裹的话编译器将会送给你一个大大的warning，所以说通常Rust中的一个条件语句就像这样">```rust<br>if condition &#123;<br>    // do something<br>&#125;else&#123;<br>    // do something<br>&#125;<br></code></pre></td></tr></table></figure>
-<h1 id="match">match</h1>
-<p>说到了<code>if</code>，自然少不了我们的好朋友<code>switch</code>，不过非常喜闻乐见的是Rust并没有<code>switch</code>，取而代之的是功能强大的<code>match</code>。<code>match</code>作为Rust中著名的条件选择语句，它不止用于多条件的判断控制，它还经常出现于<code>Option</code>的判断等等各类<code>None</code>类型或者错误处理的场景。常见的<code>match</code>的使用场景如下</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-title function_ invoke__">match</span>(item)&#123;<br>    condition_1 =&gt; <span class="hljs-comment">//do something</span><br>    condition_2 =&gt; &#123;<br>        <span class="hljs-comment">//do something</span><br>    &#125;<br>    _=&gt; <span class="hljs-comment">//do default thing</span><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>这里我们可以看到Rust的<code>match</code>语句支持单行或者多行的情况，其中多行的情况必须使用大括号包起来，同时<code>match</code>同样有一个<code>_</code>分支，这个分支一般是作为default分支存在。有一点非常重要，所有分支的返回值类型必须相同。</p>
-<p>但是前面又提到了<code>match</code>相对于<code>switch</code>更为强大，所以这里我们将会探讨之所以<code>match</code>强大的原因</p>
-<h2 id="match可以作为表达式">match可以作为表达式</h2>
-<p>在Rust中，match有一个非常常用的用法，在这种情况下所有的分支都必须要有返回值，就像这样</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">s</span> = <span class="hljs-title function_ invoke__">match</span> (item)&#123;<br>    condition_1 =&gt; &#123;<br>        <span class="hljs-number">1</span><br>    &#125;<br>    condition_2 =&gt; &#123;<br>        <span class="hljs-number">1</span> * <span class="hljs-number">2</span><br>    &#125;<br>    _=&gt; &#123;<br>        <span class="hljs-number">3</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>在这种情况下各个代码块最终的执行后的返回值将会被赋给<code>s</code></p>
-<h2 id="match的分支条件可以用于解包各类enum">match的分支条件可以用于解包各类enum</h2>
-<p>上面也说到了<code>match</code>可以用于处理<code>Option&lt;T&gt;</code>类型，在Rust中我们可以这样用</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">s</span> = <span class="hljs-title function_ invoke__">Some</span>(<span class="hljs-number">5</span>);<br><br><span class="hljs-title function_ invoke__">match</span>(s)&#123;<br>    <span class="hljs-title function_ invoke__">Some</span>(x) =&gt; &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>, x);<br>    &#125;<br>    <span class="hljs-literal">None</span> =&gt; &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;is none&quot;</span>);<br>    &#125;<br>&#125;<span class="hljs-comment">// 输出5</span><br><br></code></pre></td></tr></table></figure>
-<p>就像这样，Rust可以利用<code>match</code>语句轻松地解决<code>Option&lt;T&gt;</code>类型的问题。</p>
-<h1 id="后记">后记</h1>
-<p>在写了四篇Rust的博客之后，我突然发现自己对Rust的理解非常的零散肤浅，所以从本篇开始《从零开始的Rust生活》系列将会暂时停更，待到我更加了解Rust后再继续进行更新。接下来本博客将会开始逐步更新本人的Rust学习记录，同步于本人的Rust的学习进程。</p>
+                <h2 id="购买动机">购买动机</h2>
+<p>由于编码需求日渐提升，MacBook自带的键盘过于敲钢板，故开始着眼于购买一把新的键盘用于日常输入。在仔细研究当前的键盘市场以及遭到某位客制化狂魔洗脑后，我购入了一把Keychron的Q1 Pro，并将其轴体更换为了TTC的钢铁红轴。虽然输入体验相较于内置键盘提升巨大，但是对于我来说45g的键盘还是些许不适合长时间进行输入。在对键盘圈进行进一步了解之后，我逐渐看上了静电容键盘，这一类键盘的评价两极分化，有的人说这是最后的退烧键盘，有的人说这只是单纯的高级薄膜键盘罢了。而对于键盘的手感问题一直都是一个主观问题，选择一把适合自己的键盘最好的办法就是去体验它，故我决定购买一把静电容键盘用于日常输入体验。</p>
+<p>市面上常见的成品静电容键盘主要有三家，分别为大名鼎鼎的HHKB、RealForece和Niz。前两者的价格都在两千左右，而Niz则位于一千左右。作为一个预算有限的学生党，处于能省则省的原则，在多方了解Niz的评价和体验后，我选择了购买Niz最新推出的35g单模版本Mini84键盘。</p>
+<h2 id="键盘介绍">键盘介绍</h2>
+<p>Mini84的配列是一种不常见的配列，该配列中F键区紧挨着数字键区，并且并未与数字键错位，同时方向键和功能键也紧挨主键盘区域，整个键盘几乎看不到空白的区域。对于这种紧凑的配列我表示非常满意，其在一定程度上减少了手腕的移动，虽然赶不上HHKB那种更为极端的配列，但是Niz的这个配列在我看来是一个在便携和便于输入之间找到了一个相对优秀的平衡的配列。</p>
+<p>键盘的触发方式就是大名鼎鼎的静电容，基本的结构和Topre一致，均由弹簧、胶碗和导柱三部分构成，主要的手感由胶碗提供。按照网络上的说法，该种结构由于不存在任何的物理触点，故其拥有一般机械键盘难以达到的寿命，但是个人认为其随着时间的推移，内部的胶碗可能会出现一定的老化导致手感发生衰退，在某种程度上也算是限制了整把键盘的寿命。</p>
+<p>键盘默认拥有四层定义，其中第一层即Office层不允许自定义，其余三层均可以通过专用软件进行修改，有一点不好的就是这个软件只提供了Windows版本，希望商家未来可以提供在macOS上使用的专用软件以方便Mac用户。</p>
+<h2 id="键盘体验">键盘体验</h2>
+<blockquote>
+<p>体验方面相对主观，仅供参考</p>
+</blockquote>
+<h3 id="硬件体验">硬件体验</h3>
+<p>Niz的静电容键盘一大争议点就是在于其键盘按下的适合所产生的沙沙沙声，这种声音主要来自于导柱和外壳的摩擦，只要进行简单的润滑便可以解决，在我自己使用的体验看来这种声音似乎并不会对手感产生太大的影响，但是如果追求极致静音建议还是对导柱进行简单的润滑以降低摩擦的声音。</p>
+<p>这把键盘敲击时会产生轻微的段落感，这种段落感类似于某些具有轻微段落感的静音机械轴，触底的时候有轻微的回弹感，不会有那种震手的感觉。这把键盘的大键按照网友的说法是得到了专门的升级的，个人体验上我这把键盘的大键的确也不会有网络上所说的宁芝键盘大键不稳的问题，大键不管是稳定性还是手感都优于我的Q1 Pro和更早时候购买的阿米洛樱花一代。</p>
+<p>输入的过程中35g的压力也并不会出现误触发的情况，手指也可以很自然地搭在上面休息。虽然键盘整体高度较矮，但是还是建议搭配手托进行输入。</p>
+<h3 id="配套软件">配套软件</h3>
+<p>键盘自身自带了大量的调节快捷键，基于这些快捷键已经可以实现很多的功能，然而如果希望使用另外三层的自定义键就必须使用配套软件对其进行调节。</p>
+<p>基础自带的改键快捷键已经提供了很多常用的改键选项，例如Win/Mac配列切换、CapsLock与Ctrl交换等等，切换方式均印刷在键帽上方便查看，这样唯一的缺点就是键帽上略显杂乱，不过未来可以通过更换键帽进行解决。</p>
+<p>在配套软件的获取方面，宁芝只提供了找经销商获取这一条途径，这点与不少大厂可以直接在官网下载的体验相差甚远，也不知道啥时候能解决一下。</p>
 
                 
               </div>
@@ -317,15 +314,6 @@
               <div class="post-metas my-3">
   
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/Rust/" class="print-no-link">#Rust</a>
-      
-        <a href="/tags/%E7%A8%8B%E5%BA%8F%E8%AF%AD%E8%A8%80/" class="print-no-link">#程序语言</a>
-      
-    </div>
-  
 </div>
 
 
@@ -334,8 +322,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>从零开始的Rust生活：03-控制流与逻辑运算符</div>
-      <div>http://anyin233.github.io/2020/11/27/Rust-03/</div>
+      <div>宁芝静电容键盘体验</div>
+      <div>http://anyin233.github.io/2023/05/24/Niz-Keyboard-Exp/</div>
     </div>
     <div class="license-meta">
       
@@ -347,7 +335,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>November 27, 2020</div>
+          <div>May 24, 2023</div>
         </div>
       
       
@@ -379,9 +367,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/05/22/AcWing-532/" title="AcWing 532. 货币系统">
+                      <a href="/2023/09/27/dkms-build-error-after-upgrade/" title="记录如何解决更新PVE后apt编译某dkms模块出错">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">AcWing 532. 货币系统</span>
+                        <span class="hidden-mobile">记录如何解决更新PVE后apt编译某dkms模块出错</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -389,8 +377,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2020/11/23/Rust-02/" title="从零开始的Rust生活：02-函数">
-                        <span class="hidden-mobile">从零开始的Rust生活：02-函数</span>
+                      <a href="/2023/02/21/new-nas-build/" title="记录一次宿舍NAS的搭建">
+                        <span class="hidden-mobile">记录一次宿舍NAS的搭建</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

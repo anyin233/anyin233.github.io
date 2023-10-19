@@ -238,6 +238,48 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2022/02/06/LeetCode-LCP33-%E8%93%84%E6%B0%B4/" target="_self">
+          LeetCode LCP33.蓄水
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/06/LeetCode-LCP33-%E8%93%84%E6%B0%B4/" target="_self">
+        <div>
+          算法思路 基于给出的操作，即每次操作可以让所有的水桶进行一次注水或者升级一个水桶，我们可以考虑使用贪心的思路。 由于总共倒水的次数取决于需要倒水次数最多的水桶，我们可以考虑采用一个堆，每次取出需要倒水次数最多的那个水桶进行升级，从而最小化倒水的次数。通过不断遍历直到最大的倒水次数只有一次的时候即可跳出升级循环。 另外，由于本题中存在容量为0的水缸，为了避免不必要的判断，可以考虑直接进行跳过处理。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-06 13:22" pubdate>
+              2022-02-06
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/LeetCode/">#LeetCode</a>
+            
+              <a href="/tags/LCP/">#LCP</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2022/02/05/AcWing-170-%E5%8A%A0%E6%88%90%E5%BA%8F%E5%88%97/" target="_self">
           AcWing 170.加成序列
         </a>
@@ -600,52 +642,6 @@
             <i class="iconfont icon-date"></i>
             <time datetime="2022-02-03 20:10" pubdate>
               2022-02-03
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">#算法学习</a>
-            
-              <a href="/tags/AcWing/">#AcWing</a>
-            
-              <a href="/tags/DFS/">#DFS</a>
-            
-              <a href="/tags/%E5%89%AA%E6%9E%9D/">#剪枝</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/02/02/AcWing-166-%E6%95%B0%E7%8B%AC/" target="_self">
-          AcWing 166.数独
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/02/AcWing-166-%E6%95%B0%E7%8B%AC/" target="_self">
-        <div>
-          算法思路 数据表示 本题中采用单行表示一个问题，考虑采用数组记录每行、每列和每九宫格的数字出现情况。 题目中选择使用x和y计算得到每个单元格在给出的数组中对应下标。 剪枝思路 首先本题中每一种情况均唯一，并无冗余。采用的剪枝方法包括  可行性剪枝 优先遍历最少方案  其中可行性剪枝采用了位运算进行优化，通过位运算和lowbit算法可以在o(1)的时间内确定数独中某一行、列和九宫格存在的一个方案。同
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-02-02 11:35" pubdate>
-              2022-02-02
             </time>
           </div>
         
