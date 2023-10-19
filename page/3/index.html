@@ -114,12 +114,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -145,6 +145,86 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/01/29/AcWing-167-%E5%B0%8F%E7%8C%AB%E7%88%AC%E5%B1%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anyin233">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dive In World">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Dive In World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/29/AcWing-167-%E5%B0%8F%E7%8C%AB%E7%88%AC%E5%B1%B1/" class="post-title-link" itemprop="url">AcWing 167.小猫爬山</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-29 17:18:59" itemprop="dateCreated datePublished" datetime="2022-01-29T17:18:59+00:00">2022-01-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="算法思路">算法思路</h1>
+<p>考虑到本算法的时间复杂度，如果遍历全部的情况会导致TLE，故需要进行一定的剪枝。</p>
+<p>所以本题需要进行适当的剪枝，优先搜索状态较少的方案，即从个体质量较大的单位开始搜索。同时对非最优方案进行剪枝，最终可以得到结果</p>
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">20</span>;</span><br><span class="line"><span class="type">int</span> n, w;</span><br><span class="line"><span class="type">int</span> res;</span><br><span class="line"><span class="type">int</span> c[N], group[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> t, <span class="type">int</span> g)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (g &gt; res) <span class="keyword">return</span>; <span class="comment">// 非最优剪枝</span></span><br><span class="line">    <span class="keyword">if</span> (t == n) </span><br><span class="line">    &#123;</span><br><span class="line">        res = g;    </span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; g; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (c[t] + group[i] &lt;= w) <span class="comment">//非可行方案剪枝</span></span><br><span class="line">        &#123;</span><br><span class="line">            group[i] += c[t];</span><br><span class="line">            <span class="built_in">dfs</span>(t + <span class="number">1</span>, g);</span><br><span class="line">            group[i] -= c[t];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    group[g] += c[t];</span><br><span class="line">    <span class="built_in">dfs</span>(t + <span class="number">1</span>, g + <span class="number">1</span>);</span><br><span class="line">    group[g] = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    res = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; w;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) cin &gt;&gt; c[i];</span><br><span class="line">    <span class="built_in">sort</span>(c, c + n);</span><br><span class="line">    <span class="built_in">reverse</span>(c, c + n);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">dfs</span>(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -190,7 +270,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -269,7 +349,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -348,7 +428,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -427,7 +507,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -506,7 +586,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -585,7 +665,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -664,7 +744,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -746,7 +826,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -828,7 +908,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -846,85 +926,6 @@
 <p>同时本题要求记录操作序列，故可以参考<em>1076.迷宫问题</em>中记录前驱操作的思想记录每一个操作，最终通过迭代得到操作序列。</p>
 <h1 id="算法实现">算法实现</h1>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line">unordered_map&lt;string, <span class="type">int</span>&gt; dist;</span><br><span class="line">unordered_map&lt;string, pair&lt;<span class="type">char</span>, string&gt;&gt; pre; <span class="comment">// &lt;Current, &lt;Operation, LastState&gt;&gt;</span></span><br><span class="line">queue&lt;string&gt; q;</span><br><span class="line">string target, start=<span class="string">&quot;12345678&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">string <span class="title">move0</span><span class="params">(string a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">reverse</span>(a.<span class="built_in">begin</span>(), a.<span class="built_in">end</span>());</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">string <span class="title">move1</span><span class="params">(string a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string temp;</span><br><span class="line">    temp += a[<span class="number">3</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        temp += a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">5</span>; i &lt; <span class="number">8</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        temp += a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    temp += a[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">string <span class="title">move2</span><span class="params">(string a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> t1 = a[<span class="number">1</span>], t2 = a[<span class="number">2</span>], t3 = a[<span class="number">5</span>], t4 = a[<span class="number">6</span>];</span><br><span class="line">    a[<span class="number">1</span>] = t4;</span><br><span class="line">    a[<span class="number">2</span>] = t1;</span><br><span class="line">    a[<span class="number">5</span>] = t2;</span><br><span class="line">    a[<span class="number">6</span>] = t3;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">bfs</span><span class="params">(string start, string target)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    q.<span class="built_in">push</span>(start);</span><br><span class="line">    dist[start] = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">auto</span> t = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        </span><br><span class="line">        string m[<span class="number">3</span>];</span><br><span class="line">        m[<span class="number">0</span>] = <span class="built_in">move0</span>(t);</span><br><span class="line">        m[<span class="number">1</span>] = <span class="built_in">move1</span>(t);</span><br><span class="line">        m[<span class="number">2</span>] = <span class="built_in">move2</span>(t); <span class="comment">// generate string by Op.A B C</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (dist[m[i]] != <span class="number">0</span> || m[i] == start) <span class="keyword">continue</span>;</span><br><span class="line">            </span><br><span class="line">            dist[m[i]] = dist[t] + <span class="number">1</span>;</span><br><span class="line">            pre[m[i]] = &#123;<span class="string">&#x27;A&#x27;</span> + i, t&#125;;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (m[i] == target) <span class="keyword">break</span>;</span><br><span class="line">            </span><br><span class="line">            q.<span class="built_in">push</span>(m[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> t;</span><br><span class="line">        cin &gt;&gt; t;</span><br><span class="line">        target += <span class="built_in">char</span>(t + <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">bfs</span>(start, target);</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; dist[target] &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    </span><br><span class="line">    string res;</span><br><span class="line">    <span class="keyword">while</span>(target != start)</span><br><span class="line">    &#123;</span><br><span class="line">        res += pre[target].first;</span><br><span class="line">        target = pre[target].second;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">reverse</span>(res.<span class="built_in">begin</span>(), res.<span class="built_in">end</span>());</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (res.<span class="built_in">size</span>()) cout &lt;&lt; res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/01/24/AcWing-173-%E7%9F%A9%E9%98%B5%E8%B7%9D%E7%A6%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/24/AcWing-173-%E7%9F%A9%E9%98%B5%E8%B7%9D%E7%A6%BB/" class="post-title-link" itemprop="url">AcWing 173.矩阵距离</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-01-24 13:33:19" itemprop="dateCreated datePublished" datetime="2022-01-24T13:33:19+00:00">2022-01-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="算法思路">算法思路</h1>
-<p>该算法实际上是针对BFS的一种扩展写法。我们都知道BFS算法会构造一个搜索树，而如果我们希望从多个起点开始BFS最简单的方式便是使用一个虚拟的BFS起点，并在该起点后面连接所有我们希望作为起点的点即可。表现在代码中则变成了用于BFS的队列在初始化的时候将会加入所有的希望作为起点的点。</p>
-<h1 id="算法实现">算法实现</h1>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PII pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> x first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> y second</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1010</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> g[N][N], dist[N][N], st[N][N];</span><br><span class="line"><span class="type">int</span> dx[] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line"><span class="type">int</span> dy[] = &#123;<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    queue&lt;PII&gt; q;</span><br><span class="line">    <span class="built_in">memset</span>(dist, <span class="number">0x3f</span>, <span class="keyword">sizeof</span> dist);</span><br><span class="line">    </span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    cin.<span class="built_in">get</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; m; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">char</span> t = cin.<span class="built_in">get</span>();</span><br><span class="line">            <span class="comment">//cout &lt;&lt; t &lt;&lt; &#x27; &#x27;;</span></span><br><span class="line">            g[i][j] = t - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            <span class="keyword">if</span> (g[i][j]) </span><br><span class="line">            &#123;</span><br><span class="line">                q.<span class="built_in">push</span>(&#123;i, j&#125;);</span><br><span class="line">                dist[i][j] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        cin.<span class="built_in">get</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">auto</span> t = q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">if</span> (st[t.x][t.y]) <span class="keyword">continue</span>;</span><br><span class="line">        st[t.x][t.y] = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> x = t.x + dx[i], y = t.y + dy[i];</span><br><span class="line">            <span class="keyword">if</span> (x &lt; <span class="number">0</span> || y &lt; <span class="number">0</span> || x &gt;= n || y &gt;= m || st[x][y]) <span class="keyword">continue</span>;</span><br><span class="line">            dist[x][y] = <span class="built_in">min</span>(dist[x][y], dist[t.x][t.y] + <span class="number">1</span>);</span><br><span class="line">            q.<span class="built_in">push</span>(&#123;x, y&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; m; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; dist[i][j] &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>

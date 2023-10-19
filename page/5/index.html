@@ -114,12 +114,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -145,6 +145,89 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2022/01/07/AcWing-100-IncDec%E5%BA%8F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="anyin233">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dive In World">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Dive In World">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/07/AcWing-100-IncDec%E5%BA%8F%E5%88%97/" class="post-title-link" itemprop="url">AcWing 100.IncDec序列</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-07 17:41:42" itemprop="dateCreated datePublished" datetime="2022-01-07T17:41:42+00:00">2022-01-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="算法思路">算法思路</h1>
+<p>算法基于查分数组的前缀和即是原数组的思想进行。</p>
+<p>对于在原始数组上[m, n]区间每个数字+n，体现在差分数组上即第m个数字+n同时第n+1个数字-n。</p>
+<hr />
+<p>本题提供的基本操作可以使用差分进行表示，即每次+1或-1的操作可以在差分数组上对两端的数字进行操作实现，对于整个差分数组可以用一个折线图进行表示，可以发现当所有的数字经过该操作到达相同值所需步骤最少的过程必然是所有数字达到重叠的区域内。</p>
+<!---more--->
+<h1 id="算法实现">算法实现</h1>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a[N], n;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> pos = <span class="number">0</span>, neg = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) cin &gt;&gt; a[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = n; i &gt; <span class="number">1</span>; --i) a[i] -= a[i - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i] &gt; <span class="number">0</span>) pos += a[i];</span><br><span class="line">        <span class="keyword">else</span> neg -= a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; <span class="built_in">min</span>(pos, neg) + <span class="built_in">abs</span>(pos - neg) &lt;&lt; <span class="string">&#x27;\n&#x27;</span> &lt;&lt; <span class="built_in">abs</span>(pos - neg) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -190,7 +273,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -275,7 +358,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -360,7 +443,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -448,7 +531,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -533,7 +616,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -625,7 +708,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -709,7 +792,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -794,7 +877,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -889,7 +972,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
+      <time title="Modified: 2023-10-19 05:19:28" itemprop="dateModified" datetime="2023-10-19T05:19:28+00:00">2023-10-19</time>
     </span>
 
   
@@ -907,90 +990,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/11/20/Rust-00/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://anyin233.github.io/2020/11/19/%E6%AD%BB%E9%94%81%E4%B8%8E%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="anyin233">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Dive In World">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/11/19/%E6%AD%BB%E9%94%81%E4%B8%8E%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">死锁与银行家算法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-11-19 10:18:46" itemprop="dateCreated datePublished" datetime="2020-11-19T10:18:46+00:00">2020-11-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-09-27 09:25:19" itemprop="dateModified" datetime="2023-09-27T09:25:19+00:00">2023-09-27</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="死锁">死锁</h1>
-<p>死锁作为多进(线)程开发中经常遇到的问题，其通常体现为多个进程和线程同时处于阻塞状态并且在没有任何外力干扰的情况下完全无法解除这种状态的情况。我们可以通过一个著名的场景来具体地理解死锁的概念。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/11/19/%E6%AD%BB%E9%94%81%E4%B8%8E%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1065,7 +1064,7 @@
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
