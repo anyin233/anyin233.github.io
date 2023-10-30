@@ -746,6 +746,44 @@
       </tags>
   </entry>
   <entry>
+    <title>使用MLIR编写一个自己的程序语言 Ep.-1</title>
+    <url>/2023/10/30/MLIR-0/</url>
+    <content><![CDATA[<h1 id="什么是mlir">什么是MLIR</h1>
+<p>MLIR是LLVM项目的一部分，其目的在于减少在新的程序语言开发设计中所需要被重复实现的功能模块，从而实现低工作量且快速地开发新的程序语言或者为现有的程序语言进行优化。</p>
+<h1 id="基础概念">基础概念</h1>
+<p>MLIR存在着一种叫作方言(Dialect)的概念。在MLIR中，所有的高级语言都会被转换为一个统一的中间表示，而MLIR为了便于开发者扩展这个中间表示，提出了一个方言的概念，通常一个mlir语句是这样的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs mlir">%t_tensor = &quot;toy.transpose&quot;(%tensor) &#123;inplace = true&#125; : (tensor&lt;2x3xf64&gt;) -&gt; tensor&lt;3x2xf64&gt; loc(&quot;example/file/path&quot;:12:1)<br></code></pre></td></tr></table></figure>
+<p>在其中我们可以将其拆分为如下的部分</p>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><code class="hljs inform7"><span class="hljs-comment">[out_ssa]</span> = <span class="hljs-string">&quot;<span class="hljs-subst">[dialect]</span>.<span class="hljs-subst">[op]</span>&quot;</span>(<span class="hljs-comment">[operands]</span>) &#123;<span class="hljs-comment">[attrs]</span>&#125; : (<span class="hljs-comment">[type of operands]</span>) -&gt; <span class="hljs-comment">[type of out_ssa]</span> loc(<span class="hljs-comment">[path_to_source]</span>)<br></code></pre></td></tr></table></figure>
+<p>其中<code>[out_ssa]</code>是一个以SSA变量，<code>[dialect]</code>是上面提到的方言。</p>
+<p>在这里面，开发者可以自己定义一套方言，并通过定义一组Transform将其转换为现有的其他方言或者转换到内置的方言，这使得MLIR的开发具有非常高的灵活性，开发者可以通过自由组合方言和Transform来设计一套完整的编译器。</p>
+<h1 id="前置知识">前置知识</h1>
+<p>在开始设计之前，建议阅读编译器原理相关书籍或学习相关课程，了解一个编译器的基础结构和常见的设计方法。</p>
+<h2 id="build-mlir">Build MLIR</h2>
+<p>MLIR作为了LLVM的一部分，通常情况下其都是直接在llvm-project下直接进行编译的，编译MLIR本体实际上非常简单。</p>
+<p>首先自然需要克隆LLVM的仓库到你的目录下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/llvm/llvm-project<br></code></pre></td></tr></table></figure>
+<p>当然考虑到特色网络以及这个仓库的恐怖体积，通常还是加入<code>--depth=1</code>来减少克隆的数据量</p>
+<p>接下来就是老三样，建立build目录，<code>cmake</code>生成编译指令，<code>cmake --build .</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> build &amp;&amp; <span class="hljs-built_in">cd</span> build<br>cmake ../llvm -DCMAKE_BUILD_TYPE=Debug -DLLVM_ENABLE_PROJECTS=<span class="hljs-string">&quot;mlir&quot;</span> -DLLVM_BUILD_EXAMPLES=ON -DLLVM_ENABLE_RTTI=ON<br></code></pre></td></tr></table></figure>
+<p>上面指令的含意可以参考LLVM提供的文档<a href="https://www.llvm.org/docs/CMake.html">build LLVM with cmake</a>，其中<code>-DLLVM_BUILD_EXAMPLES=ON</code>是为了让cmake同样会编译<code>mlir</code>提供的示例，之后会使用后续的示例，而<code>-DLLVM_ENABLE_RTTI=ON</code>则是为了编译具有LLVM风格运行时类型推断的二进制，从而减少后续可能会遇到的麻烦（LLVM的不少示例默认都是启用了RTTI的，但是编译LLVM默认却不会启用）。</p>
+<p>然后就正式开始编译，进入漫长的等待</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">cmake --build .<br></code></pre></td></tr></table></figure>
+<h2 id="tablegen">TableGen</h2>
+<p>TableGen是LLVM项目组开发的一套声明语言，这套语言最大的优点就是相对于直接使用C++定义可以减少不少的代码量，虽然实际上TableGen文件最后还是被生成到C++文件。</p>
+<p>对于LLVM，其默认的TableGen具有多个对应不同应用场景的分支版本，这里我们需要用到的是<code>mlir-tblgen</code>，这个是专门用于生成开发MLIR所需要的定义文件的<code>tblgen</code>生成器。</p>
+]]></content>
+      <categories>
+        <category>Tech</category>
+        <category>Compiler</category>
+        <category>MLIR</category>
+      </categories>
+      <tags>
+        <tag>MLIR</tag>
+        <tag>Compiler</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MPI_Cart_Create 使用方法</title>
     <url>/2022/12/25/MPI-topology-with-MPI-Cart-Create/</url>
     <content><![CDATA[<p>在使用MPI的过程中可能会涉及到一些针对特定的拓扑关系的模拟情况，如<strong>FOX算法求矩阵乘积</strong>。此时需要涉及到如何简便地模拟出特定的方阵以及元素之间的关系。MPI提供了一套简便地API可以快速地创建出携带所需要的拓扑关系的<code>MPI_Comm</code>。</p>
