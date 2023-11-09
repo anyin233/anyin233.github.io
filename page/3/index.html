@@ -238,6 +238,48 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2022/02/03/LeetCode-1414-%E5%92%8C%E4%B8%BAK%E7%9A%84%E6%9C%80%E5%B0%91%E6%96%90%E6%B3%A2%E7%BA%B3%E5%A5%91%E6%95%B0%E5%AD%97%E6%95%B0%E7%9B%AE/" target="_self">
+          LeetCode 1414.和为K的最少斐波纳契数字数目
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/03/LeetCode-1414-%E5%92%8C%E4%B8%BAK%E7%9A%84%E6%9C%80%E5%B0%91%E6%96%90%E6%B3%A2%E7%BA%B3%E5%A5%91%E6%95%B0%E5%AD%97%E6%95%B0%E7%9B%AE/" target="_self">
+        <div>
+          算法思路 考虑采用深度优先搜索的方式进行，由于每个斐波纳契数字均小于前一个数字的两倍（2除外），可以基于这个特性，每次找到小于当前所求总和的最大的斐波纳契数字x，然后总和 -= x，反复迭代之后即可得到结果。 算法实现 1234567891011121314151617181920212223242526class Solution &#123;public:    int f[50], n, a
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-02-03 22:14" pubdate>
+              2022-02-03
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/LeetCode/">#LeetCode</a>
+            
+              <a href="/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/">#每日一题</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2022/02/03/AcWing-167-%E6%9C%A8%E6%A3%92/" target="_self">
           AcWing 167.木棒
         </a>
@@ -615,50 +657,6 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
             <time datetime="2022-01-26 15:08" pubdate>
-              2022-01-26
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">#算法学习</a>
-            
-              <a href="/tags/AcWing/">#AcWing</a>
-            
-              <a href="/tags/A/">#A*</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/01/26/AcWing-179-%E5%85%AB%E6%95%B0%E7%A0%81/" target="_self">
-          AcWing 179.八数码
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/01/26/AcWing-179-%E5%85%AB%E6%95%B0%E7%A0%81/" target="_self">
-        <div>
-          算法思路 本算法实际上也是BFS的一种应用，但是朴素的BFS搜索会导致需要搜索的状态过多从而发生TLE或者MLE。为了解决这种问题故采用了A*算法 估计函数 A*算法中一个关键的部分便是估计函数。通过估计函数使得算法可以找到一个接近理想情况的最佳路径。通常情况下一个可用的估计函数必须满足估计值小于最小值，本题的估计函数选择了各个点到其最终位置的曼哈顿距离之和。 A*算法使用一个小根堆代替了BFS中
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-26 14:05" pubdate>
               2022-01-26
             </time>
           </div>
