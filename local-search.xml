@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>About the tools I am using.</title>
+    <link href="/2023/11/10/MY-DEVELOPMENT-ENV/"/>
+    <url>/2023/11/10/MY-DEVELOPMENT-ENV/</url>
+    
+    <content type="html"><![CDATA[<h1 id="motivation">Motivation</h1><p><strong>Why I wrote this blog to log my own environment of development?</strong></p><p>I always forget some softwares' name which is pretty helpful to me, so writting down them can help me migrate my working habit into another computer.</p><p><strong>What will I write in this blog</strong></p><ul><li>The tools are still in active developing.</li><li>The tools are pretty helpful and have good compatibility even developers stopped maintance.</li><li>The tools I have used in my daily life.</li><li>...</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Tech</category>
+      
+      <category>Misc</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>misc</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>高性能的异构并行框架Kokkos: 0</title>
     <link href="/2023/11/09/Kokkos-0/"/>
     <url>/2023/11/09/Kokkos-0/</url>

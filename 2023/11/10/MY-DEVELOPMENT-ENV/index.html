@@ -18,24 +18,22 @@
   <meta name="author" content="anyin233">
   <meta name="keywords" content="">
   
-    <meta name="description" content="算法思路 常规的DFS问题，只需要注意如何实现字符串匹配的问题即可 算法实现 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253#include &lt;iostream&gt;#include &lt;string&gt;using namespace">
+    <meta name="description" content="Motivation Why I wrote this blog to log my own environment of development? I always forget some softwares&#39; name which is pretty helpful to me, so writting down them can help me migrate my working habi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AcWing 1117.单词接龙">
-<meta property="og:url" content="http://anyin233.github.io/2022/01/27/AcWing-1117-%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99/index.html">
+<meta property="og:title" content="About the tools I am using.">
+<meta property="og:url" content="http://anyin233.github.io/2023/11/10/MY-DEVELOPMENT-ENV/index.html">
 <meta property="og:site_name" content="Dive In World">
-<meta property="og:description" content="算法思路 常规的DFS问题，只需要注意如何实现字符串匹配的问题即可 算法实现 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253#include &lt;iostream&gt;#include &lt;string&gt;using namespace">
+<meta property="og:description" content="Motivation Why I wrote this blog to log my own environment of development? I always forget some softwares&#39; name which is pretty helpful to me, so writting down them can help me migrate my working habi">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-01-27T15:10:30.000Z">
-<meta property="article:modified_time" content="2023-11-10T15:15:53.387Z">
+<meta property="article:published_time" content="2023-11-10T23:09:56.000Z">
+<meta property="article:modified_time" content="2023-11-10T15:15:53.391Z">
 <meta property="article:author" content="anyin233">
-<meta property="article:tag" content="算法学习">
-<meta property="article:tag" content="AcWing">
-<meta property="article:tag" content="DFS">
+<meta property="article:tag" content="misc">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>AcWing 1117.单词接龙 - Dive In World</title>
+  <title>About the tools I am using. - Dive In World</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +211,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="AcWing 1117.单词接龙"></span>
+            <span id="subtitle" data-typed-text="About the tools I am using."></span>
           
         </div>
 
@@ -224,8 +222,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-01-27 15:10" pubdate>
-          January 27, 2022 pm
+        <time datetime="2023-11-10 23:09" pubdate>
+          November 10, 2023 pm
         </time>
       </span>
     
@@ -236,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          873 words
+          358 words
         
       </span>
     
@@ -247,7 +245,7 @@
         
         
         
-          8 mins
+          3 mins
         
       </span>
     
@@ -284,15 +282,21 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">AcWing 1117.单词接龙</h1>
+            <h1 id="seo-header">About the tools I am using.</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="算法思路">算法思路</h1>
-<p>常规的DFS问题，只需要注意如何实现字符串匹配的问题即可</p>
-<h1 id="算法实现">算法实现</h1>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">21</span>;<br><br>string s[N];<br><span class="hljs-type">int</span> cnt[N];<br><span class="hljs-type">int</span> res;<br><span class="hljs-type">char</span> start;<br><span class="hljs-type">int</span> n;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(string last, <span class="hljs-type">int</span> l)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">//cout &lt;&lt; last &lt;&lt; endl;</span><br>    res = <span class="hljs-built_in">max</span>(l, res);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; ++i)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (cnt[i] &gt;= <span class="hljs-number">2</span>) <span class="hljs-keyword">continue</span>;   <br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> len = <span class="hljs-number">1</span>; len &lt; last.<span class="hljs-built_in">size</span>() &amp;&amp; len &lt; s[i].<span class="hljs-built_in">size</span>(); ++len)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (last.<span class="hljs-built_in">substr</span>(last.<span class="hljs-built_in">size</span>() - len) == s[i].<span class="hljs-built_in">substr</span>(<span class="hljs-number">0</span>, len))<br>            &#123;<br>                string temp = last + s[i].<span class="hljs-built_in">substr</span>(len);<br>                cnt[i] ++;<br>                <span class="hljs-comment">//cout &lt;&lt; s[i] &lt;&lt; endl &lt;&lt; endl;</span><br>                <span class="hljs-built_in">dfs</span>(temp, l + s[i].<span class="hljs-built_in">size</span>() - len);<br>                cnt[i] --;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; ++i) cin &gt;&gt; s[i];<br>    cin &gt;&gt; start;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; ++i)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (s[i][<span class="hljs-number">0</span>] == start) <br>        &#123;<br>            cnt[i] ++;<br>            <span class="hljs-built_in">dfs</span>(s[i], s[i].<span class="hljs-built_in">size</span>());<br>            cnt[i] --;<br>        &#125;<br>    &#125;<br>    <br>    cout &lt;&lt; res;<br>&#125;<br></code></pre></td></tr></table></figure>
+                <h1 id="motivation">Motivation</h1>
+<p><strong>Why I wrote this blog to log my own environment of development?</strong></p>
+<p>I always forget some softwares' name which is pretty helpful to me, so writting down them can help me migrate my working habit into another computer.</p>
+<p><strong>What will I write in this blog</strong></p>
+<ul>
+<li>The tools are still in active developing.</li>
+<li>The tools are pretty helpful and have good compatibility even developers stopped maintance.</li>
+<li>The tools I have used in my daily life.</li>
+<li>...</li>
+</ul>
 
                 
               </div>
@@ -301,15 +305,39 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Tech/" class="category-chain-item">Tech</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Tech/Misc/" class="category-chain-item">Misc</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" class="print-no-link">#算法学习</a>
-      
-        <a href="/tags/AcWing/" class="print-no-link">#AcWing</a>
-      
-        <a href="/tags/DFS/" class="print-no-link">#DFS</a>
+        <a href="/tags/misc/" class="print-no-link">#misc</a>
       
     </div>
   
@@ -321,8 +349,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>AcWing 1117.单词接龙</div>
-      <div>http://anyin233.github.io/2022/01/27/AcWing-1117-单词接龙/</div>
+      <div>About the tools I am using.</div>
+      <div>http://anyin233.github.io/2023/11/10/MY-DEVELOPMENT-ENV/</div>
     </div>
     <div class="license-meta">
       
@@ -334,7 +362,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>January 27, 2022</div>
+          <div>November 10, 2023</div>
         </div>
       
       
@@ -366,18 +394,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/27/AcWing-1118-%E5%88%86%E6%88%90%E4%BA%92%E8%B4%A8%E7%BB%84/" title="AcWing 1118.分成互质组">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">AcWing 1118.分成互质组</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/27/AcWing-1116-%E9%A9%AC%E8%B5%B0%E6%97%A5/" title="AcWing 1116.马走日">
-                        <span class="hidden-mobile">AcWing 1116.马走日</span>
+                      <a href="/2023/11/09/Kokkos-0/" title="高性能的异构并行框架Kokkos: 0">
+                        <span class="hidden-mobile">高性能的异构并行框架Kokkos: 0</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
