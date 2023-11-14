@@ -26,7 +26,7 @@
 <meta property="og:description" content="C++ Thread C++ Thread是存在于C++ std库内的一个多线程库，该库是C++原生的一套做到了平台无关的多线程库。该库功能相对于市面上多线程计算库更为基础，提供了对线程的直接控制。 在Thread中创建一个线程通常如下所示 1234567891011121314151617181920212223242526272829&#x2F;&#x2F; thread example#include &lt;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-11-13T22:20:57.000Z">
-<meta property="article:modified_time" content="2023-11-13T14:57:22.638Z">
+<meta property="article:modified_time" content="2023-11-14T13:39:59.785Z">
 <meta property="article:author" content="anyin233">
 <meta property="article:tag" content="Kokkos">
 <meta property="article:tag" content="HPC">
@@ -235,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k words
+          3.2k words
         
       </span>
     
@@ -246,7 +246,7 @@
         
         
         
-          17 mins
+          27 mins
         
       </span>
     
@@ -299,9 +299,17 @@
 <p>In this procedure, we declare the <code>Space</code> of each variable and <code>RangePolicy</code>, which tells our framework the expected execute place of kernel.</p>
 <h2 id="how-does-this-code-run">How does this code run</h2>
 <p>We use <code>Thread</code> backend as example.</p>
+<h3 id="initialize">Initialize</h3>
 <p>First of all, Kokkos will initialize thread pool before kernel running by invoking <code>initialize_space_factory</code>. Initialize code locates at <code>Kokkos_ExecSpaceManager.hpp</code>, this will invoke <code>ExecutionSpace::impl_initialize()</code>, while <code>ExecutionSpace</code> is the template parameter.</p>
-<p><code>initialize_space_factory</code> will be invoked in <code>Kokkos_&lt;Runtime&gt;Exec</code> automatically, after serval function calls, the actual useful function is <code>::Impl::&lt;Runtime&gt;Exec::initialize()</code></p>
-<h1 id="todo">TODO</h1>
+<p><code>initialize_space_factory</code> will be invoked in <code>Kokkos_&lt;Runtime&gt;Exec</code> automatically, after serval function calls, the actual useful function is <code>::Impl::&lt;Runtime&gt;Exec::initialize()</code>.</p>
+<p>In <code>initialize()</code>, program will first check the basic information of current machine if <code>hwloc</code> is available. If <code>hwloc</code> is unavilable, thread count will be set to 1. Then program will initialize all threads by dispatching a noop task for each thread and spawn it. After thread received noop, thread status will be set to <code>ThreadsExec::Inactive</code> and wait next task.</p>
+<h3 id="task-dispatch">Task Dispatch</h3>
+<p>We use <code>parallel_for</code> as an example.</p>
+<p>When we invoke <code>parallel_for</code>, it will use a class named <code>ParallelFor</code> to handle the execution. The entrance of parllel execution is <code>ParallelFor::execute()</code>, it will pass member function <code>exec</code> into execution environment <code>ThreadExec::start</code>.</p>
+<p>Inside <code>ThreadExec::start()</code>, it will set current function to <code>exec</code> and notify threads by switching their state into <code>ThreadsExec::Active</code>, then threads will execute functions automatically.</p>
+<p>To control the range each thread will execute, Kokkos provides two schedule type: static one and dynamic one, both of them share a same function name <code>exec_schedule</code>.</p>
+<p>For static one, it will compute a work range and do a serial loop on it. After execute the functor, each thread will do <code>fan_in</code> operate and turn into <code>Inactive</code> status.</p>
+<p>For dynamic one, it will leverage a work stealing algorithm to schedule work load. Each iteration will take <code>chunk_size()</code> tasks to execute, when this iteration has done, it will get next chunk's index and continue to execute.</p>
 
                 
               </div>
