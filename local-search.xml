@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title></title>
+    <link href="/2024/01/19/How%20to%20solve%20duplicated%20symbol%20problems%20in%20C++/"/>
+    <url>/2024/01/19/How%20to%20solve%20duplicated%20symbol%20problems%20in%20C++/</url>
+    
+    <content type="html"><![CDATA[<p>When compiling a program which sources sharing a same headers, for example, SWYAKL, there is possibility that error of duplicated symbol will appear during link stage.</p><p>For me, this problem is because SWYAKL is a header-only library, C++ compiler's preprocessor will expand headers to every source files include this header, so a function named <code>yakl::yakl_std_wrapper::round</code> had been added to top of every source files, and caused this error.</p><p>To solve this problem, the easiest way is change this function into an inline function. <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// original version</span><br><span class="hljs-keyword">namespace</span> yakl &#123;<br><span class="hljs-keyword">namespace</span> yakl_std_wrapper &#123;<br><span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">round</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span></span>; <span class="hljs-comment">// In some condition, this will cause duplicated symbol error</span><br>&#125;<br>&#125;<br><br><span class="hljs-comment">// fixed version</span><br><span class="hljs-keyword">namespace</span> yakl&#123;<br><span class="hljs-keyword">namespace</span> yakl_std_wrapper &#123;<br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">double</span> <span class="hljs-title">round</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span></span>; <span class="hljs-comment">// This will not cause duplicated symbol error</span><br>&#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Kokkos并行后端实现: C++ Thread</title>
     <link href="/2023/11/13/Kokkos-impl-0/"/>
     <url>/2023/11/13/Kokkos-impl-0/</url>
