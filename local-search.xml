@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>Migrating VPIC-kokko to YAKL</title>
+    <link href="/2024/01/19/Migrating%20VPIC-kokko%20to%20YAKL/"/>
+    <url>/2024/01/19/Migrating%20VPIC-kokko%20to%20YAKL/</url>
+    
+    <content type="html"><![CDATA[<h1 id="why-i-want-to-migrate-it-to-yakl">Why I want to migrate it to YAKL</h1><p>YAKL is a light-weight performance portability library, and it is a header-only library. It supports many main-stream HPC platform. To compare with Kokkos, YAKL is compatible with typical CMake project, and is also easy to migrate to new platform.<br />Currently I want VPIC can run on a new platform, which is different with todays popular platform like CUDA, HIP etc. But first Kokkos depends on gcc 8.4.0+, which haven't been implemented on this platform and in the same time I want use a library with few feature so that I can implement new API without any restriction, so that I choose YAKL.</p><h1 id="what-can-be-replaced-directly-using-yakl">What can be replaced directly using YAKL</h1><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs rust">Kokkos::View         <span class="hljs-punctuation">-&gt;</span> yakl::Array<br>Kokkos::parallel_for <span class="hljs-punctuation">-&gt;</span> yakl::parallel_for<br>....<br></code></pre></td></tr></table></figure><h1 id="what-should-i-implement">What should I implement</h1><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs lasso">Kokkos<span class="hljs-type">::ScatterView</span><br>Kokkos<span class="hljs-type">::parallel_reduce</span><br>Kokkos<span class="hljs-type">::TeamPolicy</span> (Maybe replaced <span class="hljs-keyword">by</span> yakl<span class="hljs-type">::parallel_outer</span> <span class="hljs-literal">and</span> yakl<span class="hljs-type">::parallel_inner</span>)<br>Kokkos<span class="hljs-type">::HostMirror</span> (Maybe replaced <span class="hljs-keyword">by</span> yakl<span class="hljs-type">::Array</span> <span class="hljs-keyword">with</span> memHost)<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Tech</category>
+      
+      <category>HPC</category>
+      
+      <category>YAKL</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Kokkos</tag>
+      
+      <tag>HPC</tag>
+      
+      <tag>YAKL</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>How to solve duplicated symbol problems in C++</title>
     <link href="/2024/01/19/How%20to%20solve%20duplicated%20symbol%20problems%20in%20C++/"/>
     <url>/2024/01/19/How%20to%20solve%20duplicated%20symbol%20problems%20in%20C++/</url>
