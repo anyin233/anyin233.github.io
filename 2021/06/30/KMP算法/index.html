@@ -26,7 +26,7 @@
 <meta property="og:description" content="算法简介 KMP算法解决的问题主要在于如何实现在一个较长的字符串中匹配得到一个较短的字符串。 我们知道对于子串匹配的问题，常用的暴力解法是不断枚举起点，并反复遍历字符串以确定是否匹配，而KMP算法则可以简化这一个过程。该算法可以自动跳过一些可能会导致重复匹配的字符串从而减少匹配的次数。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-06-30T16:26:32.000Z">
-<meta property="article:modified_time" content="2024-01-19T04:09:17.043Z">
+<meta property="article:modified_time" content="2024-04-26T02:29:24.347Z">
 <meta property="article:author" content="anyin233">
 <meta property="article:tag" content="算法学习">
 <meta property="article:tag" content="AcWing">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"anyin233.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"|","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"anyin233.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"|","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -85,7 +85,7 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.2.0"></head>
 
 
 <body>
@@ -116,7 +116,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/">
+              <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>Home</span>
               </a>
@@ -128,7 +128,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
+              <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>Archives</span>
               </a>
@@ -140,7 +140,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/">
+              <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>Categories</span>
               </a>
@@ -152,7 +152,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
+              <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>Tags</span>
               </a>
@@ -164,7 +164,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/">
+              <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>About</span>
               </a>
@@ -176,7 +176,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/links/">
+              <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
                 <span>Links</span>
               </a>
@@ -235,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.8k words
+          1.8k words
         
       </span>
     
@@ -246,7 +246,7 @@
         
         
         
-          24 mins
+          16 mins
         
       </span>
     
@@ -303,7 +303,7 @@
 <p>为了推导方便，此时我们假设<code>p=ababdababaa</code>，实际使用的时候我们只需要知道如何从<code>next[0~i - 1]</code>推得<code>next[i]</code>即可</p>
 <figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs inform7">//此时我们假设我们已知next<span class="hljs-comment">[8]</span>推导next<span class="hljs-comment">[9]</span>，我们有如下字符串，可以看到next<span class="hljs-comment">[8]</span> = 3<br>|aba|bd|aba|baa<br>//而正因为我们已知了next<span class="hljs-comment">[8]</span> = 3，我们知道p<span class="hljs-comment">[1:3]</span> == p<span class="hljs-comment">[6:8]</span>同时p<span class="hljs-comment">[1:4]</span> != p<span class="hljs-comment">[5:8]</span>，接下来我们继续向后读入一个字符<br>|aba|bd|aba|baa<br>     ^      ^p<span class="hljs-comment">[9]</span><br>     p<span class="hljs-comment">[next<span class="hljs-comment">[9 - 1]</span> + 1]</span><br>//可以发现此时p<span class="hljs-comment">[next<span class="hljs-comment">[9 - 1]</span> + 1]</span> == p<span class="hljs-comment">[9]</span>，故我们可以得到p<span class="hljs-comment">[9]</span> = p<span class="hljs-comment">[8]</span> + 1<br></code></pre></td></tr></table></figure>
 <p>但是我们面临着一个问题，如果第一次匹配不成功应该怎么解决，我们假设下面一种情况</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">|abab|d|abab|aa<br> <span class="hljs-number">1234</span> <span class="hljs-number">5</span> <span class="hljs-number">6789</span> <span class="hljs-number">01</span><br><span class="hljs-regexp">//</span>此时我们需要计算<span class="hljs-keyword">next</span>[<span class="hljs-number">10</span>]，但是很不幸p[<span class="hljs-keyword">next</span>[<span class="hljs-number">10</span> - <span class="hljs-number">1</span>] + <span class="hljs-number">1</span>] != p[<span class="hljs-number">10</span>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs coq">|<span class="hljs-type">abab</span>|<span class="hljs-type">d</span>|<span class="hljs-type">abab</span>|<span class="hljs-type">aa</span><br> <span class="hljs-number">1234</span> <span class="hljs-number">5</span> <span class="hljs-number">6789</span> <span class="hljs-number">01</span><br>//此时我们需要计算next[<span class="hljs-number">10</span>]，但是很不幸p[next[<span class="hljs-number">10</span> - <span class="hljs-number">1</span>] + <span class="hljs-number">1</span>] != p[<span class="hljs-number">10</span>]<br></code></pre></td></tr></table></figure>
 <p>为了求解得到<code>next[10]</code>，我们只能退而求其次，去尝试更短的子串看看是否可以求解。根据<code>next[9]=4</code>我们可以知道<code>p[1:4] == p[6:9]</code>，而我们又可以发现<code>next[next[9]] = next[4] = 2</code>，即<code>p[1:2] == p[3:4]</code>，而根据<code>next[9]</code>的定义我们又知道<code>p[3:4] == p[8:9]</code>，同时<code>p[next[next[9]] + 1] == p[10]</code>，所以我们可以得到<code>p[1:3] == p[8:10]</code>即<code>next[10] = 3</code>。</p>
 <p>而上面的推导存在一个边界，即当<code>next[next[....]] = 0</code>时，此时不再指望<code>next[0~n-1]</code>会对<code>next[n]</code>做出任何贡献。</p>
 <h3 id="next数组构造代码实现">next数组构造代码实现</h3>
@@ -315,7 +315,7 @@
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ababababfab</span><br>  ababf<br>    <span class="hljs-regexp"> ^下一个判断是否匹配的字符</span><br></code></pre></td></tr></table></figure>
 <p>可以看到这样我们就成功实现了利用<code>next[]</code>一次性移动多位的操作。这里的思想与求<code>next[]</code>的过程类似，即我们实际上是在<code>s</code>上搜索一个与当前已知前缀相互匹配的后缀，假设存在任何一个可以相互匹配的前后缀即可直接将字符串开头移动到求得的后缀的开头的位置。</p>
 <h3 id="匹配过程代码实现">匹配过程代码实现</h3>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-keyword">for</span> (int i = <span class="hljs-number">1</span>, j = <span class="hljs-number">0</span>; i &lt;= n; ++i)<br>&#123;<br>	<span class="hljs-keyword">while</span>(j &amp;&amp; s[i] != p[j + <span class="hljs-number">1</span>]) j = <span class="hljs-keyword">next</span>[j]; <span class="hljs-regexp">//</span> 在s上匹配一个p的后缀，而由于最终求得的前后缀是前面<span class="hljs-keyword">next</span>数组得到的前后缀，故可以直接获得前文中三个子串相互的关系。<br>	<span class="hljs-keyword">if</span> (s[i] == p[j + <span class="hljs-number">1</span>]) j ++; <span class="hljs-regexp">//</span> 若当前位置匹配成功则后移待匹配的指针<br>	<span class="hljs-keyword">if</span> (j == m) <span class="hljs-regexp">//</span> j到达了p的末尾<br>	&#123;<br>		<span class="hljs-regexp">//</span> 匹配成功<br>		j = ne[j]; <span class="hljs-regexp">//</span> 继续后移<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs perl"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>, j = <span class="hljs-number">0</span>; i &lt;= n; ++i)<br>&#123;<br>	<span class="hljs-keyword">while</span>(j &amp;&amp; s[i] != p[j + <span class="hljs-number">1</span>]) j = <span class="hljs-keyword">next</span>[j]; <span class="hljs-regexp">//</span> 在s上匹配一个p的后缀，而由于最终求得的前后缀是前面<span class="hljs-keyword">next</span>数组得到的前后缀，故可以直接获得前文中三个子串相互的关系。<br>	<span class="hljs-keyword">if</span> (s[i] == p[j + <span class="hljs-number">1</span>]) j ++; <span class="hljs-regexp">//</span> 若当前位置匹配成功则后移待匹配的指针<br>	<span class="hljs-keyword">if</span> (j == m) // j到达了p的末尾<br>	&#123;<br>		<span class="hljs-regexp">//</span> 匹配成功<br>		j = <span class="hljs-keyword">ne</span>[j]; <span class="hljs-regexp">//</span> 继续后移<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="kmp算法的应用">KMP算法的应用</h2>
 <h3 id="状态机kmpacwing-1052.-设计密码">状态机+KMP(AcWing 1052. 设计密码)</h3>
 <p>该题目中实际上可以将我们需要求得的密码视作<code>n</code>次状态转换，其中第一个状态即<code>state[0]</code>就是不存在任何匹配的状态，而由于我们的要求是不能匹配子串，假设子串长度为<code>m</code>，故我们要求不能到达<code>state[m]</code>。</p>

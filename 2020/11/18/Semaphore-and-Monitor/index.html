@@ -26,7 +26,7 @@
 <meta property="og:description" content="信号量机制 信号量机制最早由提出图论的Dijkstra提出，其被广泛地使用于操作系统中用于解决同步问题。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-11-18T19:38:10.000Z">
-<meta property="article:modified_time" content="2024-01-19T04:09:17.047Z">
+<meta property="article:modified_time" content="2024-04-26T02:29:24.347Z">
 <meta property="article:author" content="anyin233">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary_large_image">
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"anyin233.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"|","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"anyin233.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"|","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -84,7 +84,7 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.2.0"></head>
 
 
 <body>
@@ -115,7 +115,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/">
+              <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>Home</span>
               </a>
@@ -127,7 +127,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
+              <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>Archives</span>
               </a>
@@ -139,7 +139,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/">
+              <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>Categories</span>
               </a>
@@ -151,7 +151,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
+              <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>Tags</span>
               </a>
@@ -163,7 +163,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/">
+              <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>About</span>
               </a>
@@ -175,7 +175,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/links/">
+              <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
                 <span>Links</span>
               </a>
@@ -234,7 +234,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.8k words
+          2.1k words
         
       </span>
     
@@ -245,7 +245,7 @@
         
         
         
-          32 mins
+          18 mins
         
       </span>
     
@@ -334,7 +334,7 @@ V操作通常用于释放资源，其的主要过程一般为
 <p>这里我们就可以清楚地看到条件变量和信号量的区别，对于条件变量来说由于调用其的进(线)程已经在管程中，故其的<code>wait()</code>和<code>signal()</code>无需成对，且在条件变量执行完成<code>wait()</code>操作后进(线)程必定阻塞，但是对于信号量的<code>V()</code>操作则不一定会阻塞。且在条件变量执行<code>wait()</code>操作或<code>signal()</code>的时候已经默认获得了互斥锁。</p>
 <p>光谈概念感觉管程本身还是比较晦涩的，下面还是会用著名的读者-写者问题讨论管程</p>
 <h2 id="使用管程实现读者-写者问题">使用管程实现读者-写者问题</h2>
-<p>通过使用管程，我们可以将读者-写者问题包装为一个面向对象的类 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Database</span>&#123;<br>    lock: Lock,<br>    AC: <span class="hljs-type">i32</span>, <span class="hljs-comment">//已经激活的读者</span><br>    AP: <span class="hljs-type">i32</span>, <span class="hljs-comment">//已经激活的写者</span><br>    WC: <span class="hljs-type">i32</span>, <span class="hljs-comment">//正在等待的读者</span><br>    WP: <span class="hljs-type">i32</span>, <span class="hljs-comment">//正在等待的写者</span><br>    buffer: <span class="hljs-type">i32</span>,<br>    Condition okToRead, okToWrite;<br>&#125;<br><br><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Database</span>&#123;<br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">start_consume</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        <span class="hljs-title function_ invoke__">if</span> (WP + AP) &gt; <span class="hljs-number">0</span>&#123; <span class="hljs-comment">// 相当于还有写者处于激活状态的时候</span><br>            WC++;<br>            okToRead.<span class="hljs-title function_ invoke__">wait</span>(<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>.lock); <span class="hljs-comment">// 将自己阻塞</span><br>            WC--;<br>        &#125;<br>        AC++;<span class="hljs-comment">//此处为未阻塞或者被唤醒</span><br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">end_consume</span>(&amp;<span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        AC--;<br>        <span class="hljs-keyword">if</span> AC == <span class="hljs-number">0</span> &amp;&amp; WP &gt; <span class="hljs-number">0</span>&#123;<br>            okToWrite.<span class="hljs-title function_ invoke__">signal</span>(); <span class="hljs-comment">// 当激活的读者退出的时候唤醒阻塞在队列中的写者</span><br>        &#125;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">start_produce</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        <span class="hljs-title function_ invoke__">if</span> (WC + AC) &gt; <span class="hljs-number">0</span>&#123;<br>            WP++;<br>            okToWrite.<span class="hljs-title function_ invoke__">wait</span>(<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>.lock); <span class="hljs-comment">// 同样当任何读者在执行的时候将自身阻塞</span><br>            WP--;<br>        &#125;<br>        AP++; <span class="hljs-comment">//此处为未阻塞或者被唤醒</span><br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">end_produce</span>(&amp;<span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        AP--;<br>        <span class="hljs-keyword">if</span> AP == <span class="hljs-number">0</span> &amp;&amp; WC &gt; <span class="hljs-number">0</span>&#123;<br>            okToRead.<span class="hljs-title function_ invoke__">signal</span>(); <span class="hljs-comment">// 当激活的写者退出的时候唤醒正在排队的读者线程</span><br>        &#125;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">read</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">start_consume</span>();<br>        <span class="hljs-comment">// do consume</span><br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">end_consume</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">write</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">start_produce</span>();<br>        <span class="hljs-comment">// do produce</span><br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">end_produce</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<p>通过使用管程，我们可以将读者-写者问题包装为一个面向对象的类 <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Database</span>&#123;<br>    lock: Lock,<br>    AC: <span class="hljs-type">i32</span>, <span class="hljs-comment">//已经激活的读者</span><br>    AP: <span class="hljs-type">i32</span>, <span class="hljs-comment">//已经激活的写者</span><br>    WC: <span class="hljs-type">i32</span>, <span class="hljs-comment">//正在等待的读者</span><br>    WP: <span class="hljs-type">i32</span>, <span class="hljs-comment">//正在等待的写者</span><br>    buffer: <span class="hljs-type">i32</span>,<br>    Condition okToRead, okToWrite;<br>&#125;<br><br><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Database</span>&#123;<br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">start_consume</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        <span class="hljs-keyword">if</span> (WP + AP) &gt; <span class="hljs-number">0</span>&#123; <span class="hljs-comment">// 相当于还有写者处于激活状态的时候</span><br>            WC++;<br>            okToRead.<span class="hljs-title function_ invoke__">wait</span>(<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>.lock); <span class="hljs-comment">// 将自己阻塞</span><br>            WC--;<br>        &#125;<br>        AC++;<span class="hljs-comment">//此处为未阻塞或者被唤醒</span><br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">end_consume</span>(&amp;<span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        AC--;<br>        <span class="hljs-keyword">if</span> AC == <span class="hljs-number">0</span> &amp;&amp; WP &gt; <span class="hljs-number">0</span>&#123;<br>            okToWrite.<span class="hljs-title function_ invoke__">signal</span>(); <span class="hljs-comment">// 当激活的读者退出的时候唤醒阻塞在队列中的写者</span><br>        &#125;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">start_produce</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        <span class="hljs-keyword">if</span> (WC + AC) &gt; <span class="hljs-number">0</span>&#123;<br>            WP++;<br>            okToWrite.<span class="hljs-title function_ invoke__">wait</span>(<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>.lock); <span class="hljs-comment">// 同样当任何读者在执行的时候将自身阻塞</span><br>            WP--;<br>        &#125;<br>        AP++; <span class="hljs-comment">//此处为未阻塞或者被唤醒</span><br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">end_produce</span>(&amp;<span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">aquire</span>();<br>        AP--;<br>        <span class="hljs-keyword">if</span> AP == <span class="hljs-number">0</span> &amp;&amp; WC &gt; <span class="hljs-number">0</span>&#123;<br>            okToRead.<span class="hljs-title function_ invoke__">signal</span>(); <span class="hljs-comment">// 当激活的写者退出的时候唤醒正在排队的读者线程</span><br>        &#125;<br>        <span class="hljs-keyword">self</span>.lock.<span class="hljs-title function_ invoke__">release</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">read</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">start_consume</span>();<br>        <span class="hljs-comment">// do consume</span><br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">end_consume</span>();<br>    &#125;<br><br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">write</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>)&#123;<br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">start_produce</span>();<br>        <span class="hljs-comment">// do produce</span><br>        <span class="hljs-keyword">self</span>.<span class="hljs-title function_ invoke__">end_produce</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></p>
 <p>这里我们使用了四个整形变量、一个锁和两个条件变量完成了对消费者-生产者的控制，我们可以看到对于读和写操作我们均使用两个函数来完成其的同步控制。</p>
 
                 

@@ -26,7 +26,7 @@
 <meta property="og:description" content="前言 作为一款合格的程序语言，基本的控制语句是必须有的，而对于Rust来说她的控制流语句相对于传统的语言来说都要更为丰富，本文将会大体地介绍Rust的各类控制语句及其的基本用法。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-11-27T22:23:00.000Z">
-<meta property="article:modified_time" content="2024-01-19T04:09:17.047Z">
+<meta property="article:modified_time" content="2024-04-26T02:29:24.347Z">
 <meta property="article:author" content="anyin233">
 <meta property="article:tag" content="Rust">
 <meta property="article:tag" content="程序语言">
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"anyin233.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"|","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"anyin233.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"|","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -85,7 +85,7 @@
 
 
   
-<meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 7.2.0"></head>
 
 
 <body>
@@ -116,7 +116,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/">
+              <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>Home</span>
               </a>
@@ -128,7 +128,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
+              <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>Archives</span>
               </a>
@@ -140,7 +140,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/">
+              <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>Categories</span>
               </a>
@@ -152,7 +152,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/">
+              <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>Tags</span>
               </a>
@@ -164,7 +164,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/">
+              <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>About</span>
               </a>
@@ -176,7 +176,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/links/">
+              <a class="nav-link" href="/links/" target="_self">
                 <i class="iconfont icon-link-fill"></i>
                 <span>Links</span>
               </a>
@@ -235,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          613 words
         
       </span>
     
@@ -246,7 +246,7 @@
         
         
         
-          11 mins
+          6 mins
         
       </span>
     
@@ -295,16 +295,16 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs if```语句作为大多数语言的标配，在Rust中自然也没有缺席，对于Rust来说与```if```搭配的同样是```else```，但是不同于经常拿来和Rust对比的C++，Rust的```if```语句后面的条件并不需要括号包裹起来，如果你用括号把它包裹的话编译器将会送给你一个大大的warning，所以说通常Rust中的一个条件语句就像这样">```rust<br>if condition &#123;<br>    // do something<br>&#125;else&#123;<br>    // do something<br>&#125;<br></code></pre></td></tr></table></figure>
 <h1 id="match">match</h1>
 <p>说到了<code>if</code>，自然少不了我们的好朋友<code>switch</code>，不过非常喜闻乐见的是Rust并没有<code>switch</code>，取而代之的是功能强大的<code>match</code>。<code>match</code>作为Rust中著名的条件选择语句，它不止用于多条件的判断控制，它还经常出现于<code>Option</code>的判断等等各类<code>None</code>类型或者错误处理的场景。常见的<code>match</code>的使用场景如下</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-title function_ invoke__">match</span>(item)&#123;<br>    condition_1 =&gt; <span class="hljs-comment">//do something</span><br>    condition_2 =&gt; &#123;<br>        <span class="hljs-comment">//do something</span><br>    &#125;<br>    _=&gt; <span class="hljs-comment">//do default thing</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">match</span>(item)&#123;<br>    condition_1 =&gt; <span class="hljs-comment">//do something</span><br>    condition_2 =&gt; &#123;<br>        <span class="hljs-comment">//do something</span><br>    &#125;<br>    _=&gt; <span class="hljs-comment">//do default thing</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>这里我们可以看到Rust的<code>match</code>语句支持单行或者多行的情况，其中多行的情况必须使用大括号包起来，同时<code>match</code>同样有一个<code>_</code>分支，这个分支一般是作为default分支存在。有一点非常重要，所有分支的返回值类型必须相同。</p>
 <p>但是前面又提到了<code>match</code>相对于<code>switch</code>更为强大，所以这里我们将会探讨之所以<code>match</code>强大的原因</p>
 <h2 id="match可以作为表达式">match可以作为表达式</h2>
 <p>在Rust中，match有一个非常常用的用法，在这种情况下所有的分支都必须要有返回值，就像这样</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">s</span> = <span class="hljs-title function_ invoke__">match</span> (item)&#123;<br>    condition_1 =&gt; &#123;<br>        <span class="hljs-number">1</span><br>    &#125;<br>    condition_2 =&gt; &#123;<br>        <span class="hljs-number">1</span> * <span class="hljs-number">2</span><br>    &#125;<br>    _=&gt; &#123;<br>        <span class="hljs-number">3</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">s</span> = <span class="hljs-keyword">match</span> (item)&#123;<br>    condition_1 =&gt; &#123;<br>        <span class="hljs-number">1</span><br>    &#125;<br>    condition_2 =&gt; &#123;<br>        <span class="hljs-number">1</span> * <span class="hljs-number">2</span><br>    &#125;<br>    _=&gt; &#123;<br>        <span class="hljs-number">3</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>在这种情况下各个代码块最终的执行后的返回值将会被赋给<code>s</code></p>
 <h2 id="match的分支条件可以用于解包各类enum">match的分支条件可以用于解包各类enum</h2>
 <p>上面也说到了<code>match</code>可以用于处理<code>Option&lt;T&gt;</code>类型，在Rust中我们可以这样用</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">s</span> = <span class="hljs-title function_ invoke__">Some</span>(<span class="hljs-number">5</span>);<br><br><span class="hljs-title function_ invoke__">match</span>(s)&#123;<br>    <span class="hljs-title function_ invoke__">Some</span>(x) =&gt; &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>, x);<br>    &#125;<br>    <span class="hljs-literal">None</span> =&gt; &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;is none&quot;</span>);<br>    &#125;<br>&#125;<span class="hljs-comment">// 输出5</span><br><br></code></pre></td></tr></table></figure>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">let</span> <span class="hljs-variable">s</span> = <span class="hljs-title function_ invoke__">Some</span>(<span class="hljs-number">5</span>);<br><br><span class="hljs-keyword">match</span>(s)&#123;<br>    <span class="hljs-title function_ invoke__">Some</span>(x) =&gt; &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>, x);<br>    &#125;<br>    <span class="hljs-literal">None</span> =&gt; &#123;<br>        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;is none&quot;</span>);<br>    &#125;<br>&#125;<span class="hljs-comment">// 输出5</span><br><br></code></pre></td></tr></table></figure>
 <p>就像这样，Rust可以利用<code>match</code>语句轻松地解决<code>Option&lt;T&gt;</code>类型的问题。</p>
 <h1 id="后记">后记</h1>
 <p>在写了四篇Rust的博客之后，我突然发现自己对Rust的理解非常的零散肤浅，所以从本篇开始《从零开始的Rust生活》系列将会暂时停更，待到我更加了解Rust后再继续进行更新。接下来本博客将会开始逐步更新本人的Rust学习记录，同步于本人的Rust的学习进程。</p>
