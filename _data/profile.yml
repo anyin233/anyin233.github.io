@@ -22,9 +22,9 @@ linkedin: yanwei-ye
 
 short_bio_text_justify: false
 short_bio_en: >-
-  <p>Yanwei Ye is a Ph.D. student in Computer Science at the University of Edinburgh. His research explores systems for agentic AI and scalable AI infrastructure, with a focus on low-latency scheduling for agentic workloads and compilation for wafer-scale accelerators. He is interested in making complex and heterogeneous computing platforms more efficient, predictable, and easier to program. His current work spans scheduling, runtime systems, performance modeling, and compiler support for emerging AI workloads. He previously completed an M.S. in Computer Science at the University of Science and Technology of China.</p>
+  <p>Yanwei Ye is a Ph.D. student in Computer Science at the University of Edinburgh, working on systems for next-generation AI accelerators and agentic AI. His research sits at the intersection of AI systems, computer architecture, compilers, and runtime infrastructure. He studies how to make emerging AI workloads efficient on heterogeneous and wafer-scale hardware, including low-latency scheduling for agentic applications, compilation and execution planning for wafer-scale accelerators, and performance modeling for model-serving systems. More broadly, he is interested in turning advances in AI models and accelerator hardware into reliable, programmable, and scalable systems. He previously completed an M.S. in Computer Science at the University of Science and Technology of China.</p>
 short_bio_zh: >-
-  <p>叶言威，爱丁堡大学计算机科学博士生。主要研究智能体 AI 系统与可扩展 AI 基础设施，关注智能体工作负载的低延迟调度、晶圆级加速器编译，以及面向新型 AI 应用的运行时与性能建模问题。目前的工作致力于让复杂异构计算平台更高效、更稳定，也更易于编程。此前，他在中国科学技术大学获得计算机科学硕士学位。</p>
+  <p>叶言威是爱丁堡大学计算机科学博士生，研究方向聚焦于面向下一代 AI 加速器的系统软件与智能体 AI。其研究结合 AI 系统、计算机体系结构、编译器和运行时，关注如何让新型 AI 工作负载在异构计算平台和晶圆级 AI 加速器上高效运行。当前主要研究包括智能体应用的低延迟调度、面向晶圆级 AI 加速器的编译与执行计划，以及模型服务系统的性能建模。更广泛地，他希望连接 AI 模型、加速器硬件与系统软件，构建高效、可靠、可编程且可扩展的 AI 基础设施。此前，他在中国科学技术大学获得计算机科学硕士学位。</p>
 
 # Portrait intentionally omitted until the user provides a photo.
 # portrait_url: /assets/images/photos/portrait.jpg

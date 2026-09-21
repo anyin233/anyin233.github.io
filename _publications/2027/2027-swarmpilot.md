@@ -6,8 +6,9 @@ selected: true
 pub: "EuroSys '27 Spring"
 pub_zh: "EuroSys '27 Spring"
 pub_date: "2027"
-pub_last: ' <span class="badge badge-pill badge-publication badge-warning">Conditionally Accepted</span>'
+status_en: "Conditionally Accepted"
 status_zh: "有条件接收"
+status_class: "badge-warning"
 contribution_note_en: "equal contribution"
 contribution_note_zh: "共同一作"
 abstract_en: >-

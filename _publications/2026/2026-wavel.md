@@ -6,8 +6,9 @@ selected: true
 pub: "SOSP 2026"
 pub_zh: "SOSP 2026"
 pub_date: "2026"
-pub_last: ' <span class="badge badge-pill badge-publication badge-success">Accepted</span>'
+status_en: "Accepted"
 status_zh: "已接收"
+status_class: "badge-success"
 contribution_note_en: "equal contribution"
 contribution_note_zh: "共同二作及后续作者贡献一致"
 abstract_en: >-
