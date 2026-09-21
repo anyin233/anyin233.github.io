@@ -1,0 +1,7 @@
+pages:
+# NOTE: The `name` field matches each visible page's `navbar_title` so the
+# active navigation item is highlighted correctly.
+- name: Home / 首页
+  url: /
+- name: Publications / 论文
+  url: /publications

@@ -1,0 +1,38 @@
+primary_name: "Yanwei Ye"
+secondary_name: "叶言威"
+navbar_name: "Yanwei Ye / 叶言威"
+
+positions:
+- name: Ph.D. Student · Computer Science
+- name: University of Edinburgh / 爱丁堡大学
+
+
+email: "yanwei.ye@ed.ac.uk"
+# cv_link: leave unset until a public CV is available
+# gscholar: leave unset until a verified Google Scholar profile is available
+github: anyin233
+# twitter: leave unset
+linkedin: yanwei-ye
+# orcid: leave unset
+
+short_bio_text_justify: false
+short_bio: >-
+  <p><strong>English</strong> — Yanwei Ye is a Ph.D. student in Computer Science at the University of Edinburgh. His research explores systems for agentic AI and scalable AI infrastructure, with a focus on low-latency scheduling for agentic workloads and compilation for wafer-scale accelerators. He is interested in making complex and heterogeneous computing platforms more efficient, predictable, and easier to program. His current work spans scheduling, runtime systems, performance modeling, and compiler support for emerging AI workloads. He previously completed an M.S. in Computer Science at the University of Science and Technology of China.</p>
+  <p><strong>中文</strong> — 叶言威是爱丁堡大学计算机科学博士生，研究方向聚焦于智能体 AI 系统与可扩展 AI 基础设施，重点关注智能体工作负载的低延迟调度以及晶圆级加速器编译系统。他关注如何让复杂的异构计算平台更加高效、可预测且易于编程。目前的研究涉及调度、运行时系统、性能建模和新型 AI 工作负载的编译器支持。此前，他在中国科学技术大学获得计算机科学硕士学位。</p>
+
+# Portrait intentionally omitted until the user provides a photo.
+# portrait_url: /assets/images/photos/portrait.jpg
+
+education:
+- name: University of Edinburgh
+  position: Ph.D. in Computer Science / 计算机科学博士
+  date: Sep. 2025 – Jun. 2029
+- name: University of Science and Technology of China
+  position: M.S. in Computer Science / 计算机科学硕士
+  date: Sep. 2022 – Jun. 2025
+
+experience:
+- name: Tencent
+  dept: Guangzhou
+  position: ""
+  date: ""
