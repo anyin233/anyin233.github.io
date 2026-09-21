@@ -26,8 +26,7 @@ short_bio_en: >-
 short_bio_zh: >-
   <p>叶言威是爱丁堡大学计算机科学博士生，研究方向聚焦于面向下一代 AI 加速器的系统软件与智能体 AI。其研究结合 AI 系统、计算机体系结构、编译器和运行时，关注如何让新型 AI 工作负载在异构计算平台和晶圆级 AI 加速器上高效运行。当前主要研究包括智能体应用的低延迟调度、面向晶圆级 AI 加速器的编译与执行计划，以及模型服务系统的性能建模。更广泛地，他希望连接 AI 模型、加速器硬件与系统软件，构建高效、可靠、可编程且可扩展的 AI 基础设施。此前，他在中国科学技术大学获得计算机科学硕士学位。</p>
 
-# Portrait intentionally omitted until the user provides a photo.
-# portrait_url: /assets/images/photos/portrait.jpg
+portrait_url: /assets/images/photos/yanwei-ye.jpg
 
 education:
 - name: University of Edinburgh
