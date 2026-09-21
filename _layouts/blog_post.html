@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-language="en">
 <!-- Template: https://github.com/luost26/academic-homepage -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ page.title }} - {{ site.data.profile.navbar_name }}</title>
+    <script>
+        (function () {
+            try {
+                var savedLanguage = window.localStorage.getItem('site-language');
+                if (savedLanguage === 'zh') {
+                    document.documentElement.dataset.language = 'zh';
+                    document.documentElement.lang = 'zh-CN';
+                }
+            } catch (error) {
+                // Private browsing modes may block localStorage; English remains the fallback.
+            }
+        }());
+    </script>
+    <title>{{ page.title }} - {{ site.data.profile.navbar_name_en }}</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" />
@@ -19,7 +32,7 @@
     <link rel="stylesheet" href="{{ '/assets/css/global.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/css/blog.css' | relative_url }}">
 </head>
-<body class="bg-light d-flex flex-column min-vh-100" {{ page.body_attr }}>
+<body class="bg-light d-flex flex-column min-vh-100" data-page-title-en="{{ page.title | escape }}" data-page-title-zh="{{ page.title_zh | default: page.title | escape }}" {{ page.body_attr }}>
     {% include navbar.html active_page="Blog" %}
 
     <main class="flex-grow-1 flex-shrink-0">
@@ -27,9 +40,9 @@
             <div class="blog-main">
                 <article class="bg-white shadow-sm rounded-xl p-4 mb-4">
                     <header class="mb-4">
-                        <h1 class="display-4 mb-3">{{ page.title }}</h1>
+                        <h1 class="display-4 mb-3"><span data-lang="en">{{ page.title }}</span><span data-lang="zh">{{ page.title_zh | default: page.title }}</span></h1>
                         <div class="text-muted mb-3">
-                            <i class="fas fa-calendar-alt"></i> {{ page.date | date: "%B %d, %Y" }}
+                            <i class="fas fa-calendar-alt"></i> <span data-lang="en">{{ page.date | date: "%B %d, %Y" }}</span><span data-lang="zh">{{ page.date | date: "%Y年%m月%d日" }}</span>
                             {% if page.tags %}
                                 <span class="ml-3">
                                     <i class="fas fa-tags"></i>
@@ -48,7 +61,7 @@
             </div>
             <div class="blog-toc-sidebar">
                 <nav id="blog-toc" class="blog-toc-nav">
-                    <div class="blog-toc-title">Table of Contents</div>
+                    <div class="blog-toc-title"><span data-lang="en">Table of Contents</span><span data-lang="zh">目录</span></div>
                     <ul class="blog-toc-list"></ul>
                 </nav>
             </div>
@@ -84,6 +97,7 @@
     </script>
     <script src="{{ '/assets/js/blog.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/common.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/i18n.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/bubble_visual_hash.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/semantic_scholar_citation_count.js' | relative_url }}"></script>
 </body>

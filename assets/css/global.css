@@ -48,6 +48,31 @@ h1, h2, h3, h4, h5, h6,
     -webkit-backdrop-filter: blur(16px);
 }
 
+html[data-language="en"] [data-lang="zh"],
+html:not([data-language="zh"]) [data-lang="zh"],
+html[data-language="zh"] [data-lang="en"] {
+    display: none !important;
+}
+
+.language-toggle {
+    color: #495057;
+    border: 1px solid rgba(73, 80, 87, 0.35);
+    background: rgba(255, 255, 255, 0.72);
+    line-height: 1.25;
+}
+
+.language-toggle:hover {
+    color: #212529;
+    background: #fff;
+    border-color: rgba(73, 80, 87, 0.6);
+}
+
+.language-toggle:focus-visible {
+    outline: 2px solid #2f80ed;
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
 .inline-badge {
     height: 16px;
     vertical-align: -10%;

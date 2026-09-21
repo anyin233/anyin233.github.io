@@ -1,7 +1,10 @@
 pages:
-# NOTE: The `name` field matches each visible page's `navbar_title` so the
-# active navigation item is highlighted correctly.
-- name: Home / 首页
+# NOTE: `key` matches each page's `navbar_key` so the active item is highlighted.
+- key: home
+  name_en: Home
+  name_zh: 首页
   url: /
-- name: Publications / 论文
+- key: publications
+  name_en: Publications
+  name_zh: 论文
   url: /publications

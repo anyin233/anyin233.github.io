@@ -1,10 +1,15 @@
-primary_name: "Yanwei Ye"
-secondary_name: "叶言威"
-navbar_name: "Yanwei Ye / 叶言威"
+primary_name_en: "Yanwei Ye"
+primary_name_zh: "叶言威"
+secondary_name_en: ""
+secondary_name_zh: ""
+navbar_name_en: "Yanwei Ye"
+navbar_name_zh: "叶言威"
 
 positions:
-- name: Ph.D. Student · Computer Science
-- name: University of Edinburgh / 爱丁堡大学
+- name_en: Ph.D. Student · Computer Science
+  name_zh: 计算机科学博士生
+- name_en: University of Edinburgh
+  name_zh: 爱丁堡大学
 
 
 email: "yanwei.ye@ed.ac.uk"
@@ -16,23 +21,34 @@ linkedin: yanwei-ye
 # orcid: leave unset
 
 short_bio_text_justify: false
-short_bio: >-
-  <p><strong>English</strong> — Yanwei Ye is a Ph.D. student in Computer Science at the University of Edinburgh. His research explores systems for agentic AI and scalable AI infrastructure, with a focus on low-latency scheduling for agentic workloads and compilation for wafer-scale accelerators. He is interested in making complex and heterogeneous computing platforms more efficient, predictable, and easier to program. His current work spans scheduling, runtime systems, performance modeling, and compiler support for emerging AI workloads. He previously completed an M.S. in Computer Science at the University of Science and Technology of China.</p>
-  <p><strong>中文</strong> — 叶言威是爱丁堡大学计算机科学博士生，研究方向聚焦于智能体 AI 系统与可扩展 AI 基础设施，重点关注智能体工作负载的低延迟调度以及晶圆级加速器编译系统。他关注如何让复杂的异构计算平台更加高效、可预测且易于编程。目前的研究涉及调度、运行时系统、性能建模和新型 AI 工作负载的编译器支持。此前，他在中国科学技术大学获得计算机科学硕士学位。</p>
+short_bio_en: >-
+  <p>Yanwei Ye is a Ph.D. student in Computer Science at the University of Edinburgh. His research explores systems for agentic AI and scalable AI infrastructure, with a focus on low-latency scheduling for agentic workloads and compilation for wafer-scale accelerators. He is interested in making complex and heterogeneous computing platforms more efficient, predictable, and easier to program. His current work spans scheduling, runtime systems, performance modeling, and compiler support for emerging AI workloads. He previously completed an M.S. in Computer Science at the University of Science and Technology of China.</p>
+short_bio_zh: >-
+  <p>叶言威，爱丁堡大学计算机科学博士生。主要研究智能体 AI 系统与可扩展 AI 基础设施，关注智能体工作负载的低延迟调度、晶圆级加速器编译，以及面向新型 AI 应用的运行时与性能建模问题。目前的工作致力于让复杂异构计算平台更高效、更稳定，也更易于编程。此前，他在中国科学技术大学获得计算机科学硕士学位。</p>
 
 # Portrait intentionally omitted until the user provides a photo.
 # portrait_url: /assets/images/photos/portrait.jpg
 
 education:
 - name: University of Edinburgh
-  position: Ph.D. in Computer Science / 计算机科学博士
-  date: Sep. 2025 – Jun. 2029
+  name_en: University of Edinburgh
+  name_zh: 爱丁堡大学
+  position_en: Ph.D. in Computer Science
+  position_zh: 计算机科学博士
+  date_en: Sep. 2025 – Jun. 2029
+  date_zh: 2025年9月 – 2029年6月
 - name: University of Science and Technology of China
-  position: M.S. in Computer Science / 计算机科学硕士
-  date: Sep. 2022 – Jun. 2025
+  name_en: University of Science and Technology of China
+  name_zh: 中国科学技术大学
+  position_en: M.S. in Computer Science
+  position_zh: 计算机科学硕士
+  date_en: Sep. 2022 – Jun. 2025
+  date_zh: 2022年9月 – 2025年6月
 
 experience:
 - name: Tencent
+  name_en: Tencent
+  name_zh: 腾讯
+  dept_en: Guangzhou
+  dept_zh: 广州
   dept: Guangzhou
-  position: ""
-  date: ""

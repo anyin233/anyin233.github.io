@@ -6,18 +6,18 @@
                     {% if site.data.profile.education %}
                     <div class="col-lg-6">
                         <div class="mx-2 my-1">
-                            <h6>Education</h6>
+                            <h6><span data-lang="en">Education</span><span data-lang="zh">教育经历</span></h6>
                             <ul class="list-unstyled mb-1">
                                 {% for item in site.data.profile.education %}
                                 <li class="media mb-1">
                                     {% if item.logo %}<img src="{{ item.logo | relative_url }}" alt="{{ item.name }}" style="width: 18px;" class="mr-1 mt-1">{% endif %}
                                     <div class="media-body">
-                                        <div>{{ item.name }}</div>
-                                        {% if item.dept %}<div class="small">{{ item.dept }}</div>{% endif %}
-                                        {% if item.position or item.date %}
+                                        <div><span data-lang="en">{{ item.name_en | default: item.name }}</span><span data-lang="zh">{{ item.name_zh | default: item.name }}</span></div>
+                                        {% if item.dept_en or item.dept_zh or item.dept %}<div class="small"><span data-lang="en">{{ item.dept_en | default: item.dept }}</span><span data-lang="zh">{{ item.dept_zh | default: item.dept }}</span></div>{% endif %}
+                                        {% if item.position_en or item.position_zh or item.position or item.date_en or item.date_zh or item.date %}
                                         <div class="small d-flex">
-                                            {% if item.position %}<div>{{ item.position }}</div>{% endif %}
-                                            {% if item.date %}<div class="mt-auto ml-auto no-break"><em>{{ item.date }}</em></div>{% endif %}
+                                            {% if item.position_en or item.position_zh or item.position %}<div><span data-lang="en">{{ item.position_en | default: item.position }}</span><span data-lang="zh">{{ item.position_zh | default: item.position }}</span></div>{% endif %}
+                                            {% if item.date_en or item.date_zh or item.date %}<div class="mt-auto ml-auto no-break"><em><span data-lang="en">{{ item.date_en | default: item.date }}</span><span data-lang="zh">{{ item.date_zh | default: item.date }}</span></em></div>{% endif %}
                                         </div>
                                         {% endif %}
                                     </div>
@@ -31,18 +31,20 @@
                     {% if site.data.profile.experience %}
                     <div class="col-lg-6">
                         <div class="mx-2 my-1">
-                            <h6>Experience</h6>
+                            <h6><span data-lang="en">Experience</span><span data-lang="zh">经历</span></h6>
                             <ul class="list-unstyled mb-1">
                                 {% for item in site.data.profile.experience %}
                                 <li class="media mb-1">
                                     {% if item.logo %}<img src="{{ item.logo | relative_url }}" alt="{{ item.name }}" style="width: 18px;" class="mr-1 mt-1">{% endif %}
                                     <div class="media-body">
-                                        <div>{{ item.name }}</div>
-                                        <div class="small">{{ item.dept }}</div>
+                                        <div><span data-lang="en">{{ item.name_en | default: item.name }}</span><span data-lang="zh">{{ item.name_zh | default: item.name }}</span></div>
+                                        {% if item.dept_en or item.dept_zh or item.dept %}<div class="small"><span data-lang="en">{{ item.dept_en | default: item.dept }}</span><span data-lang="zh">{{ item.dept_zh | default: item.dept }}</span></div>{% endif %}
+                                        {% if item.position_en or item.position_zh or item.position or item.date_en or item.date_zh or item.date %}
                                         <div class="small d-flex">
-                                            <div>{{ item.position }}</div>
-                                            <div class="mt-auto ml-auto no-break"><em>{{ item.date }}</em></div>
+                                            {% if item.position_en or item.position_zh or item.position %}<div><span data-lang="en">{{ item.position_en | default: item.position }}</span><span data-lang="zh">{{ item.position_zh | default: item.position }}</span></div>{% endif %}
+                                            {% if item.date_en or item.date_zh or item.date %}<div class="mt-auto ml-auto no-break"><em><span data-lang="en">{{ item.date_en | default: item.date }}</span><span data-lang="zh">{{ item.date_zh | default: item.date }}</span></em></div>{% endif %}
                                         </div>
+                                        {% endif %}
                                     </div>
                                 </li>
                                 {% endfor %}
@@ -54,7 +56,7 @@
                     {% if site.data.profile.awards %}
                     <div class="col-lg-6">
                         <div class="mx-2 my-1">
-                            <h6>Honors & Awards</h6>
+                            <h6><span data-lang="en">Honors & Awards</span><span data-lang="zh">荣誉与奖励</span></h6>
                             <ul class="list small pl-3 mb-1">
                                 {% for item in site.data.profile.awards %}
                                 <li>

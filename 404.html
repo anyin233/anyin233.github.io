@@ -1,7 +1,9 @@
 ---
-layout: prompt
+layout: default
 title: 404 - Page Not Found
+title_zh: 404 - 页面未找到
+navbar_key: home
 ---
 <h1 class="mt-5">404</h1>
-<p class="lead">The requested page could not be found.</p>
-<p><a href="{{ '/' | relative_url }}">Go home</a></p>
+<p class="lead"><span data-lang="en">The requested page could not be found.</span><span data-lang="zh">找不到你访问的页面。</span></p>
+<p><a href="{{ '/' | relative_url }}"><span data-lang="en">Go home</span><span data-lang="zh">返回主页</span></a></p>

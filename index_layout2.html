@@ -1,7 +1,8 @@
 ---
 layout: default
 title : Homepage
-navbar_title: Home (Layout 2)
+navbar_key: home
+title_zh: 主页
 ---
 {% include widgets/profile_card.html %}
 
@@ -21,6 +22,6 @@ navbar_title: Home (Layout 2)
     {% 
         include widgets/publication_card.html 
         publications=pubs
-        title='<i class="fas fa-star"></i> Selected Publications'
+        title='<i class="fas fa-star"></i> <span data-lang="en">Selected Publications</span><span data-lang="zh">代表性论文</span>'
     %}
 {% endif %}

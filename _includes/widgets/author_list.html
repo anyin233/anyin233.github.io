@@ -1,4 +1,6 @@
 {%- assign authors = include.authors -%}
+{%- assign contribution_note_en = include.contribution_note_en | default: "equal contribution" -%}
+{%- assign contribution_note_zh = include.contribution_note_zh | default: "共同贡献" -%}
 {%- assign has_eq_contrib = false -%}
 {%- assign has_corresponding = false -%}
 
@@ -50,11 +52,11 @@
 {%- if has_eq_contrib or has_corresponding %}
 <mark>(
     {%- if has_eq_contrib -%}
-        * <i> equal contribution</i>
+        * <i><span data-lang="en">{{ contribution_note_en }}</span><span data-lang="zh">{{ contribution_note_zh }}</span></i>
     {%- endif -%}
     {%- if has_corresponding -%}
         {%- if has_eq_contrib -%}, {% endif -%}
-        <sup>#</sup> <i> corresponding author</i>
+        <sup>#</sup> <i><span data-lang="en">corresponding author</span><span data-lang="zh">通讯作者</span></i>
     {%- endif -%}
 )</mark>
 {%- endif -%}

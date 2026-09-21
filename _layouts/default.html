@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-language="en">
 <!-- Template: https://github.com/luost26/academic-homepage -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ page.title }} - {{ site.data.profile.navbar_name }}</title>
+    <script>
+        (function () {
+            try {
+                var savedLanguage = window.localStorage.getItem('site-language');
+                if (savedLanguage === 'zh') {
+                    document.documentElement.dataset.language = 'zh';
+                    document.documentElement.lang = 'zh-CN';
+                }
+            } catch (error) {
+                // Private browsing modes may block localStorage; English remains the fallback.
+            }
+        }());
+    </script>
+    <title>{{ page.title }} - {{ site.data.profile.navbar_name_en }}</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" />
@@ -16,7 +29,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ '/assets/css/global.css' | relative_url }}">
 </head>
-<body class="bg-light d-flex flex-column min-vh-100" {{ page.body_attr }}>
+<body class="bg-light d-flex flex-column min-vh-100" data-page-title-en="{{ page.title | escape }}" data-page-title-zh="{{ page.title_zh | default: page.title | escape }}" {{ page.body_attr }}>
     {% include navbar.html %}
     <main class="flex-grow-1 flex-shrink-0 {% if page.container_class %}{{ page.container_class }}{% else %}container-lg{% endif %}">
         {{content}}
@@ -45,6 +58,7 @@
         });
     </script>
     <script src="{{ '/assets/js/common.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/i18n.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/bubble_visual_hash.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/semantic_scholar_citation_count.js' | relative_url }}"></script>
 </body>
