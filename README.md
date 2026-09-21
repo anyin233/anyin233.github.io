@@ -33,6 +33,8 @@ bundle exec jekyll build
 The navigation language switch defaults to English, toggles the page to Chinese,
 and remembers the visitor's choice in browser storage. Localized text uses
 `data-lang="en"` and `data-lang="zh"` markers in the shared widgets.
+Publication entries remain in their original English, including titles,
+metadata, status, abstracts, and author-contribution notes.
 
 The portrait is intentionally unset until a personal photo is provided.
 Awards, news, blog, and showcase sections are currently disabled.

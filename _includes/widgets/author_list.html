@@ -52,11 +52,11 @@
 {%- if has_eq_contrib or has_corresponding %}
 <mark>(
     {%- if has_eq_contrib -%}
-        * <i><span data-lang="en">{{ contribution_note_en }}</span><span data-lang="zh">{{ contribution_note_zh }}</span></i>
+        * <i>{% if include.original_language %}{{ contribution_note_en }}{% else %}<span data-lang="en">{{ contribution_note_en }}</span><span data-lang="zh">{{ contribution_note_zh }}</span>{% endif %}</i>
     {%- endif -%}
     {%- if has_corresponding -%}
         {%- if has_eq_contrib -%}, {% endif -%}
-        <sup>#</sup> <i><span data-lang="en">corresponding author</span><span data-lang="zh">通讯作者</span></i>
+        <sup>#</sup> <i>{% if include.original_language %}corresponding author{% else %}<span data-lang="en">corresponding author</span><span data-lang="zh">通讯作者</span>{% endif %}</i>
     {%- endif -%}
 )</mark>
 {%- endif -%}

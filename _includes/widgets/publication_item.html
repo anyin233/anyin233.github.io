@@ -9,17 +9,17 @@
             {%- endif -%}
         </div>
         <div class="col-md-9 col-xl-10 p-3 pl-md-0">
-            <h5 class="mt-0 mb-1 font-weight-normal"><span data-lang="en">{{ item.title }}</span><span data-lang="zh">{{ item.title_zh | default: item.title }}</span></h5>
-            <p class="mt-0 mb-0 small">{% include widgets/author_list.html authors=item.authors contribution_note_en=item.contribution_note_en contribution_note_zh=item.contribution_note_zh %}</p>
-            <p class="mt-0 mb-0 small">{{item.pub_pre}}<i><span data-lang="en">{{ item.pub }}</span><span data-lang="zh">{{ item.pub_zh | default: item.pub }}</span></i>{{ item.pub_post }} {{ item.pub_date }} <span data-lang="en" class="badge badge-pill badge-publication {{ item.status_class | default: 'badge-warning' }}">{{ item.status_en | default: item.status_zh }}</span><span data-lang="zh" class="badge badge-pill badge-publication {{ item.status_class | default: 'badge-warning' }}">{{ item.status_zh | default: item.status_en }}</span> <span data-semantic-scholar-id="{{ item.semantic_scholar_id }}"></span></p>
-            <p class="mt-0 mb-0 small text-muted"><span data-lang="en">{{ item.abstract_en | default: item.abstract }}</span><span data-lang="zh">{{ item.abstract_zh | default: item.abstract_en | default: item.abstract }}</span></p>
+            <h5 class="mt-0 mb-1 font-weight-normal">{{ item.title }}</h5>
+            <p class="mt-0 mb-0 small">{% include widgets/author_list.html authors=item.authors contribution_note_en=item.contribution_note_en original_language=true %}</p>
+            <p class="mt-0 mb-0 small">{{item.pub_pre}}<i>{{ item.pub }}</i>{{ item.pub_post }} {{ item.pub_date }} <span class="badge badge-pill badge-publication {{ item.status_class | default: 'badge-warning' }}">{{ item.status_en }}</span> <span data-semantic-scholar-id="{{ item.semantic_scholar_id }}"></span></p>
+            <p class="mt-0 mb-0 small text-muted">{{ item.abstract_en | default: item.abstract }}</p>
             
             <p class="small pb-0 mb-0 lh-125 text-muted abstract-links">
                 {% for link in item.links %}
                 {% if link[1].url %}
-                <a target="{{ link[1]['target'] }}" href="{{ link[1]['url'] }}"><span data-lang="en">[{{ link[0] }}]</span><span data-lang="zh">[{% if link[0] == 'Paper' %}论文{% else %}{{ link[0] }}{% endif %}]</span></a>
+                <a target="{{ link[1]['target'] }}" href="{{ link[1]['url'] }}">[{{ link[0] }}]</a>
                 {% else %}
-                <a target="_blank" href="{{ link[1] }}"><span data-lang="en">[{{ link[0] }}]</span><span data-lang="zh">[{% if link[0] == 'Paper' %}论文{% else %}{{ link[0] }}{% endif %}]</span></a>
+                <a target="_blank" href="{{ link[1] }}">[{{ link[0] }}]</a>
                 {% endif %}
                 {% endfor %}
             </p>
@@ -33,17 +33,17 @@
         <div class="d-flex align-items-start flex-column py-3 px-4">
             <div class="mb-auto"></div>
             <div>
-                <h5 class="mt-0 mb-1 font-weight-normal"><span data-lang="en">{{ item.title }}</span><span data-lang="zh">{{ item.title_zh | default: item.title }}</span></h5>
-                <p class="mt-0 mb-0 small">{% include widgets/author_list.html authors=item.authors contribution_note_en=item.contribution_note_en contribution_note_zh=item.contribution_note_zh %}</p>
-                <p class="mt-0 mb-0 small">{{item.pub_pre}}<i><span data-lang="en">{{ item.pub }}</span><span data-lang="zh">{{ item.pub_zh | default: item.pub }}</span></i>{{ item.pub_post }} {{ item.pub_date }} <span data-lang="en" class="badge badge-pill badge-publication {{ item.status_class | default: 'badge-warning' }}">{{ item.status_en | default: item.status_zh }}</span><span data-lang="zh" class="badge badge-pill badge-publication {{ item.status_class | default: 'badge-warning' }}">{{ item.status_zh | default: item.status_en }}</span> <span data-semantic-scholar-id="{{ item.semantic_scholar_id }}"></span></p>
-                <p class="mt-0 mb-0 small text-muted"><span data-lang="en">{{ item.abstract_en | default: item.abstract }}</span><span data-lang="zh">{{ item.abstract_zh | default: item.abstract_en | default: item.abstract }}</span></p>
+                <h5 class="mt-0 mb-1 font-weight-normal">{{ item.title }}</h5>
+                <p class="mt-0 mb-0 small">{% include widgets/author_list.html authors=item.authors contribution_note_en=item.contribution_note_en original_language=true %}</p>
+                <p class="mt-0 mb-0 small">{{item.pub_pre}}<i>{{ item.pub }}</i>{{ item.pub_post }} {{ item.pub_date }} <span class="badge badge-pill badge-publication {{ item.status_class | default: 'badge-warning' }}">{{ item.status_en }}</span> <span data-semantic-scholar-id="{{ item.semantic_scholar_id }}"></span></p>
+                <p class="mt-0 mb-0 small text-muted">{{ item.abstract_en | default: item.abstract }}</p>
                 
                 <p class="small pb-0 mb-0 lh-125 text-muted abstract-links">
                     {% for link in item.links %}
                     {% if link[1].url %}
-                        <a target="{{ link[1]['target'] }}" href="{{ link[1]['url'] }}"><span data-lang="en">[{{ link[0] }}]</span><span data-lang="zh">[{% if link[0] == 'Paper' %}论文{% else %}{{ link[0] }}{% endif %}]</span></a>
+                        <a target="{{ link[1]['target'] }}" href="{{ link[1]['url'] }}">[{{ link[0] }}]</a>
                     {% else %}
-                    <a target="_blank" href="{{ link[1] }}"><span data-lang="en">[{{ link[0] }}]</span><span data-lang="zh">[{% if link[0] == 'Paper' %}论文{% else %}{{ link[0] }}{% endif %}]</span></a>
+                    <a target="_blank" href="{{ link[1] }}">[{{ link[0] }}]</a>
                     {% endif %}
                     {% endfor %}
                 </p>
