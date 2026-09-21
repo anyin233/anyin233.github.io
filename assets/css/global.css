@@ -277,8 +277,225 @@ mark {
     box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.25);
 }
 
+/* Pac-Man easter egg ----------------------------------------------------- */
+.pacman-easter-egg {
+    --pacman-yellow: #ffd800;
+    --pacman-wafer: #d59645;
+    --pacman-angle: 0deg;
+    position: fixed;
+    z-index: 1080;
+    inset: 0;
+    pointer-events: none;
+}
+
+.pacman-control {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    cursor: grab;
+    pointer-events: auto;
+    touch-action: none;
+    image-rendering: pixelated;
+}
+
+.pacman-control:active,
+.pacman-control.is-dragging {
+    cursor: grabbing;
+}
+
+.pacman-control:focus-visible {
+    outline: 3px solid #2f80ed;
+    outline-offset: 5px;
+}
+
+.pacman-sprite {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transform: rotate(var(--pacman-angle));
+    transition: transform 140ms steps(2, end);
+    animation: pacman-hover 2.8s steps(2, end) infinite;
+}
+
+.pacman-control.is-dragging .pacman-sprite {
+    animation: none;
+}
+
+.pacman-control.is-eating .pacman-sprite {
+    animation: pacman-eat-bob 115ms steps(2, end) infinite;
+}
+
+.pacman-sprite svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    image-rendering: pixelated;
+}
+
+.pacman-body {
+    fill: var(--pacman-yellow);
+}
+
+.pacman-body-closed {
+    display: none;
+}
+
+.pacman-control.is-mouth-closed .pacman-body-open {
+    display: none;
+}
+
+.pacman-control.is-mouth-closed .pacman-body-closed {
+    display: block;
+}
+
+.pacman-hint {
+    position: absolute;
+    top: var(--pacman-hint-top, 0px);
+    left: var(--pacman-hint-left, 0px);
+    padding: 0.35rem 0.55rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-primary);
+    background: var(--color-surface);
+    box-shadow: 0 3px 12px var(--color-shadow);
+    font: 600 0.68rem/1.2 "Source Code Pro", monospace;
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 10px)) translateY(4px);
+    transition: opacity 180ms ease, transform 180ms ease;
+    white-space: nowrap;
+}
+
+.pacman-control:hover + .pacman-hint,
+.pacman-control.is-dragging + .pacman-hint,
+.pacman-easter-egg.is-dragging .pacman-hint,
+.pacman-control:focus-visible + .pacman-hint {
+    opacity: 1;
+    transform: translate(-50%, calc(-100% - 10px));
+}
+
+.pacman-target--wafer {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.pacman-target--wafer > *:not(.pacman-wafer):not(.pacman-crumbs):not(.pacman-eaten-trail) {
+    visibility: hidden;
+}
+
+.pacman-wafer {
+    position: absolute;
+    z-index: 5;
+    inset: 0;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid rgba(109, 64, 10, 0.28);
+    border-radius: inherit;
+    background-color: var(--pacman-wafer);
+    background-image:
+        linear-gradient(135deg, transparent 38%, rgba(255, 231, 164, 0.68) 39%, rgba(255, 231, 164, 0.68) 47%, transparent 48%),
+        linear-gradient(45deg, transparent 38%, rgba(116, 68, 13, 0.28) 39%, rgba(116, 68, 13, 0.28) 47%, transparent 48%);
+    background-size: 29px 29px;
+    box-shadow: inset 0 0 0 5px rgba(255, 219, 133, 0.2), inset 0 0 22px rgba(96, 52, 5, 0.18);
+    clip-path: circle(0% at 0% 100%);
+    opacity: 1;
+    animation: pacman-wafer-arrive 280ms steps(4, end) forwards;
+    pointer-events: none;
+}
+
+.pacman-eaten-trail {
+    position: absolute;
+    z-index: 6;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--color-page-bg, #f8f9fa);
+    pointer-events: none;
+}
+
+.pacman-crumbs {
+    position: absolute;
+    z-index: 7;
+    inset: 0;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.pacman-crumb {
+    position: absolute;
+    left: var(--crumb-left, 0px);
+    top: var(--crumb-top, 0px);
+    width: 7px;
+    height: 7px;
+    background: #e8b45f;
+    box-shadow: 2px 2px 0 #9a6428;
+    image-rendering: pixelated;
+    opacity: 0;
+    animation: pacman-cookie-crumb 900ms steps(7, end) var(--crumb-delay) both;
+}
+
+.pacman-crumb.is-large {
+    width: 10px;
+    height: 10px;
+}
+
+.pacman-target--eaten {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+@keyframes pacman-hover {
+    0%, 100% { transform: rotate(var(--pacman-angle)) translateY(0); }
+    50% { transform: rotate(var(--pacman-angle)) translateY(-2px); }
+}
+
+@keyframes pacman-eat-bob {
+    0%, 100% { transform: rotate(var(--pacman-angle)) translateY(0); }
+    50% { transform: rotate(var(--pacman-angle)) translateY(-2px); }
+}
+
+@keyframes pacman-wafer-arrive {
+    0% {
+        clip-path: circle(0% at 0% 100%);
+    }
+    100% {
+        clip-path: circle(150% at 0% 100%);
+    }
+}
+
+@keyframes pacman-cookie-crumb {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--crumb-x), var(--crumb-y)) rotate(var(--crumb-rotate));
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .carousel-indicators button {
         transition: none;
+    }
+
+    .pacman-sprite,
+    .pacman-wafer,
+    .pacman-crumb {
+        animation-duration: 1ms;
+        animation-iteration-count: 1;
+    }
+
+    .pacman-sprite,
+    .pacman-hint,
+    .pacman-target--wafer > *:not(.pacman-wafer):not(.pacman-crumbs):not(.pacman-eaten-trail) {
+        transition-duration: 1ms;
     }
 }
