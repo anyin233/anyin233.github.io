@@ -21,6 +21,7 @@
         var lastPointer = null;
         var eatenCount = 0;
         var isEating = false;
+        var keyboardMoved = false;
 
         function clamp(value, minimum, maximum) {
             return Math.min(Math.max(value, minimum), Math.max(minimum, maximum));
@@ -180,18 +181,6 @@
             }, 1000);
         }
 
-        function stopDragForEating() {
-            if (!dragState) {
-                return;
-            }
-            if (control.hasPointerCapture(dragState.pointerId)) {
-                control.releasePointerCapture(dragState.pointerId);
-            }
-            control.classList.remove("is-dragging");
-            root.classList.remove("is-dragging");
-            dragState = null;
-        }
-
         function animateEating(target, trail, crumbs, eatingPath) {
             var segments = [];
             var totalDistance = 0;
@@ -273,12 +262,15 @@
             target.appendChild(crumbs);
             eatenCount += 1;
             root.style.setProperty("--pacman-eaten-count", eatenCount);
-            stopDragForEating();
             var trail = createEatingTrail(target, targetRect, eatingPath);
             animateEating(target, trail, crumbs, eatingPath);
         }
 
         function checkCollisions() {
+            if (isEating) {
+                return;
+            }
+
             var controlRect = control.getBoundingClientRect();
             var radius = controlRect.width * 0.38;
             var center = {
@@ -286,9 +278,9 @@
                 y: controlRect.top + controlRect.height / 2
             };
 
-            targets.forEach(function (target) {
+            targets.some(function (target) {
                 if (target.dataset.pacmanEaten === "true") {
-                    return;
+                    return false;
                 }
 
                 var targetRect = target.getBoundingClientRect();
@@ -299,12 +291,14 @@
 
                 if ((distanceX * distanceX) + (distanceY * distanceY) <= radius * radius) {
                     makeWafer(target, center);
+                    return true;
                 }
+                return false;
             });
         }
 
         function beginDrag(event) {
-            if (isEating || (event.button !== undefined && event.button !== 0)) {
+            if (isEating || dragState || (event.button !== undefined && event.button !== 0)) {
                 return;
             }
 
@@ -312,12 +306,10 @@
             dragState = {
                 pointerId: event.pointerId,
                 offsetX: event.clientX - rect.left,
-                offsetY: event.clientY - rect.top,
-                startX: event.clientX,
-                startY: event.clientY,
-                moved: false
+                offsetY: event.clientY - rect.top
             };
-            control.style.bottom = "auto";
+            setPosition(rect.left, rect.top);
+            keyboardMoved = false;
             lastPointer = { x: event.clientX, y: event.clientY };
             control.setPointerCapture(event.pointerId);
             control.classList.add("is-dragging");
@@ -330,26 +322,30 @@
                 return;
             }
 
-            var distance = Math.hypot(event.clientX - dragState.startX, event.clientY - dragState.startY);
-            dragState.moved = dragState.moved || distance > 4;
             setPosition(event.clientX - dragState.offsetX, event.clientY - dragState.offsetY);
             updateDirection(event.clientX - lastPointer.x, event.clientY - lastPointer.y);
             lastPointer = { x: event.clientX, y: event.clientY };
-            checkCollisions();
             event.preventDefault();
         }
 
-        function endDrag(event) {
+        function endDrag(event, shouldEat) {
             if (!dragState || (event && event.pointerId !== dragState.pointerId)) {
                 return;
             }
 
-            if (control.hasPointerCapture(dragState.pointerId)) {
-                control.releasePointerCapture(dragState.pointerId);
+            var pointerId = dragState.pointerId;
+            if (shouldEat) {
+                setPosition(event.clientX - dragState.offsetX, event.clientY - dragState.offsetY);
+            }
+            dragState = null;
+            if (control.hasPointerCapture(pointerId)) {
+                control.releasePointerCapture(pointerId);
             }
             control.classList.remove("is-dragging");
             root.classList.remove("is-dragging");
-            dragState = null;
+            if (shouldEat) {
+                checkCollisions();
+            }
         }
 
         function moveWithKeyboard(deltaX, deltaY) {
@@ -361,7 +357,7 @@
             }
             setPosition(position.left + deltaX, position.top + deltaY);
             updateDirection(deltaX, deltaY);
-            checkCollisions();
+            keyboardMoved = true;
         }
 
         setInitialPosition();
@@ -372,9 +368,15 @@
         });
         control.addEventListener("pointerdown", beginDrag);
         control.addEventListener("pointermove", moveDrag);
-        control.addEventListener("pointerup", endDrag);
-        control.addEventListener("pointercancel", endDrag);
-        control.addEventListener("lostpointercapture", endDrag);
+        control.addEventListener("pointerup", function (event) {
+            endDrag(event, true);
+        });
+        control.addEventListener("pointercancel", function (event) {
+            endDrag(event, false);
+        });
+        control.addEventListener("lostpointercapture", function (event) {
+            endDrag(event, false);
+        });
         control.addEventListener("keydown", function (event) {
             var step = event.shiftKey ? 64 : 32;
             var deltas = {
@@ -389,6 +391,12 @@
             }
             event.preventDefault();
             moveWithKeyboard(deltas[event.key][0], deltas[event.key][1]);
+        });
+        control.addEventListener("keyup", function (event) {
+            if (keyboardMoved && /^Arrow(Up|Down|Left|Right)$/.test(event.key)) {
+                keyboardMoved = false;
+                checkCollisions();
+            }
         });
         window.addEventListener("resize", keepInViewport);
     }
