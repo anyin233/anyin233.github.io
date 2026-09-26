@@ -22,6 +22,8 @@
         var eatenCount = 0;
         var isEating = false;
         var keyboardMoved = false;
+        var hoveredTarget = null;
+        var triggerBiteTimer = null;
 
         function clamp(value, minimum, maximum) {
             return Math.min(Math.max(value, minimum), Math.max(minimum, maximum));
@@ -181,6 +183,34 @@
             }, 1000);
         }
 
+        function clearTriggerFeedback() {
+            if (triggerBiteTimer !== null) {
+                window.clearInterval(triggerBiteTimer);
+                triggerBiteTimer = null;
+            }
+            hoveredTarget = null;
+            control.classList.remove("is-target-hovering", "is-mouth-closed");
+        }
+
+        function setTriggerFeedback(target) {
+            if (hoveredTarget === target) {
+                return;
+            }
+
+            clearTriggerFeedback();
+            if (!target) {
+                return;
+            }
+
+            hoveredTarget = target;
+            control.classList.add("is-target-hovering");
+            triggerBiteTimer = window.setInterval(function () {
+                if (!isEating && hoveredTarget === target) {
+                    control.classList.toggle("is-mouth-closed");
+                }
+            }, reducedMotion ? 220 : 115);
+        }
+
         function animateEating(target, trail, crumbs, eatingPath) {
             var segments = [];
             var totalDistance = 0;
@@ -246,6 +276,7 @@
                 return;
             }
 
+            clearTriggerFeedback();
             var targetRect = target.getBoundingClientRect();
             var wafer = document.createElement("div");
             var crumbs = document.createElement("div");
@@ -266,17 +297,14 @@
             animateEating(target, trail, crumbs, eatingPath);
         }
 
-        function checkCollisions() {
-            if (isEating) {
-                return;
-            }
-
+        function findCollision() {
             var controlRect = control.getBoundingClientRect();
             var radius = controlRect.width * 0.38;
             var center = {
                 x: controlRect.left + controlRect.width / 2,
                 y: controlRect.top + controlRect.height / 2
             };
+            var collision = null;
 
             targets.some(function (target) {
                 if (target.dataset.pacmanEaten === "true") {
@@ -290,11 +318,34 @@
                 var distanceY = center.y - closestY;
 
                 if ((distanceX * distanceX) + (distanceY * distanceY) <= radius * radius) {
-                    makeWafer(target, center);
+                    collision = { target: target, center: center };
                     return true;
                 }
                 return false;
             });
+
+            return collision;
+        }
+
+        function updateTriggerFeedback() {
+            if (isEating) {
+                return;
+            }
+            var collision = findCollision();
+            setTriggerFeedback(collision ? collision.target : null);
+        }
+
+        function checkCollisions() {
+            if (isEating) {
+                return;
+            }
+
+            var collision = findCollision();
+            if (collision) {
+                makeWafer(collision.target, collision.center);
+                return;
+            }
+            clearTriggerFeedback();
         }
 
         function beginDrag(event) {
@@ -303,6 +354,7 @@
             }
 
             var rect = control.getBoundingClientRect();
+            clearTriggerFeedback();
             dragState = {
                 pointerId: event.pointerId,
                 offsetX: event.clientX - rect.left,
@@ -325,6 +377,7 @@
             setPosition(event.clientX - dragState.offsetX, event.clientY - dragState.offsetY);
             updateDirection(event.clientX - lastPointer.x, event.clientY - lastPointer.y);
             lastPointer = { x: event.clientX, y: event.clientY };
+            updateTriggerFeedback();
             event.preventDefault();
         }
 
@@ -336,6 +389,8 @@
             var pointerId = dragState.pointerId;
             if (shouldEat) {
                 setPosition(event.clientX - dragState.offsetX, event.clientY - dragState.offsetY);
+            } else {
+                clearTriggerFeedback();
             }
             dragState = null;
             if (control.hasPointerCapture(pointerId)) {
@@ -358,6 +413,7 @@
             setPosition(position.left + deltaX, position.top + deltaY);
             updateDirection(deltaX, deltaY);
             keyboardMoved = true;
+            updateTriggerFeedback();
         }
 
         setInitialPosition();

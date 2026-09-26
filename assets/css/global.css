@@ -329,6 +329,10 @@ mark {
     animation: pacman-eat-bob 115ms steps(2, end) infinite;
 }
 
+.pacman-control.is-target-hovering .pacman-sprite {
+    animation: pacman-trigger-bite 115ms steps(2, end) infinite;
+}
+
 .pacman-sprite svg {
     display: block;
     width: 100%;
@@ -459,6 +463,11 @@ mark {
 @keyframes pacman-eat-bob {
     0%, 100% { transform: rotate(var(--pacman-angle)) translateY(0); }
     50% { transform: rotate(var(--pacman-angle)) translateY(-2px); }
+}
+
+@keyframes pacman-trigger-bite {
+    0%, 100% { transform: rotate(var(--pacman-angle)) translateY(0) scale(1); }
+    50% { transform: rotate(var(--pacman-angle)) translateY(-1px) scale(1.04); }
 }
 
 @keyframes pacman-wafer-arrive {
